@@ -37,16 +37,23 @@ def start_session():
     client = ec2_client(session)
     ec2 = EC2Data(client, config.logger)
     data = ec2.filter_ec2_data()
-    instance_id = ec2_list_selector(config.logger,data)
+    instance_id = ec2_list_selector(config.logger, data)
     ssm = SSMSession(session, instance_id, config.region, config.profile, config.logger)
     ssm.start_session()
 
 
 @app.callback(invoke_without_command=True)
 def cli(
-        profile: Annotated[str, typer.Option(help="AWS profile to use", show_default=True)] = os.getenv("AWS_PROFILE"),
-        log_level: Annotated[str, typer.Option(help="Log level", show_default=True)] = "INFO",
-        region: Annotated[str, typer.Option(help="AWS region", show_default=True)] = "eu-west-1"):
+    profile: Annotated[
+        str, typer.Option(help="AWS profile to use", show_default=True)
+    ] = os.getenv("AWS_PROFILE"),
+    log_level: Annotated[
+        str, typer.Option(help="Log level", show_default=True)
+    ] = "INFO",
+    region: Annotated[
+        str, typer.Option(help="AWS region", show_default=True)
+    ] = "eu-west-1",
+):
     """
     Entrypoint. Declare some global options for all the CLI
     This function will be executed when the CLI starts.

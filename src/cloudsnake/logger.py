@@ -3,12 +3,12 @@ import logging
 
 
 class CustomFormatter(logging.Formatter):
-    BLUE1 = '\033[95m'
-    BLUE2 = '\033[96m'
-    SUCCESS = '\033[92m'
-    WARNING = '\033[93m'
-    ERROR = '\033[91m'
-    NOCOLOR = '\033[0m'
+    BLUE1 = "\033[95m"
+    BLUE2 = "\033[96m"
+    SUCCESS = "\033[92m"
+    WARNING = "\033[93m"
+    ERROR = "\033[91m"
+    NOCOLOR = "\033[0m"
     format = "> %(levelname)s - %(message)s"
 
     FORMATS = {
@@ -16,7 +16,7 @@ class CustomFormatter(logging.Formatter):
         logging.INFO: BLUE2 + format + NOCOLOR,
         logging.WARNING: WARNING + format + NOCOLOR,
         logging.ERROR: ERROR + format + NOCOLOR,
-        logging.CRITICAL: ERROR + format + NOCOLOR
+        logging.CRITICAL: ERROR + format + NOCOLOR,
     }
 
     def format(self, record):

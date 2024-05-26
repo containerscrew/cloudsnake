@@ -3,7 +3,7 @@ from cli import app
 
 def main() -> None:
     """
-       Start awstools. THis is the CLI entrypoint
+    Start awstools. THis is the CLI entrypoint
     """
     # Run the cli
     app()

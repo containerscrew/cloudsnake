@@ -15,7 +15,9 @@ table.add_column("Private ip address", style="red")
 table.add_column("Platform details", style="magenta")
 
 
-def ec2_list_selector(logger, entries: list[InstanceData], title: str = "EC2 instance selector"):
+def ec2_list_selector(
+    logger, entries: list[InstanceData], title: str = "EC2 instance selector"
+):
     instance_entries = []
 
     for instance in entries:
@@ -33,7 +35,13 @@ def ec2_list_selector(logger, entries: list[InstanceData], title: str = "EC2 ins
 
     menu_entry_index = terminal_menu.show()
     selected_instance = entries[menu_entry_index]
-    table.add_row(selected_instance.name, selected_instance.instance_id, selected_instance.instance_type, selected_instance.vpc_id,
-                  selected_instance.private_ip_address, selected_instance.platform_details)
+    table.add_row(
+        selected_instance.name,
+        selected_instance.instance_id,
+        selected_instance.instance_type,
+        selected_instance.vpc_id,
+        selected_instance.private_ip_address,
+        selected_instance.platform_details,
+    )
     console.print(table)
     return entries[menu_entry_index].instance_id

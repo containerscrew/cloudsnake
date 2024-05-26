@@ -7,22 +7,20 @@ help: ## this help
 run: ## Execute the cli locally using poetry
 	poetry run python src/cloudsnake/__main__.py
 
-deploy: ## Deploy package with twine
-	twine upload dist/* --verbose
+build: ## Build project using poetry
+	poetry build
 
 clean: ## Clean build files
-	rm -rvf build/
 	rm -rvf dist/
-	rm -rvf *.egg-info
-
-local-install: ## Install the package locally
-	pip3 install .
-
-local-uninstall: ## Uninstall the package locally
-	pip3 uninstall awstools
-
-lint: ## Lint python code
-	pylint ecr_lifecycle
 
 doctoc: ## Create table of contents with doctoc
 	doctoc .
+
+pre-commit-install: ## Install pre-commit
+	pre-commit install
+
+pre-commit-uninstall: ## Uninstall pre-commit
+	pre-commit uninstall
+
+run-pre-commit: ## Run pre-commit locally
+	pre-commit run -a

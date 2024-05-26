@@ -5,6 +5,21 @@
     <p align="center">Build with ❤ in Python</p>
 </p>
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Badges](#badges)
+- [TO DO](#to-do)
+- [TOP LINKS](#top-links)
+- [Tools](#tools)
+- [Poetry commands](#poetry-commands)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Introduction
 
 Lorem ipsum....
@@ -17,18 +32,18 @@ pip3 install cloudsnake
 
 # Badges
 
-|         |                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Code    | ![Code Size](https://img.shields.io/github/languages/code-size/containerscrew/tftools)                                                                                                                                                                                                                                                                                                                                  |
-| CI/CD   | [![CI - Test](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml) [![CD - Build](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml) |
-| Package | [![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)[![PyPI - Version](https://img.shields.io/pypi/v/hatch-showcase.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-showcase/) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-showcase.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/hatch-showcase/) ![packaging](https://img.shields.io/badge/packaging-poetry-cyan.svg)                                                                              |
-| Meta    | [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/)                                                                                                                                                             |
-| Linter  | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)                                                                                                                                                                                                                                                            | 
+|         |                                                                                                                                                                                                                                                                                                                                                         |
+|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Code    | ![Code Size](https://img.shields.io/github/languages/code-size/containerscrew/tftools)                                                                                                                                                                                                                                                                  |
+| CI/CD   | [![CI - Test](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml) [![CD - Build](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml)                        |
+| Package | [![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)[![PyPI - Version](https://img.shields.io/pypi/v/hatch-showcase.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-showcase/) ![packaging](https://img.shields.io/badge/packaging-poetry-cyan.svg) |
+| Meta    | [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/)                                                                                             |
+| Linter  | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)                                                                                                                                                                                            |
 
 
 
 
-# TO DO 
+# TO DO
 
 * Implement websocket protocol of ssm-session-plugin
 * Implement python textual for OptionList
@@ -37,11 +52,11 @@ pip3 install cloudsnake
 
 # TOP LINKS
 
-https://github.com/aws/aws-cli/blob/b6e7c5b79e4471713b2f7c660eff99b36d977064/awscli/customizations/sessionmanager.py#L83  
-https://stackoverflow.com/questions/57868722/unable-to-decode-aws-session-manager-websocket-output-in-python  
-https://github.com/aws/session-manager-plugin/blob/mainline/src/sessionmanagerplugin/session/shellsession/shellsession.go  
-Logger: https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output  
-Textual for beginners: https://mathspp.com/blog/textual-for-beginners  
+https://github.com/aws/aws-cli/blob/b6e7c5b79e4471713b2f7c660eff99b36d977064/awscli/customizations/sessionmanager.py#L83
+https://stackoverflow.com/questions/57868722/unable-to-decode-aws-session-manager-websocket-output-in-python
+https://github.com/aws/session-manager-plugin/blob/mainline/src/sessionmanagerplugin/session/shellsession/shellsession.go
+Logger: https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
+Textual for beginners: https://mathspp.com/blog/textual-for-beginners
 More of textual: https://dev.to/wiseai/textual-the-definitive-guide-part-1-1i0p
 [Packaging projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 [Poetry](https://python-poetry.org/docs/)
@@ -57,7 +72,7 @@ More of textual: https://dev.to/wiseai/textual-the-definitive-guide-part-1-1i0p
 # Poetry commands
 
 ```shell
-poetry add boto3 dacite 
+poetry add boto3 dacite
 poetry config pypi-token.pypi pypi-
 poetry publish --build
 ```
