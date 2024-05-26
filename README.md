@@ -1,7 +1,6 @@
 <p align="center">
     <h1 align="center">cloudsnake 🐍</h1>
-    <img src="img/aws.png" width="150"/>
-    <img src="img/snake.png" width="150"/>
+    <img src="logo.png" width="150" alt="cloudsnake"/>
     <h3 align="center">Wrapping some awscli commands with beautiful TUI</h3>
     <h3 align="center">Build with ❤ in Python</h3>
 </p>
