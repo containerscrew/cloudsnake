@@ -1,10 +1,9 @@
-<p align="center">
-    <h1 align="center">cloudsnake 🐍</h1>
-    <img src="logo.png" width="150" alt="cloudsnake"/>
-    <h3 align="center">Wrapping some awscli commands with beautiful TUI</h3>
-    <h3 align="center">Build with ❤ in Python</h3>
+<p align="center" >
+    <img src="logo.png" alt="logo" width="250"/>
+    <h3 align="center">cloudsnake 🐍</h3>
+    <p align="center">Wrapping some awscli commands with beautiful TUI</p>
+    <p align="center">Build with ❤ in Python</p>
 </p>
-
 
 # Introduction
 
