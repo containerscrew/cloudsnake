@@ -15,7 +15,7 @@ table.add_column("Platform details", style="magenta")
 
 
 def ec2_list_selector(
-        entries: list[InstanceData], title: str = "EC2 instance selector"
+    entries: list[InstanceData], title: str = "EC2 instance selector"
 ):
     # instance_entries = []
     #
