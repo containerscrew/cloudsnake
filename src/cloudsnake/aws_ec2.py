@@ -13,6 +13,7 @@ class InstanceData:
     private_ip_address: str
     vpc_id: str
 
+
 class Instances:
     """A class to manage EC2 instance API calls"""
 
@@ -32,9 +33,8 @@ class Instances:
                         self.log.debug(f"Fetching instance data for {inst}")
                         all_instance_data.append(inst)
             else:
-                self.log.warning(f"No instances in your region. Exiting")
+                self.log.warning("No instances in your region. Exiting")
                 sys.exit(0)
-
 
         return all_instance_data
 

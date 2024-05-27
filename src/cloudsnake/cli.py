@@ -3,8 +3,7 @@ import os
 import typer
 from typing import Annotated
 from typing_extensions import Optional
-from aws_client import aws_session, ec2_client
-from aws_ssm import SSMSession
+from aws_client import aws_session
 from aws_ec2 import Instances
 from tui import ec2_list_selector
 from logger import init_logger
