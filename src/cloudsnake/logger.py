@@ -9,7 +9,7 @@ class CustomFormatter(logging.Formatter):
     WARNING = "\033[93m"
     ERROR = "\033[91m"
     NOCOLOR = "\033[0m"
-    format = "> %(levelname)s - %(message)s"
+    format = "[%(asctime)s] %(levelname)s - %(message)s"
 
     FORMATS = {
         logging.DEBUG: BLUE1 + format + NOCOLOR,

@@ -4,8 +4,8 @@ import typer
 from typing import Annotated
 from typing_extensions import Optional
 from aws_client import aws_session, ec2_client
-from aws_ec2 import EC2Data
 from aws_ssm import SSMSession
+from aws_ec2 import Instances
 from tui import ec2_list_selector
 from logger import init_logger
 
@@ -22,8 +22,8 @@ class Settings:
 config = Settings()
 
 """Register new typer"""
-app = typer.Typer(no_args_is_help=True)
-ssm = typer.Typer(no_args_is_help=True)
+app = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True)
+ssm = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True)
 
 """Add subcommands/typer"""
 app.add_typer(ssm, name="ssm", help="Manage ssm operations")
@@ -32,14 +32,13 @@ app.add_typer(ssm, name="ssm", help="Manage ssm operations")
 @ssm.command("start-session")
 def start_session():
     """Declare subcommands for SSM command"""
-    config.logger.info("Starting SSM session")
+    config.logger.info("Start SSM session")
     session = aws_session(config.profile, config.region, config.logger)
-    client = ec2_client(session)
-    ec2 = EC2Data(client, config.logger)
-    data = ec2.filter_ec2_data()
-    instance_id = ec2_list_selector(config.logger, data)
-    ssm = SSMSession(session, instance_id, config.region, config.profile, config.logger)
-    ssm.start_session()
+    instances = Instances(session)
+    running_ec2 = instances.get_custom_instance_data()
+    ec2_list_selector(running_ec2)
+    # ssm = SSMSession(session, instance_id, config.region, config.profile, config.logger)
+    # ssm.start_session()
 
 
 @app.callback(invoke_without_command=True)
@@ -61,3 +60,5 @@ def cli(
     config.profile = profile
     config.region = region
     config.logger = init_logger(log_level)
+
+    config.logger.info("Starting cloudsnake 🐍☁")

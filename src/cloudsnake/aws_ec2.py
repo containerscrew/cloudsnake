@@ -1,3 +1,5 @@
+import logging
+import sys
 from dataclasses import dataclass
 from dacite import from_dict
 
@@ -11,38 +13,39 @@ class InstanceData:
     private_ip_address: str
     vpc_id: str
 
+class Instances:
+    """A class to manage EC2 instance API calls"""
 
-class EC2Data:
-    def __init__(self, ec2_client, logger):
-        self.client = ec2_client
-        self.log = logger
+    def __init__(self, session):
+        self.log = logging.getLogger("awstools")
+        self.client = session.client("ec2")
 
-    def get_instance_data(self):
-        """
-        Pending to add doc
-        :return:
-        """
-        instance_data = []
+    def _get_instance_data(self):
+        all_instance_data = []
         filters = [{"Name": "instance-state-name", "Values": ["running"]}]
-
         paginator = self.client.get_paginator("describe_instances")
         for page in paginator.paginate(Filters=filters):
             if page["Reservations"]:
+                self.log.info("Fetching EC2 instance data")
                 for res in page["Reservations"]:
                     for inst in res["Instances"]:
-                        instance_data.append(inst)
+                        self.log.debug(f"Fetching instance data for {inst}")
+                        all_instance_data.append(inst)
             else:
-                self.log.info("No instances in your region")
+                self.log.warning(f"No instances in your region. Exiting")
+                sys.exit(0)
 
-        return instance_data
 
-    def filter_ec2_data(self) -> list[InstanceData]:
+        return all_instance_data
+
+    def get_custom_instance_data(self) -> list[InstanceData]:
         """
-        Pending to add doc
+        From all the instance data returner in _get_instance_data, filter the necessary values you need
         :return:
         """
         filtered_ec2_data = []
-        for inst in self.get_instance_data():
+        for inst in self._get_instance_data():
+            # TODO pending to test that this variable name is not empty
             name = next(
                 (
                     item["Value"]
@@ -51,8 +54,10 @@ class EC2Data:
                 ),
                 None,
             )
+            #  TODO: decide what data want to retrieve the user.
+            #  By the moment this is hardcoded
             data = dict(
-                name=name,
+                name=name if name else "unknown-name",
                 instance_id=inst["InstanceId"],
                 instance_type=inst["InstanceType"],
                 platform_details=inst["PlatformDetails"],

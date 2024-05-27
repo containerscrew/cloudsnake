@@ -1,5 +1,4 @@
-from simple_term_menu import TerminalMenu
-
+from rich.progress import track
 from aws_ec2 import InstanceData
 from rich.console import Console
 from rich.table import Table
@@ -16,32 +15,34 @@ table.add_column("Platform details", style="magenta")
 
 
 def ec2_list_selector(
-    logger, entries: list[InstanceData], title: str = "EC2 instance selector"
+        entries: list[InstanceData], title: str = "EC2 instance selector"
 ):
-    instance_entries = []
+    # instance_entries = []
+    #
+    # for instance in entries:
+    #     instance_entries.append(instance.name)
+    #
+    # terminal_menu = TerminalMenu(
+    #     instance_entries,
+    #     title=title,
+    #     menu_cursor="> ",
+    #     menu_cursor_style=("fg_red", "bold"),
+    #     menu_highlight_style=("fg_black", "bg_yellow", "bold"),
+    #     cycle_cursor=True,
+    #     clear_screen=True,
+    # )
+    #
+    # menu_entry_index = terminal_menu.show()
+    # selected_instance = entries[menu_entry_index]
 
-    for instance in entries:
-        instance_entries.append(instance.name)
-
-    terminal_menu = TerminalMenu(
-        instance_entries,
-        title=title,
-        menu_cursor="> ",
-        menu_cursor_style=("fg_red", "bold"),
-        menu_highlight_style=("fg_black", "bg_yellow", "bold"),
-        cycle_cursor=True,
-        clear_screen=True,
-    )
-
-    menu_entry_index = terminal_menu.show()
-    selected_instance = entries[menu_entry_index]
-    table.add_row(
-        selected_instance.name,
-        selected_instance.instance_id,
-        selected_instance.instance_type,
-        selected_instance.vpc_id,
-        selected_instance.private_ip_address,
-        selected_instance.platform_details,
-    )
+    for instance in track(entries):
+        table.add_row(
+            instance.name,
+            instance.instance_id,
+            instance.instance_type,
+            instance.vpc_id,
+            instance.private_ip_address,
+            instance.platform_details,
+        )
     console.print(table)
-    return entries[menu_entry_index].instance_id
+    # return entries[menu_entry_index].instance_id
