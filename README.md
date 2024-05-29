@@ -47,6 +47,7 @@ pip3 install cloudsnake
 
 * Implement websocket protocol of ssm-session-plugin
 * Implement python textual for OptionList
+* Reorganize global flags (region, profile, log-level)
 
 
 
@@ -60,6 +61,8 @@ Textual for beginners: https://mathspp.com/blog/textual-for-beginners
 More of textual: https://dev.to/wiseai/textual-the-definitive-guide-part-1-1i0p
 [Packaging projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 [Poetry](https://python-poetry.org/docs/)
+Some examples using boto3 SDK https://docs.aws.amazon.com/code-library/latest/ug/python_3_ec2_code_examples.html
+Mocking: https://github.com/getmoto/moto
 
 # Tools
 
