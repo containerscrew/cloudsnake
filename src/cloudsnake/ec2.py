@@ -19,16 +19,17 @@ class InstanceData:
 class InstanceWrapper:
     """Encapsulates Amazon Elastic Compute Cloud (Amazon EC2) instance actions."""
 
-    def __init__(self, ec2_client):
+    def __init__(self, ec2_client, instances = None):
         self.log = logging.getLogger("cloudsnake")
         self.ec2_client = ec2_client
+        self.instances = instances
 
     @classmethod
     def from_session(cls, session):
         ec2_client = session.client("ec2")
         return cls(ec2_client)
 
-    def describe_ec2_instances(self, filters, query, output):
+    def describe_ec2_instances(self, filters, query):
         """
         AWS EC2 describe instances.
         :param output: Output mode. See available options running: cloudsnake ec2 describe-instances --help
@@ -45,9 +46,14 @@ class InstanceWrapper:
         paginator = self.ec2_client.get_paginator("describe_instances")
 
         for page in paginator.paginate(Filters=parsed_filters):
-            tui = Tui(output)
             if query is not None:
                 result = jmespath.search(query, page)
-                tui.pretty_print(result)
+                self.instances = result
             else:
-                tui.pretty_print(page)
+                self.instances = page
+
+    def print_console(self, output):
+        tui = Tui(output)
+        tui.pretty_print(self.instances)
+
+
