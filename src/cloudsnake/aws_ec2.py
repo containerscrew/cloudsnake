@@ -49,36 +49,6 @@ class InstanceWrapper:
                 result = jmespath.search(query, page)
                 tui = Tui()
                 tui.pprint(result)
+                tui.print_table(result)
             else:
                 print(page)
-            # Tui().print_json(result)
-
-    # def get_custom_instance_data(self) -> list[InstanceData]:
-    #     """
-    #     From all the instance data returner in _get_instance_data, filter the necessary values you need
-    #     :return:
-    #     """
-    #     filtered_ec2_data = []
-    #     for inst in self._get_instance_data():
-    #         # TODO pending to test that this variable name is not empty
-    #         name = next(
-    #             (
-    #                 item["Value"]
-    #                 for item in inst.get("Tags", [])
-    #                 if item["Key"] == "Name"
-    #             ),
-    #             None,
-    #         )
-    #         #  TODO: decide what data want to retrieve the user
-    #         #  By the moment this is hardcoded
-    #         data = dict(
-    #             name=name if name else "unknown-name",
-    #             instance_id=inst["InstanceId"],
-    #             instance_type=inst["InstanceType"],
-    #             platform_details=inst["PlatformDetails"],
-    #             private_ip_address=inst["PrivateIpAddress"],
-    #             vpc_id=inst["VpcId"],
-    #         )
-    #         filtered_ec2_data.append(from_dict(data_class=InstanceData, data=data))
-    #
-    #     return filtered_ec2_data
