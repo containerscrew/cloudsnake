@@ -60,7 +60,8 @@ def describe_instances(
     """Invoke ec2 describe-instances"""
     session = SessionWrapper(config.profile, config.region).with_local_session()
     instances = InstanceWrapper.from_session(session)
-    instances.describe_ec2_instances(filters, query, output)
+    instances.describe_ec2_instances(filters, query)
+    instances.print_console(output)
 
 
 @app.callback(invoke_without_command=True)
