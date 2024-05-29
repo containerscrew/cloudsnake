@@ -13,7 +13,7 @@ from logger import init_logger
 
 class OutputMode(str, Enum):
     json = "json"
-    text = "text"
+    table = "table"
 
 
 class LoggingLevel(str, Enum):

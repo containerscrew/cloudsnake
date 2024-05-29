@@ -1,4 +1,3 @@
-import collections
 import logging
 from dataclasses import dataclass
 import jmespath
@@ -32,6 +31,7 @@ class InstanceWrapper:
     def describe_ec2_instances(self, filters, query, output):
         """
         AWS EC2 describe instances.
+        :param output: Output mode. See available options running: cloudsnake ec2 describe-instances --help
         :param filters: filter the output. Available filters: https://awscli.amazonaws.com/v2/documentation/api/2.0.33/reference/ec2/describe-instances.html#options
         :param query: Parse the output using json query language. Example: --query "Reservations[*].Instances[*].{Instance:InstanceId,Subnet:SubnetId}"
         :return:
@@ -45,10 +45,9 @@ class InstanceWrapper:
         paginator = self.ec2_client.get_paginator("describe_instances")
 
         for page in paginator.paginate(Filters=parsed_filters):
+            tui = Tui(output)
             if query is not None:
                 result = jmespath.search(query, page)
-                tui = Tui()
-                tui.pprint(result)
-                tui.print_table(result)
+                tui.pretty_print(result)
             else:
-                print(page)
+                tui.pretty_print(page)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from typing_extensions import List, Dict
 
 
@@ -18,10 +20,15 @@ def parse_filters(filters: List[str]) -> List[Dict[str, List[str]]]:
     return parsed_filters
 
 
-# def parse_filters(filters: List[str]) -> List[dict]:
-#     parsed_filters = []
-#     for f in filters:
-#         name, values = f.split('=', 1)
-#         values_list = values.split(',')
-#         parsed_filters.append({'Name': name, 'Values': values_list})
-#     return parsed_filters
+def get_table_column_keys(data) -> list[str]:
+    if data and isinstance(data[0], list) and data[0] and isinstance(data[0][0], dict):
+        keys = list(data[0][0].keys())
+        return keys
+    else:
+        raise TypeError("Invalid json")
+
+
+def serialize_datetime(obj):
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    raise TypeError("Type not serializable")
