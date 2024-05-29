@@ -35,7 +35,7 @@ def ec2_list_selector(
     # menu_entry_index = terminal_menu.show()
     # selected_instance = entries[menu_entry_index]
 
-    for instance in track(entries):
+    for instance in track(entries, description="Fetching EC2 data"):
         table.add_row(
             instance.name,
             instance.instance_id,

@@ -26,12 +26,27 @@ class CustomFormatter(logging.Formatter):
 
 
 def init_logger(log_level: str = "INFO") -> logging.Logger:
-    logger = logging.getLogger("awstools")
+    logger = logging.getLogger('cloudsnake')
     logger.setLevel(log_level)
 
-    handler = logging.StreamHandler()
-    handler.setFormatter(CustomFormatter())
+    # Create console handler
+    ch = logging.StreamHandler()
+    ch.setLevel(log_level)
 
-    logger.addHandler(handler)
+    # Create formatter and add it to the handler
+    ch.setFormatter(CustomFormatter())
+
+    # Add the handler to the logger
+    logger.addHandler(ch)
+
+    # Configure boto3 to use the same logger
+    boto3_logger = logging.getLogger('boto3')
+    boto3_logger.setLevel(log_level)
+    boto3_logger.addHandler(ch)
+
+    # Also configure botocore logger to use the same handler and level
+    botocore_logger = logging.getLogger('botocore')
+    botocore_logger.setLevel(log_level)
+    botocore_logger.addHandler(ch)
 
     return logger
