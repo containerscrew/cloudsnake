@@ -32,7 +32,6 @@ class InstanceWrapper:
     def describe_ec2_instances(self, filters, query):
         """
         AWS EC2 describe instances.
-        :param output: Output mode. See available options running: cloudsnake ec2 describe-instances --help
         :param filters: filter the output. Available filters: https://awscli.amazonaws.com/v2/documentation/api/2.0.33/reference/ec2/describe-instances.html#options
         :param query: Parse the output using json query language. Example: --query "Reservations[*].Instances[*].{Instance:InstanceId,Subnet:SubnetId}"
         :return:
@@ -52,8 +51,11 @@ class InstanceWrapper:
             else:
                 self.instances = page
 
-    def print_console(self, output):
+    def print_console(self, output) -> None:
+        """
+        Print the result of describe-instances operation (with filers & query) in the console
+        :param output: Output mode. See available options running: cloudsnake ec2 describe-instances --help
+        :return: None
+        """
         tui = Tui(output)
         tui.pretty_print(self.instances)
-
-
