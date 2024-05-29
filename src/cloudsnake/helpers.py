@@ -16,3 +16,12 @@ def parse_filters(filters: List[str]) -> List[Dict[str, List[str]]]:
                 filter_dict["Values"].append(value)
         parsed_filters.append(filter_dict)
     return parsed_filters
+
+
+# def parse_filters(filters: List[str]) -> List[dict]:
+#     parsed_filters = []
+#     for f in filters:
+#         name, values = f.split('=', 1)
+#         values_list = values.split(',')
+#         parsed_filters.append({'Name': name, 'Values': values_list})
+#     return parsed_filters
