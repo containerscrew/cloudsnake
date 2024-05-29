@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "cloudsnake"
-version = "0.1.0"
+version = "0.2.2"
 description = 'AWS cli operations with pretty TUI'
 authors = ["containerscrew <info@containerscrew.com>"]
 repository = "https://github.com/containerscrew/cloudsnake"
@@ -13,7 +13,7 @@ keywords = ["aws","cli", "rich", "textual", "cloudsnake"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
-  "Development Status :: 1 - Beta",
+  "Development Status :: 3 - Alpha",
   "Intended Audience :: End Users/Desktop",
   "License :: OSI Approved :: Apache Software License",
   "Operating System :: POSIX :: Linux",
@@ -29,7 +29,7 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-my_package_cli = 'cloudsnake.__main__:main'
+cloudsnake = 'cloudsnake.__main__:main'
 
 
 [tool.poetry.dependencies]
