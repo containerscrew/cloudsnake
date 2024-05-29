@@ -16,7 +16,9 @@ class SessionWrapper:
         self.profile = profile
 
     def with_local_session(self) -> boto3.Session:
-        self.log.debug("Starting boto3 session using local credentials located in ~/.aws/credentials")
+        self.log.debug(
+            "Starting boto3 session using local credentials located in ~/.aws/credentials"
+        )
         return boto3.Session(region_name=self.region, profile_name=self.profile)
 
     # def with_sts_assume_role_session(self, role_arn) -> boto3.Session:

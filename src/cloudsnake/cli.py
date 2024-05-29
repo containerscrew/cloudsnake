@@ -4,7 +4,7 @@ from enum import Enum
 
 import typer
 from typing import Annotated
-from typing_extensions import Optional, List
+from typing_extensions import List
 
 from cloudsnake.aws_ec2 import InstanceWrapper
 from cloudsnake.aws_session import SessionWrapper
@@ -22,10 +22,10 @@ class LoggingLevel(str, Enum):
 
 # Define a class to store global options
 class Settings:
-    profile: Optional[str] = "default"
-    log_level: Optional[str] = "WARNING"
-    region: Optional[str] = "eu-west-1"
-    logger: Optional[logging.Logger] = logging.Logger
+    profile: str
+    log_level: str
+    region: str
+    logger: logging.Logger
 
 
 # Instantiate the global settings object
@@ -53,25 +53,16 @@ def describe_instances(
     instances.describe_ec2_instances(filters)
 
 
-# @ssm.command("start-session")
-# def start_session():
-#     """Declare subcommands for SSM command"""
-#     config.logger.info("Start SSM session")
-#     session = aws_session(config.profile, config.region, config.logger)
-#     instances = Instances(session)
-#     running_ec2 = instances.get_custom_instance_data()
-#     ec2_list_selector(running_ec2)
-#     # ssm = SSMSession(session, instance_id, config.region, config.profile, config.logger)
-#     # ssm.start_session()
-
-
 @app.callback(invoke_without_command=True)
 def cli(
     profile: Annotated[
         str, typer.Option(help="AWS profile to use", show_default=True)
     ] = os.getenv("AWS_PROFILE"),
     log_level: Annotated[
-        LoggingLevel, typer.Option(help="Logging level for the app custom code and boto3", case_sensitive=False)
+        LoggingLevel,
+        typer.Option(
+            help="Logging level for the app custom code and boto3", case_sensitive=False
+        ),
     ] = LoggingLevel.WARNING,
     region: Annotated[
         str, typer.Option(help="AWS region", show_default=True)

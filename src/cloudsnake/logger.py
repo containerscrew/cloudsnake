@@ -26,7 +26,7 @@ class CustomFormatter(logging.Formatter):
 
 
 def init_logger(log_level: str = "INFO") -> logging.Logger:
-    logger = logging.getLogger('cloudsnake')
+    logger = logging.getLogger("cloudsnake")
     logger.setLevel(log_level)
 
     # Create console handler
@@ -40,12 +40,12 @@ def init_logger(log_level: str = "INFO") -> logging.Logger:
     logger.addHandler(ch)
 
     # Configure boto3 to use the same logger
-    boto3_logger = logging.getLogger('boto3')
+    boto3_logger = logging.getLogger("boto3")
     boto3_logger.setLevel(log_level)
     boto3_logger.addHandler(ch)
 
     # Also configure botocore logger to use the same handler and level
-    botocore_logger = logging.getLogger('botocore')
+    botocore_logger = logging.getLogger("botocore")
     botocore_logger.setLevel(log_level)
     botocore_logger.addHandler(ch)
 
