@@ -47,7 +47,8 @@ class InstanceWrapper:
         for page in paginator.paginate(Filters=parsed_filters):
             if query is not None:
                 result = jmespath.search(query, page)
-                Tui.pprint(result)
+                tui = Tui()
+                tui.pprint(result)
             else:
                 print(page)
             # Tui().print_json(result)
