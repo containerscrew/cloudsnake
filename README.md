@@ -80,6 +80,14 @@ poetry config pypi-token.pypi pypi-
 poetry publish --build
 ```
 
+# Cloudsnake commands
+
+```shell
+cloudsnake --help 
+cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].{Instance:InstanceId,VpcId:VpcId,AZ:Placement.AvailabilityZone,Name:Tags[?Key==`Name`]|[0].Value}' --output json
+cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output json
+```
+
 ## License
 
 `cloudsnake` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
