@@ -29,6 +29,7 @@ Lorem ipsum....
 
 ```console
 pip3 install cloudsnake
+pipx install cloudsnake
 ```
 
 # Badges

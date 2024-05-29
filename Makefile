@@ -1,6 +1,8 @@
 SHELL:=/bin/sh
 .PHONY: all
 
+app_name="cloudsnake"
+
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## ";  printf "Usage:\n  make \033[36m<target> \033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?## / {gsub("\\\\n",sprintf("\n%22c",""), $$2);printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
@@ -9,6 +11,9 @@ run: ## Execute the cli locally using poetry
 
 build: ## Build project using poetry
 	poetry build
+
+publish: ## Publish package to pypi.org
+	poetry publish --build
 
 clean: ## Clean build files
 	rm -rvf dist/
@@ -24,3 +29,12 @@ pre-commit-uninstall: ## Uninstall pre-commit
 
 run-pre-commit: ## Run pre-commit locally
 	pre-commit run -a
+
+pipx-local-install: ## Install the package locally using pipx
+	pipx install .
+
+pipx-upgrade: ## Upgrade package
+	pipx upgrade ${app_name}
+
+pipx-uninstall: ## Uninstall package
+	pipx uninstall ${app_name}

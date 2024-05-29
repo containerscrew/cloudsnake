@@ -8,7 +8,7 @@ from typing_extensions import List
 
 from cloudsnake.ec2 import InstanceWrapper
 from cloudsnake.session import SessionWrapper
-from logger import init_logger
+from cloudsnake.logger import init_logger
 
 
 class OutputMode(str, Enum):

@@ -2,8 +2,8 @@ import logging
 from dataclasses import dataclass
 import jmespath
 
-from helpers import parse_filters
-from tui import Tui
+from cloudsnake.helpers import parse_filters
+from cloudsnake.tui import Tui
 
 
 @dataclass
@@ -19,7 +19,7 @@ class InstanceData:
 class InstanceWrapper:
     """Encapsulates Amazon Elastic Compute Cloud (Amazon EC2) instance actions."""
 
-    def __init__(self, ec2_client, instances = None):
+    def __init__(self, ec2_client, instances=None):
         self.log = logging.getLogger("cloudsnake")
         self.ec2_client = ec2_client
         self.instances = instances
