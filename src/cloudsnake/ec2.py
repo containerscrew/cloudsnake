@@ -2,6 +2,7 @@ import logging
 from dataclasses import dataclass
 import jmespath
 
+from botocore.config import Config
 from cloudsnake.helpers import parse_filters
 from cloudsnake.tui import Tui
 
@@ -23,10 +24,16 @@ class InstanceWrapper:
         self.log = logging.getLogger("cloudsnake")
         self.ec2_client = ec2_client
         self.instances = instances
+        self.config = Config(
+            retries={
+                'max_attempts': 10,
+                'mode': 'standard'
+            }
+        )
 
     @classmethod
     def from_session(cls, session):
-        ec2_client = session.client("ec2")
+        ec2_client = session.client("ec2") #pass the config with retries
         return cls(ec2_client)
 
     def describe_ec2_instances(self, filters, query):

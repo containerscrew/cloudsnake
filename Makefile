@@ -31,7 +31,7 @@ run-pre-commit: ## Run pre-commit locally
 	pre-commit run -a
 
 pipx-local-install: ## Install the package locally using pipx
-	pipx install .
+	pipx install . --force
 
 pipx-upgrade: ## Upgrade package
 	pipx upgrade ${app_name}
