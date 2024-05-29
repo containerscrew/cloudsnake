@@ -6,8 +6,8 @@ import typer
 from typing import Annotated
 from typing_extensions import List
 
-from cloudsnake.aws_ec2 import InstanceWrapper
-from cloudsnake.aws_session import SessionWrapper
+from cloudsnake.ec2 import InstanceWrapper
+from cloudsnake.session import SessionWrapper
 from logger import init_logger
 
 

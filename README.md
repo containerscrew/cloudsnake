@@ -16,6 +16,7 @@
 - [TOP LINKS](#top-links)
 - [Tools](#tools)
 - [Poetry commands](#poetry-commands)
+- [Cloudsnake commands](#cloudsnake-commands)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -83,7 +84,7 @@ poetry publish --build
 # Cloudsnake commands
 
 ```shell
-cloudsnake --help 
+cloudsnake --help
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].{Instance:InstanceId,VpcId:VpcId,AZ:Placement.AvailabilityZone,Name:Tags[?Key==`Name`]|[0].Value}' --output json
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output json
 ```
