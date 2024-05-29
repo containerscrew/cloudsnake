@@ -11,6 +11,11 @@ from cloudsnake.aws_session import SessionWrapper
 from logger import init_logger
 
 
+class OutputMode(str, Enum):
+    json = "json"
+    text = "text"
+
+
 class LoggingLevel(str, Enum):
     NOTSET = "NOTSET"
     DEBUG = "DEBUG"
@@ -46,11 +51,16 @@ def describe_instances(
     filters: Annotated[
         List[str], typer.Option(help="Filters for EC2 instances in Name=Value format")
     ] = None,
+    query: Annotated[str, typer.Option(help="Query to format the output")] = None,
+    output: Annotated[
+        OutputMode,
+        typer.Option(help="Output mode", case_sensitive=True),
+    ] = OutputMode.json,
 ):
     """Invoke ec2 describe-instances"""
     session = SessionWrapper(config.profile, config.region).with_local_session()
     instances = InstanceWrapper.from_session(session)
-    instances.describe_ec2_instances(filters)
+    instances.describe_ec2_instances(filters, query, output)
 
 
 @app.callback(invoke_without_command=True)
