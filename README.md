@@ -73,6 +73,7 @@ Mocking: https://github.com/getmoto/moto
 3. SSM GET PARAMETERS
 4. MYSQL IAM CONNECTION
 5. AWS RESOURCE BY TAG OUTPUT TABLE
+6. All regions: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/describe_regions.html
 
 # Poetry commands
 
