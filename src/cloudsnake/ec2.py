@@ -21,6 +21,8 @@ class EC2:
 
 
 class InstanceWrapper(EC2):
+    """Encapsulates Amazon Elastic Compute Cloud (Amazon EC2) instance actions."""
+
     def __init__(self, session, filters, query, output, instances=None):
         # Inheriting the properties of parent class
         super().__init__(session, filters, query, output)
@@ -57,6 +59,7 @@ class InstanceWrapper(EC2):
         self.describe_ec2_instances()
         tui = Tui(self.output)
         tui.pretty_print(self.instances)
+
 
 # class InstanceWrapper:
 #     """Encapsulates Amazon Elastic Compute Cloud (Amazon EC2) instance actions."""

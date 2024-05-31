@@ -1,10 +1,11 @@
 import logging
 import os
+from dataclasses import dataclass
 from enum import Enum
 
 import typer
 from typing import Annotated
-from typing_extensions import List
+from typing_extensions import List, Optional
 
 from cloudsnake.session import SessionWrapper
 from cloudsnake.logger import init_logger
@@ -25,17 +26,6 @@ class LoggingLevel(str, Enum):
     CRITICAL = "CRITICAL"
 
 
-# Define a class to store global options
-class Settings:
-    profile: str
-    log_level: str
-    region: str
-    logger: logging.Logger
-
-
-# Instantiate the global settings object
-config = Settings()
-
 """Register new typer"""
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True)
 ssm = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True)
@@ -46,8 +36,16 @@ app.add_typer(ssm, name="ssm", help="Manage ssm operations")
 app.add_typer(ec2, name="ec2", help="Manage ec2 operations")
 
 
-@ec2.command("describe-instances")
+@dataclass
+class Common:
+    profile: str
+    region: str
+
+
+@ec2.command("describe-instances", help="Describe EC2 instances data with filters and query as a parameter")
+# @add_global_options
 def describe_instances(
+        ctx: typer.Context,
         filters: Annotated[
             List[str], typer.Option(help="Filters for EC2 instances in Name=Value format")
         ] = None,
@@ -58,34 +56,32 @@ def describe_instances(
         ] = OutputMode.json,
 ):
     """Invoke ec2 describe-instances"""
-    session = SessionWrapper(config.profile, config.region).with_local_session()
-    instances = InstanceWrapper(session,filters, query, output)
+    session = SessionWrapper(ctx.obj.profile, ctx.obj.region).with_local_session()
+    instances = InstanceWrapper(session, filters, query, output)
     instances.print_console()
 
 
-@app.callback(invoke_without_command=True)
-def cli(
-        profile: Annotated[
-            str, typer.Option(help="AWS profile to use", show_default=True)
-        ] = os.getenv("AWS_PROFILE"),
-        log_level: Annotated[
-            LoggingLevel,
-            typer.Option(
-                help="Logging level for the app custom code and boto3", case_sensitive=False
-            ),
-        ] = LoggingLevel.WARNING,
-        region: Annotated[
-            str, typer.Option(help="AWS region", show_default=True)
-        ] = "eu-west-1",
-):
+@app.callback()
+def entrypoint(ctx: typer.Context,
+               profile: Annotated[
+                   str, typer.Option(help="AWS profile to use", show_default=True)
+               ] = os.getenv("AWS_PROFILE"),
+               log_level: Annotated[
+                   LoggingLevel,
+                   typer.Option(
+                       help="Logging level for the app custom code and boto3", case_sensitive=False,
+                   ),
+               ] = LoggingLevel.WARNING,
+               region: Annotated[
+                   str, typer.Option(help="AWS region", show_default=True)
+               ] = "eu-west-1",
+               ):
     """
     cloudsnake is an AWS cli wrapper with beautiful TUI using rich, typer and textual. It does not implement all the
-    commands, flags... of the official cli. It's just an example to see how to use aws sdk boto3, rich,
-    typer...
+    commands, flags... of the official cli. It's just an example to see how to use aws sdk boto3, rich and
+    typer.
     Example: cloudsnake ec2 describe-instances
     """
-    config.profile = profile
-    config.region = region
-    config.logger = init_logger(log_level.value)
-
-    config.logger.info("Starting cloudsnake 🐍☁")
+    ctx.obj = Common(profile, region)
+    logger = init_logger(log_level.value)
+    logger.info("Starting cloudsnake 🐍☁")

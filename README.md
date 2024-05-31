@@ -47,9 +47,25 @@ pipx install cloudsnake
 
 # TO DO
 
-* Implement websocket protocol of ssm-session-plugin
 * Implement python textual for OptionList
-* Reorganize global flags (region, profile, log-level)
+* Documentation with docstrings
+* 
+
+# Improvements
+
+## Positional flags
+
+### Actually
+
+```shell
+cloudsnake --log-level debug --region us-east-1 --profile default ec2 describe-instance 
+```
+
+### Wants
+
+```shell
+cloudsnake ec2 describe-instances --log-level debug --region us-east-1 --profile default --other-specific-flags-for-this-subdommand
+```
 
 
 
