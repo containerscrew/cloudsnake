@@ -12,7 +12,6 @@ class Tui:
         """
         Create your own terminal user interface using Rich library
         About used colors: https://rich.readthedocs.io/en/stable/appendix/colors.html
-        :param data:
         :param output:
         """
         self.console = Console()

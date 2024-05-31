@@ -1,11 +1,11 @@
-import logging
 import os
 from dataclasses import dataclass
 from enum import Enum
 
+import boto3
 import typer
 from typing import Annotated
-from typing_extensions import List, Optional
+from typing_extensions import List
 
 from cloudsnake.session import SessionWrapper
 from cloudsnake.logger import init_logger
@@ -38,50 +38,53 @@ app.add_typer(ec2, name="ec2", help="Manage ec2 operations")
 
 @dataclass
 class Common:
-    profile: str
-    region: str
+    session: boto3.Session
 
 
-@ec2.command("describe-instances", help="Describe EC2 instances data with filters and query as a parameter")
-# @add_global_options
+@ec2.command(
+    "describe-instances",
+    help="Describe EC2 instances data with filters and query as a parameter",
+)
 def describe_instances(
-        ctx: typer.Context,
-        filters: Annotated[
-            List[str], typer.Option(help="Filters for EC2 instances in Name=Value format")
-        ] = None,
-        query: Annotated[str, typer.Option(help="Query to format the output")] = None,
-        output: Annotated[
-            OutputMode,
-            typer.Option(help="Output mode", case_sensitive=True),
-        ] = OutputMode.json,
+    ctx: typer.Context,
+    filters: Annotated[
+        List[str], typer.Option(help="Filters for EC2 instances in Name=Value format")
+    ] = None,
+    query: Annotated[str, typer.Option(help="Query to format the output")] = None,
+    output: Annotated[
+        OutputMode,
+        typer.Option(help="Output mode", case_sensitive=True),
+    ] = OutputMode.json,
 ):
     """Invoke ec2 describe-instances"""
-    session = SessionWrapper(ctx.obj.profile, ctx.obj.region).with_local_session()
-    instances = InstanceWrapper(session, filters, query, output)
+    instances = InstanceWrapper(ctx.obj.session, filters=filters, query=query, output=output)
     instances.print_console()
 
 
 @app.callback()
-def entrypoint(ctx: typer.Context,
-               profile: Annotated[
-                   str, typer.Option(help="AWS profile to use", show_default=True)
-               ] = os.getenv("AWS_PROFILE"),
-               log_level: Annotated[
-                   LoggingLevel,
-                   typer.Option(
-                       help="Logging level for the app custom code and boto3", case_sensitive=False,
-                   ),
-               ] = LoggingLevel.WARNING,
-               region: Annotated[
-                   str, typer.Option(help="AWS region", show_default=True)
-               ] = "eu-west-1",
-               ):
+def entrypoint(
+    ctx: typer.Context,
+    profile: Annotated[
+        str, typer.Option(help="AWS profile to use", show_default=True)
+    ] = os.getenv("AWS_PROFILE"),
+    log_level: Annotated[
+        LoggingLevel,
+        typer.Option(
+            help="Logging level for the app custom code and boto3",
+            case_sensitive=False,
+        ),
+    ] = LoggingLevel.WARNING,
+    region: Annotated[
+        str, typer.Option(help="AWS region", show_default=True)
+    ] = "eu-west-1",
+):
     """
     cloudsnake is an AWS cli wrapper with beautiful TUI using rich, typer and textual. It does not implement all the
     commands, flags... of the official cli. It's just an example to see how to use aws sdk boto3, rich and
     typer.
     Example: cloudsnake ec2 describe-instances
     """
-    ctx.obj = Common(profile, region)
+    session = SessionWrapper(profile, region).with_local_session()
+    ctx.obj = Common(session)
     logger = init_logger(log_level.value)
     logger.info("Starting cloudsnake 🐍☁")

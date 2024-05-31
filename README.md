@@ -13,6 +13,10 @@
 - [Installation](#installation)
 - [Badges](#badges)
 - [TO DO](#to-do)
+- [Improvements](#improvements)
+  - [Positional flags](#positional-flags)
+    - [Actually](#actually)
+    - [Wants](#wants)
 - [TOP LINKS](#top-links)
 - [Tools](#tools)
 - [Poetry commands](#poetry-commands)
@@ -49,7 +53,7 @@ pipx install cloudsnake
 
 * Implement python textual for OptionList
 * Documentation with docstrings
-* 
+*
 
 # Improvements
 
@@ -58,7 +62,7 @@ pipx install cloudsnake
 ### Actually
 
 ```shell
-cloudsnake --log-level debug --region us-east-1 --profile default ec2 describe-instance 
+cloudsnake --log-level debug --region us-east-1 --profile default ec2 describe-instance
 ```
 
 ### Wants
