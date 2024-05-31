@@ -1,3 +1,7 @@
+import logging
+
+from botocore.config import Config
+
 ERROR_MESSAGE = (
     "SessionManagerPlugin is not found. ",
     "Please refer to SessionManager Documentation here: ",
@@ -5,6 +9,20 @@ ERROR_MESSAGE = (
     "Plugin installation: https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html"
     "session-manager-plugin-not-found",
 )
+
+
+class SSM:
+    def __init__(self, session, filters=None, query=None, output=None):
+        self.log = logging.getLogger("cloudsnake")
+        self.query = query
+        self.output = output
+        self.filters = filters
+        self.ec2_client = self.create_ssm_client(session)
+
+    @staticmethod
+    def create_ssm_client(session):
+        config = Config(retries={"max_attempts": 10, "mode": "standard"})
+        return session.client("ssm", config=config)
 
 
 # class SSMSession:
