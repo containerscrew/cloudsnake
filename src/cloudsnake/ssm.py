@@ -13,6 +13,7 @@ ERROR_MESSAGE = (
     "session-manager-plugin-not-found",
 )
 
+
 class SSM:
     def __init__(self, session, *args, **kwargs):
         self.log = logging.getLogger("cloudsnake")
@@ -65,7 +66,6 @@ class StartSessionWrapper(SSM):
                     SessionId=self.session_response_output["SessionId"]
                 )
                 raise ValueError("".join(ERROR_MESSAGE))
-
 
 
 # class SSMSession:
