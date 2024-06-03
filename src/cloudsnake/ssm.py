@@ -15,10 +15,9 @@ ERROR_MESSAGE = (
 
 
 class SSM:
-    def __init__(self, session, *args, **kwargs):
+    def __init__(self, session, **kwargs):
         self.log = logging.getLogger("cloudsnake")
         self.ssm_client = self.create_ssm_client(session)
-        self.args = args
         self.kwargs = kwargs
 
     @staticmethod
@@ -28,12 +27,15 @@ class SSM:
 
 
 class StartSessionWrapper(SSM):
-    def __init__(self, session, session_response_output=None, *args, **kwargs):
+    def __init__(self, session, session_response_output=None, **kwargs):
         # Inheriting the properties of parent class
-        super().__init__(session, *args, **kwargs)
+        super().__init__(session, **kwargs)
         self.session_response_output = session_response_output
 
-    def start_session_response(self):
+    def start_session_response(self) -> None:
+        """
+            Start an SSM session and store the response.
+        """
         target = self.kwargs.get("target")
         reason = self.kwargs.get("reason")
         response = self.ssm_client.start_session(
@@ -43,6 +45,12 @@ class StartSessionWrapper(SSM):
         self.session_response_output = response
 
     def start_session(self, region: str, profile: str):
+        """
+           Start an SSM session using the session-manager-plugin.
+           :param region: AWS region
+           :param profile: AWS profile
+           :return: 0 if successful, raises an error otherwise
+       """
         self.start_session_response()
         target = self.kwargs.get("target")
         try:
@@ -58,52 +66,26 @@ class StartSessionWrapper(SSM):
                 ]
             )
             return 0
+        except subprocess.CalledProcessError as e:
+            self.log.error("Failed to start session", exc_info=True)
+            print(f"Failed to start session: {e}")
+            self.terminate_session()
+            raise
         except OSError as ex:
             if ex.errno == errno.ENOENT:
                 self.log.error("SessionManagerPlugin is not present", exc_info=True)
                 print("SessionManagerPlugin is not present")
-                self.ssm_client.terminate_session(
-                    SessionId=self.session_response_output["SessionId"]
-                )
-                raise ValueError("".join(ERROR_MESSAGE))
+                self.terminate_session()
+                raise ValueError("SessionManagerPlugin is not present") from ex
+            else:
+                self.log.error("OS error", exc_info=True)
+                raise
 
-
-# class SSMSession:
-#     def __init__(self, session, target_id, region, profile, logger):
-#         self.start_session_response = None
-#         self.client = ssm_client(session)
-#         self.target_id = target_id
-#         self.region = region
-#         self.profile = profile
-#         self.logger = logger
-#
-#     def __start_session_response(self):
-#         response = self.client.start_session(
-#             Target=self.target_id,
-#             Reason="ssm-connection",
-#         )
-#         self.start_session_response = response
-#
-#     def start_session(self):
-#         self.__start_session_response()
-#         try:
-#             subprocess.check_call(
-#                 [
-#                     "session-manager-plugin",
-#                     json.dumps(self.start_session_response),
-#                     self.region,
-#                     "StartSession",
-#                     self.profile,
-#                     json.dumps(dict(Target=self.target_id)),
-#                     f"https://ssm.{self.region}.amazonaws.com",
-#                 ]
-#             )
-#             return 0
-#         except OSError as ex:
-#             if ex.errno == errno.ENOENT:
-#                 self.logger.debug("SessionManagerPlugin is not present", exc_info=True)
-#                 print("SessionManagerPlugin is not present")
-#                 self.client.terminate_session(
-#                     SessionId=self.start_session_response["SessionId"]
-#                 )
-#                 raise ValueError("".join(ERROR_MESSAGE))
+    def terminate_session(self) -> None:
+        """
+        Terminate the SSM session.
+        """
+        if self.session_response_output and "SessionId" in self.session_response_output:
+            self.ssm_client.terminate_session(SessionId=self.session_response_output["SessionId"])
+        else:
+            self.log.warning("No active session to terminate")
