@@ -9,9 +9,10 @@ repos:
       - id: check-added-large-files
       - id: check-toml
       - id: check-json
-      - id: check-xml
+      # - id: check-xml
   # Python
   # Pending to add python pre-commit hooks
+  # Linter
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.4.5
@@ -21,6 +22,14 @@ repos:
         args: [ --fix ]
       # Run the formatter.
       - id: ruff-format
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
   - repo: https://github.com/thlorenz/doctoc
     rev: v2.2.0
     hooks:

@@ -85,6 +85,7 @@ More of textual: https://dev.to/wiseai/textual-the-definitive-guide-part-1-1i0p
 [Poetry](https://python-poetry.org/docs/)
 Some examples using boto3 SDK https://docs.aws.amazon.com/code-library/latest/ug/python_3_ec2_code_examples.html
 Mocking: https://github.com/getmoto/moto
+Pytest github action: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
 # Tools
 
