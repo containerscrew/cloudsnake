@@ -21,17 +21,17 @@ class Tui:
     def pretty_print(self, data):
         match self.output:
             case "json":
-                self.__print_json(data)
+                self.print_json(data)
             case "table":
                 # self.print_table(data)
                 self.console.print(
                     "Table output mode not implemented yet! Executing json output by default!"
                 )
-                self.__print_json(data)
+                self.print_json(data)
             case _:
-                self.__print_json(data)
+                self.print_json(data)
 
-    def __print_json(self, data) -> None:
+    def print_json(self, data) -> None:
         json_data = json.dumps(data, default=serialize_datetime)
         self.console.print_json(json_data, highlight=True, indent=2)
 
