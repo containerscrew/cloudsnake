@@ -1,8 +1,6 @@
 import errno
 import json
 import subprocess
-
-
 from cloudsnake.app_class import App
 
 ERROR_MESSAGE = (

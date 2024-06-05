@@ -3,7 +3,7 @@ import random
 
 from rich.console import Console
 from rich.table import Table
-
+from simple_term_menu import TerminalMenu
 from cloudsnake.helpers import serialize_datetime, get_table_column_keys
 
 
@@ -51,3 +51,17 @@ class Tui:
                         table.add_row(*rows, style=f"color({random.randint(0, 255)})")
 
         self.console.print(table)
+
+    def interactive_menu(self, entries, title="Select your choice") -> str:
+        terminal_menu = TerminalMenu(
+            entries,
+            title=title,
+            menu_cursor="> ",
+            menu_cursor_style=("fg_red", "bold"),
+            menu_highlight_style=("fg_black", "bg_yellow", "bold"),
+            cycle_cursor=True,
+            clear_screen=True,
+        )
+
+        menu_entry_index = terminal_menu.show()
+        return entries[menu_entry_index]

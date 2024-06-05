@@ -1,29 +1,54 @@
 import logging
+from typing import Tuple
 from botocore.config import Config
 
-class SSO_OIDC:
-    def __init__(self, session, **kwargs):
-        self.log = logging.getLogger("cloudsnake")
-        self.sso_client = self.create_sso_oidc_client(session)
-        self.kwargs = kwargs
+from cloudsnake.app_class import App
+from botocore.exceptions import ClientError
+from dataclasses import dataclass
 
-    @staticmethod
-    def create_sso_oidc_client(session):
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        return session.client("sso-oidc", config=config)
-    
-class SSOWrapper(SSO_OIDC):
-    def __init__(self, session, **kwargs):
+# @dataclass
+# class DeviceAuthorization:
+#     verificationUriComplete: str
+#     : float
+#     lat: float
+
+
+class SSOIDCWrapper(App):
+    def __init__(self, session, client, **kwargs):
         # Inheriting the properties of parent class
-        super().__init__(session, **kwargs)
+        super().__init__(session, client, **kwargs)
 
 
-    def device_registration(self, client_name: str = "sso-client", client_type:str = "public") -> None:
+    def device_registration(
+        self, client_name: str = "sso-client", client_type: str = "public"
+    ) -> Tuple[str, str]:
         try:
-            response_client_registration = self.sso_client.register_client(
-                clientName= client_name,
-                clientType= client_type,
+            response_client_registration = self.client.register_client(
+                clientName=client_name,
+                clientType=client_type,
             )
-            return response_client_registration
-        except Exception as e:
-            self.log.error(f"Failed to register the device! {e}")
+            return response_client_registration['clientId'], response_client_registration['clientSecret']
+        except ClientError as err:
+            self.log.error(
+                "Couldn't register device",
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise
+
+    def get_auth_device(self, client_id, client_secret, start_url):
+        try:
+            response_device_authorization = self.client.start_device_authorization(
+                clientId=client_id,
+                clientSecret=client_secret,
+                startUrl=start_url,
+            )
+            print(response_device_authorization)
+            return response_device_authorization['verificationUriComplete'], response_device_authorization['deviceCode'], response_device_authorization['userCode']
+        except ClientError as err:
+            self.log.error(
+                "Couldn't get auth device",
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise
