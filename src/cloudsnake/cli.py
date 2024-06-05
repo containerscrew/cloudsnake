@@ -9,8 +9,8 @@ from typing_extensions import List
 
 from cloudsnake.session import SessionWrapper
 from cloudsnake.logger import init_logger
-from cloudsnake.ec2 import InstanceWrapper
-from cloudsnake.ssm import StartSessionWrapper
+from cloudsnake.ec2 import EC2InstanceWrapper
+from cloudsnake.ssm import SSMStartSessionWrapper
 
 
 class OutputMode(str, Enum):
@@ -60,10 +60,11 @@ def describe_instances(
     ] = OutputMode.json,
 ):
     """Invoke ec2 describe-instances"""
-    instances = InstanceWrapper(
-        ctx.obj.session, filters=filters, query=query, output=output
+
+    instances = EC2InstanceWrapper(
+        ctx.obj.session, "ec2", filters=filters, query=query, output=output
     )
-    instances.print_console()
+    instances.print_ec2_instances()
 
 
 @ssm.command("start-session", help="Start session with the given target id")
@@ -74,7 +75,9 @@ def start_session(
         str, typer.Option(help="Reason of the connection")
     ] = "default-connection",
 ):
-    ssm_session = StartSessionWrapper(ctx.obj.session, target=target, reason=reason)
+    ssm_session = SSMStartSessionWrapper(
+        ctx.obj.session, "ssm", target=target, reason=reason
+    )
     ssm_session.start_session(ctx.obj.region, ctx.obj.profile)
 
 
@@ -90,7 +93,7 @@ def entrypoint(
             help="Logging level for the app custom code and boto3",
             case_sensitive=False,
         ),
-    ] = LoggingLevel.INFO,
+    ] = LoggingLevel.WARNING,
     region: Annotated[
         str, typer.Option(help="AWS region", show_default=True)
     ] = "eu-west-1",

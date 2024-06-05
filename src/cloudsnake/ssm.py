@@ -1,9 +1,9 @@
 import errno
 import json
-import logging
 import subprocess
 
-from botocore.config import Config
+
+from cloudsnake.app_class import App
 
 ERROR_MESSAGE = (
     "SessionManagerPlugin is not found. ",
@@ -14,45 +14,32 @@ ERROR_MESSAGE = (
 )
 
 
-class SSM:
-    def __init__(self, session, **kwargs):
-        self.log = logging.getLogger("cloudsnake")
-        self.ssm_client = self.create_ssm_client(session)
-        self.kwargs = kwargs
-
-    @staticmethod
-    def create_ssm_client(session):
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        return session.client("ssm", config=config)
-
-
-class StartSessionWrapper(SSM):
-    def __init__(self, session, session_response_output=None, **kwargs):
+class SSMStartSessionWrapper(App):
+    def __init__(self, session, client, session_response_output=None, **kwargs):
         # Inheriting the properties of parent class
-        super().__init__(session, **kwargs)
+        super().__init__(session, client, **kwargs)
         self.session_response_output = session_response_output
+        self.target = self.kwargs.get("target")
 
     def start_session_response(self) -> None:
         """
-            Start an SSM session and store the response.
+        Start an SSM session and store the response.
         """
-        target = self.kwargs.get("target")
         reason = self.kwargs.get("reason")
-        response = self.ssm_client.start_session(
-            Target=target,
+        response = self.client.start_session(
+            Target=self.target,
             Reason=reason,
         )
         self.session_response_output = response
 
     def start_session(self, region: str, profile: str):
         """
-           Start an SSM session using the session-manager-plugin.
-           :param region: AWS region
-           :param profile: AWS profile
-           :return: 0 if successful, raises an error otherwise
-       """
+        Start an SSM session using the session-manager-plugin.
+        :param region: AWS region
+        :param profile: AWS profile
+        :return: 0 if successful, raises an error otherwise
+        """
         self.start_session_response()
-        target = self.kwargs.get("target")
         try:
             subprocess.check_call(
                 [
@@ -61,20 +48,20 @@ class StartSessionWrapper(SSM):
                     region,
                     "StartSession",
                     profile,
-                    json.dumps(dict(Target=target)),
+                    json.dumps(dict(Target=self.target)),
                     f"https://ssm.{region}.amazonaws.com",
                 ]
             )
             return 0
         except subprocess.CalledProcessError as e:
             self.log.error("Failed to start session", exc_info=True)
-            print(f"Failed to start session: {e}")
+            self.log.error(f"Failed to start session: {e}")
             self.terminate_session()
             raise
         except OSError as ex:
             if ex.errno == errno.ENOENT:
                 self.log.error("SessionManagerPlugin is not present", exc_info=True)
-                print("SessionManagerPlugin is not present")
+                self.log.warning("SessionManagerPlugin is not present")
                 self.terminate_session()
                 raise ValueError("SessionManagerPlugin is not present") from ex
             else:
@@ -86,6 +73,8 @@ class StartSessionWrapper(SSM):
         Terminate the SSM session.
         """
         if self.session_response_output and "SessionId" in self.session_response_output:
-            self.ssm_client.terminate_session(SessionId=self.session_response_output["SessionId"])
+            self.client.terminate_session(
+                SessionId=self.session_response_output["SessionId"]
+            )
         else:
             self.log.warning("No active session to terminate")
