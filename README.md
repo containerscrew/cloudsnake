@@ -112,6 +112,7 @@ cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=run
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output json
 # Get instance name of running instances
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].{InstanceName:Tags[?Key==`Name`]|[0].Value}' --output json
+cloudsnake ec2 describe-instances  --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].Tags[?Key==`Name`].Value[][]'
 ```
 
 ## License
