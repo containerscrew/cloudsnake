@@ -52,7 +52,8 @@ class Tui:
 
         self.console.print(table)
 
-    def interactive_menu(self, entries, title="Select your choice") -> str:
+    @staticmethod
+    def interactive_menu(entries, title="Select your choice") -> str:
         terminal_menu = TerminalMenu(
             entries,
             title=title,

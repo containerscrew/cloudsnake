@@ -12,6 +12,7 @@ from cloudsnake.logger import init_logger
 from cloudsnake.ec2 import EC2InstanceWrapper
 from cloudsnake.ssm import SSMStartSessionWrapper
 from cloudsnake.sso_oidc import SSOIDCWrapper
+from cloudsnake.tui import Tui
 
 
 class OutputMode(str, Enum):
@@ -71,7 +72,7 @@ class Common:
 def describe_instances(
     ctx: typer.Context,
     filters: Annotated[
-        List[str], typer.Option(help="Filters for EC2 instances in Name=Value format")
+        str, typer.Option(help="Filters for EC2 instances in Name=Value format")
     ] = None,
     query: Annotated[str, typer.Option(help="Query to format the output")] = None,
     output: Annotated[
@@ -105,11 +106,16 @@ def start_session(
 ):
     if with_instance_selector:
         filters='Name=instance-state-name,Values=running'
-        query='Reservations[*].Instances[*].{InstanceName:Tags[?Key==`Name`]|[0].Value}'
+        query='Reservations[*].Instances[*].Tags[?Key==`Name`].Value[][]'
         ec2_instances = EC2InstanceWrapper(
             ctx.obj.session, "ec2", filters=filters, query=query,
         )
         ec2_instances.describe_ec2_instances()
+        selected_instance = Tui.interactive_menu(ec2_instances.instances)
+        ssm_session = SSMStartSessionWrapper(
+            ctx.obj.session, "ssm", target=selected_instance, reason=reason
+        )
+        ssm_session.start_session(ctx.obj.region, ctx.obj.profile)
     else:
         if target is None:
             raise ValueError("You should pass --target flag with a valid instance id")
