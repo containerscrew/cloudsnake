@@ -1,7 +1,10 @@
 import errno
 import json
+import logging
 import subprocess
-from cloudsnake.app_class import App
+from botocore.config import Config
+from rich import print
+
 
 ERROR_MESSAGE = (
     "SessionManagerPlugin is not found. ",
@@ -12,33 +15,41 @@ ERROR_MESSAGE = (
 )
 
 
-class SSMStartSessionWrapper(App):
-    def __init__(self, session, client, session_response_output=None, **kwargs):
-        # Inheriting the properties of parent class
-        super().__init__(session, client, **kwargs)
+class SSMStartSessionWrapper:
+    def __init__(self, ssm_client, session_response_output=None, **kwargs):
+        self.log = logging.getLogger("cloudsnake")
         self.session_response_output = session_response_output
-        self.target = self.kwargs.get("target")
+        self.reason = kwargs.get("reason")
+        self.ssm_client = ssm_client
 
-    def start_session_response(self) -> None:
+    @classmethod
+    def from_session(cls, session, **kwargs):
+        config = Config(retries={"max_attempts": 10, "mode": "standard"})
+        ssm_client = session.client("ssm", config=config)
+        return cls(ssm_client, **kwargs)
+
+    def start_session_response(self, target: str) -> None:
         """
         Start an SSM session and store the response.
         """
-        reason = self.kwargs.get("reason")
-        response = self.client.start_session(
-            Target=self.target,
-            Reason=reason,
+        response = self.ssm_client.start_session(
+            Target=target,
+            Reason=self.reason,
         )
         self.session_response_output = response
 
-    def start_session(self, region: str, profile: str):
+    def start_session(self, target: str, region: str, profile: str):
         """
         Start an SSM session using the session-manager-plugin.
         :param region: AWS region
         :param profile: AWS profile
         :return: 0 if successful, raises an error otherwise
         """
-        self.start_session_response()
+        self.start_session_response(target)
         try:
+            print(
+                f"[bold green]Connecting to the instance:[/bold green] {target} [red]Please wait[/red]:) :rocket:"
+            )
             subprocess.check_call(
                 [
                     "session-manager-plugin",
@@ -46,7 +57,7 @@ class SSMStartSessionWrapper(App):
                     region,
                     "StartSession",
                     profile,
-                    json.dumps(dict(Target=self.target)),
+                    json.dumps(dict(Target=target)),
                     f"https://ssm.{region}.amazonaws.com",
                 ]
             )
@@ -71,7 +82,7 @@ class SSMStartSessionWrapper(App):
         Terminate the SSM session.
         """
         if self.session_response_output and "SessionId" in self.session_response_output:
-            self.client.terminate_session(
+            self.ssm_client.terminate_session(
                 SessionId=self.session_response_output["SessionId"]
             )
         else:

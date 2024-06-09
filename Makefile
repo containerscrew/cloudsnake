@@ -15,6 +15,10 @@ build: ## Build project using poetry
 publish: ## Publish package to pypi.org
 	poetry publish --build
 
+publish-to-test: ## Publish to test pypip
+	poetry config repositories.testpypi https://test.pypi.org/legacy/
+	poetry publish --build -r testpypi
+
 clean: ## Clean build files
 	rm -rvf dist/
 
@@ -38,3 +42,15 @@ pipx-upgrade: ## Upgrade package
 
 pipx-uninstall: ## Uninstall package
 	pipx uninstall ${app_name}
+
+init-git-cliff: # Init git cliff
+	git-cliff --init
+
+generate-changelog: ## Generate changelog
+	git cliff -o CHANGELOG.md
+
+run-tests: ## Run pytest using poetry
+	poetry run pytest -v
+
+export-requirements: ## Export requirements.txt using poetry
+	poetry export -f requirements.txt --output requirements.txt

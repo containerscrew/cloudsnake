@@ -1,10 +1,6 @@
-import logging
 from typing import Tuple
-from botocore.config import Config
 
-from cloudsnake.app_class import App
 from botocore.exceptions import ClientError
-from dataclasses import dataclass
 
 # @dataclass
 # class DeviceAuthorization:
@@ -13,11 +9,10 @@ from dataclasses import dataclass
 #     lat: float
 
 
-class SSOIDCWrapper(App):
+class SSOIDCWrapper:
     def __init__(self, session, client, **kwargs):
         # Inheriting the properties of parent class
         super().__init__(session, client, **kwargs)
-
 
     def device_registration(
         self, client_name: str = "sso-client", client_type: str = "public"
@@ -27,13 +22,10 @@ class SSOIDCWrapper(App):
                 clientName=client_name,
                 clientType=client_type,
             )
-            return response_client_registration['clientId'], response_client_registration['clientSecret']
-        except ClientError as err:
-            self.log.error(
-                "Couldn't register device",
-                err.response["Error"]["Code"],
-                err.response["Error"]["Message"],
-            )
+            return response_client_registration[
+                "clientId"
+            ], response_client_registration["clientSecret"]
+        except:
             raise
 
     def get_auth_device(self, client_id, client_secret, start_url):
@@ -44,7 +36,11 @@ class SSOIDCWrapper(App):
                 startUrl=start_url,
             )
             print(response_device_authorization)
-            return response_device_authorization['verificationUriComplete'], response_device_authorization['deviceCode'], response_device_authorization['userCode']
+            return (
+                response_device_authorization["verificationUriComplete"],
+                response_device_authorization["deviceCode"],
+                response_device_authorization["userCode"],
+            )
         except ClientError as err:
             self.log.error(
                 "Couldn't get auth device",
