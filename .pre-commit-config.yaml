@@ -9,6 +9,7 @@ repos:
       - id: check-added-large-files
       - id: check-toml
       - id: check-json
+      #- id: check-docstring-first
       # - id: check-xml
   # Python
   # Pending to add python pre-commit hooks
@@ -22,14 +23,21 @@ repos:
         args: [ --fix ]
       # Run the formatter.
       - id: ruff-format
+  - repo: https://github.com/python-poetry/poetry
+    rev: '1.8.3'
+    hooks:
+    -   id: poetry-install
+    -   id: poetry-check
+    -   id: poetry-lock
   - repo: local
     hooks:
       - id: pytest
         name: pytest
-        entry: pytest
+        entry: poetry run pytest -v
         language: system
+        types: [python]
         pass_filenames: false
-        always_run: true
+  ## Doctoc and gitleaks
   - repo: https://github.com/thlorenz/doctoc
     rev: v2.2.0
     hooks:

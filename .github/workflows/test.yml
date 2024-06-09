@@ -1,0 +1,69 @@
+# Source: https://github.com/marketplace/actions/install-poetry-action
+name: Testing
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+          restore-keys: ${{ runner.os }}-pip
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'
+  test:
+    needs: linting
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ "ubuntu-latest", "macos-latest" ]
+        python-version: [ "3.12" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up python ${{ matrix.python-version }}
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      - name: Install library
+        run: poetry install --no-interaction
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          poetry run pytest -v
+      # #----------------------------------------------
+      # #             upload coverage stats
+      # # (requires CODECOV_TOKEN in repository secrets)
+      # #----------------------------------------------
+      # - name: Upload coverage
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}  # Only required for private repositories
+      #     file: ./coverage.xml
+      #     fail_ci_if_error: true

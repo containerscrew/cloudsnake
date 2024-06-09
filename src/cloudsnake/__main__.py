@@ -1,4 +1,4 @@
-from cloudsnake.cli import app
+from cloudsnake.cli.cli import app
 
 
 def main() -> None:
