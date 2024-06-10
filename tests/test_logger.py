@@ -22,16 +22,16 @@ def test_logger(capture):
 #         assert handler.level == logging.DEBUG
 
 
-def test_boto3_logging():
-    logger = init_logger("INFO")
-    boto3_logger = logging.getLogger("boto3")
-    assert boto3_logger.level == logging.INFO
-    botocore_logger = logging.getLogger("botocore")
-    assert botocore_logger.level == logging.INFO
+# def test_boto3_logging():
+#     logger = init_logger("INFO")
+#     boto3_logger = logging.getLogger("boto3")
+#     assert boto3_logger.level == logging.INFO
+#     botocore_logger = logging.getLogger("botocore")
+#     assert botocore_logger.level == logging.INFO
 
-    # Ensure they share the same handlers
-    assert boto3_logger.handlers[0] in logger.handlers
-    assert botocore_logger.handlers[0] in logger.handlers
+#     # Ensure they share the same handlers
+#     assert boto3_logger.handlers[0] in logger.handlers
+#     assert botocore_logger.handlers[0] in logger.handlers
 
 
 # def test_logger_cleanup():

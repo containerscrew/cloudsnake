@@ -1,11 +1,12 @@
 import logging
+import os
 import boto3
 
 
 class SessionWrapper:
     """Encapsulates Amazon boto3 Session operations"""
 
-    def __init__(self, profile: str = "default", region: str = "us-east-1"):
+    def __init__(self, profile: str = os.getenv("AWS_PROFILE"), region: str = "us-east-1"):
         """
         :param profile: AWS credentials profile to be used. Check your ~/.aws/credentials
         :param region: AWS region to operate.
