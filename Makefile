@@ -52,5 +52,8 @@ generate-changelog: ## Generate changelog
 run-tests: ## Run pytest using poetry
 	poetry run pytest -v
 
+poetry-cache-clear: ## Clear poetry cache
+	poetry cache clear pypi --all
+
 export-requirements: ## Export requirements.txt using poetry
 	poetry export -f requirements.txt --output requirements.txt
