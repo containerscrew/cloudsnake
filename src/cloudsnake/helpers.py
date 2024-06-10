@@ -14,7 +14,6 @@ def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
     #     raise ValueError("Filter string is not in the correct format")
 
     filter_dict = {"Name": "", "Values": []}
-    print(filter_parts)
     for part in filter_parts:
         key, value = part.split("=")
         if key == "Name":
