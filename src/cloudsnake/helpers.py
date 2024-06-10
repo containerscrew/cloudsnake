@@ -1,7 +1,7 @@
 from datetime import datetime
-import re
 
 from typing_extensions import List, Dict
+
 
 def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
     """Parse filters passed in commands like cloudsnake ec2 describe-instances --filters Name=instance-state-name,
@@ -20,8 +20,8 @@ def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
         if key == "Name":
             filter_dict["Name"] = value
         elif key == "Values":
-            if '|' in value:
-                values = value.split('|')
+            if "|" in value:
+                values = value.split("|")
                 for value in values:
                     filter_dict["Values"].append(value)
             else:
@@ -30,6 +30,7 @@ def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
             raise ValueError(f"Unexpected key: {key}")
     parsed_filters.append(filter_dict)
     return parsed_filters
+
 
 def serialize_datetime(obj):
     if isinstance(obj, datetime):

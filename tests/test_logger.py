@@ -1,4 +1,3 @@
-import logging
 from cloudsnake.logger import init_logger
 from testfixtures import log_capture
 
@@ -6,12 +5,12 @@ from testfixtures import log_capture
 @log_capture()
 def test_logger(capture):
     logger = init_logger("INFO")
-    logger.info('a message')
-    logger.error('an error')
+    logger.info("a message")
+    logger.error("an error")
 
     capture.check(
-        ('cloudsnake', 'INFO', 'a message'),
-        ('cloudsnake', 'ERROR', 'an error'),
+        ("cloudsnake", "INFO", "a message"),
+        ("cloudsnake", "ERROR", "an error"),
     )
 
 
