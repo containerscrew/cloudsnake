@@ -2,12 +2,12 @@ import boto3
 from moto import mock_aws
 import pytest
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
-from botocore.exceptions import ClientError
+
 
 @pytest.fixture
 def ec2_boto():
     """Create an EC2 boto3 client and return the client object"""
-    ec2 = boto3.client('ec2', region_name='eu-west-1')
+    ec2 = boto3.client("ec2", region_name="eu-west-1")
     return ec2
 
 
@@ -29,7 +29,10 @@ def test_describe_ec2_instances(ec2_boto):
 
     # Check if instances are correctly described
     assert len(ec2.instances["Reservations"]) == 1
-    assert ec2.instances["Reservations"][0]["Instances"][0]["InstanceId"] == instance["Instances"][0]["InstanceId"]
+    assert (
+        ec2.instances["Reservations"][0]["Instances"][0]["InstanceId"]
+        == instance["Instances"][0]["InstanceId"]
+    )
 
-    
+
 # TODO Test passing query output
