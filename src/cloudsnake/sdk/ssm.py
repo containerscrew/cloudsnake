@@ -6,7 +6,7 @@ from botocore.config import Config
 from rich import print
 
 
-ERROR_MESSAGE = (
+SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
     "SessionManagerPlugin is not found. ",
     "Please refer to SessionManager Documentation here: ",
     "http://docs.aws.amazon.com/console/systems-manager/",
@@ -69,8 +69,11 @@ class SSMStartSessionWrapper:
             raise
         except OSError as ex:
             if ex.errno == errno.ENOENT:
-                self.log.error("SessionManagerPlugin is not present", exc_info=True)
-                self.log.warning("SessionManagerPlugin is not present")
+                self.log.error(
+                    "SessionManagerPlugin is not present",
+                    SESSION_MANAGER__PLUGIN_ERROR_MESSAGE,
+                    exc_info=True,
+                )
                 self.terminate_session()
                 raise ValueError("SessionManagerPlugin is not present") from ex
             else:

@@ -57,3 +57,6 @@ poetry-cache-clear: ## Clear poetry cache
 
 export-requirements: ## Export requirements.txt using poetry
 	poetry export -f requirements.txt --output requirements.txt
+
+init-gitmoji: ## Init gitmoji (sudo npm i -g gitmoji-cli)
+	gitmoji --init
