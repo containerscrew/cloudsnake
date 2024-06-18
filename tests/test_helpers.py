@@ -12,7 +12,6 @@ def test_parse_filters_single_value():
     assert parse_filters(filters) == expected_output
 
 
-# TODO: this test is failing, you can't pass multiple values
 def test_parse_filters_multiple_values():
     filters = "Name=instance-state-name,Values=running|stopped"
     expected_output = [

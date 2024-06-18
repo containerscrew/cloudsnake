@@ -4,6 +4,9 @@ import logging
 import subprocess
 from botocore.config import Config
 from rich import print
+from botocore.exceptions import ClientError
+
+from cloudsnake.sdk.aws import App
 
 
 SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
@@ -15,26 +18,21 @@ SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
 )
 
 
-class SSMStartSessionWrapper:
-    def __init__(self, ssm_client, session_response_output=None, **kwargs):
-        self.log = logging.getLogger("cloudsnake")
-        self.session_response_output = session_response_output
-        self.reason = kwargs.get("reason")
-        self.ssm_client = ssm_client
+class SSMStartSessionWrapper(App):
+    """Encapsulates Amazon SSM Start Session actions."""
 
-    @classmethod
-    def from_session(cls, session, **kwargs):
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        ssm_client = session.client("ssm", config=config)
-        return cls(ssm_client, **kwargs)
+    def __init__(self, client, session_response_output=None, **kwargs):
+        # Call the superclass __init__ method
+        super().__init__(client, **kwargs)
+        self.session_response_output = session_response_output
 
     def start_session_response(self, target: str) -> None:
         """
         Start an SSM session and store the response.
         """
-        response = self.ssm_client.start_session(
+        response = self.client.start_session(
             Target=target,
-            Reason=self.reason,
+            Reason="Session started by cloudsnake",
         )
         self.session_response_output = response
 
@@ -90,3 +88,29 @@ class SSMStartSessionWrapper:
             )
         else:
             self.log.warning("No active session to terminate")
+
+
+class SSMParameterStoreWrapper:
+    def __init__(self, ssm_client, parameter_response=None, **kwargs):
+        self.log = logging.getLogger("cloudsnake")
+        self.ssm_client = ssm_client
+        self.parameter_response = parameter_response
+
+    @classmethod
+    def from_session(cls, session, **kwargs):
+        config = Config(retries={"max_attempts": 10, "mode": "standard"})
+        ssm_client = session.client("ssm", config=config)
+        return cls(ssm_client, **kwargs)
+
+    def describe_parameters(self):
+        try:
+            paginator = self.ssm_client.get_paginator("describe_parameters")
+            for page in paginator.paginate():
+                return page
+        except ClientError as err:
+            self.log.error(
+                "Couldn't register device",
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise

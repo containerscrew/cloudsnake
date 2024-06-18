@@ -15,7 +15,7 @@ def test_logger(capture):
 
 
 # def test_logger_levels():
-#     logger = init_logger("DEBUG")
+#     logger = init_logger(log_level="DEBUG")
 #     assert logger.level == logging.DEBUG
 #     for handler in logger.handlers:
 #         assert handler.level == logging.DEBUG
