@@ -2,7 +2,7 @@ from typing import Optional
 import typer
 
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
-from cloudsnake.sdk.ssm import SSMStartSessionWrapper
+from cloudsnake.sdk.ssm import SSMParameterStoreWrapper, SSMStartSessionWrapper
 from cloudsnake.tui import Tui
 
 
@@ -29,12 +29,14 @@ def start_session(
         help="Prompt a terminal menu and select the instance you want to connect. --target flag is no longer used",
     ),
 ):
-    ssm_session = SSMStartSessionWrapper.from_session(ctx.obj.session, reason=reason)
+    ssm_session = SSMStartSessionWrapper.with_client(
+        "ssm", ctx.obj.session, reason=reason
+    )
     if with_instance_selector:
         filters = "Name=instance-state-name,Values=running"
         query = "Reservations[*].Instances[*].{TargetId:InstanceId,Name:Tags[?Key==`Name`]|[0].Value}"
-        ec2 = EC2InstanceWrapper.from_session(
-            ctx.obj.session, filters=filters, query=query
+        ec2 = EC2InstanceWrapper.with_client(
+            "ec2", ctx.obj.session, filters=filters, query=query
         )
         ec2.describe_ec2_instances()
         instance_name = Tui.interactive_menu(
@@ -46,27 +48,7 @@ def start_session(
         ssm_session.start_session(target, ctx.obj.region, ctx.obj.profile)
 
 
-# @ssm.command(
-#     "start-interactive-session",
-#     help="Start interactive session choosing the instance id in a terminal menu",
-# )
-# def start_interactive_session(
-#     ctx: typer.Context,
-#     reason: Annotated[
-#         str, typer.Option(help="Reason of the connection")
-#     ] = "default-connection",
-# ):
-#     filters = "Name=instance-state-name,Values=running"
-#     query = "Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key==`Name`]|[0].Value}"
-#     ec2_instances = EC2InstanceWrapper(
-#         ctx.obj.session,
-#         "ec2",
-#         filters=filters,
-#         query=query,
-#     )
-#     ec2_instances.describe_ec2_instances()
-#     selected_instance = Tui.interactive_menu(ec2_instances.instances)
-# ssm_session = SSMStartSessionWrapper(
-#     ctx.obj.session, "ssm", target=selected_instance, reason=reason
-# )
-# ssm_session.start_session(ctx.obj.region, ctx.obj.profile)
+@ssm.command("get-parameters", help="Get parameters from parameter store")
+def get_parameters(ctx: typer.Context):
+    ssm = SSMParameterStoreWrapper.from_session(ctx.obj.session)
+    ssm.describe_parameters()

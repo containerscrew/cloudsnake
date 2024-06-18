@@ -1,26 +1,17 @@
-import logging
 import jmespath
 from cloudsnake.helpers import parse_filters
+from cloudsnake.sdk.aws import App
 from cloudsnake.tui import Tui
-from botocore.config import Config
 from botocore.exceptions import ClientError
 
 
-class EC2InstanceWrapper:
+class EC2InstanceWrapper(App):
     """Encapsulates Amazon Elastic Compute Cloud (Amazon EC2) instance actions."""
 
-    def __init__(self, ec2_client, instances=None, **kwargs):
-        self.log = logging.getLogger("cloudsnake")
-        self.filters = kwargs.get("filters", None)
-        self.query = kwargs.get("query", None)
+    def __init__(self, client, instances=None, **kwargs):
+        # Call the superclass __init__ method
+        super().__init__(client, **kwargs)
         self.instances = instances
-        self.ec2_client = ec2_client
-
-    @classmethod
-    def from_session(cls, session, **kwargs):
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        ec2_client = session.client("ec2", config=config)
-        return cls(ec2_client, **kwargs)
 
     def describe_ec2_instances(self):
         """
@@ -36,7 +27,7 @@ class EC2InstanceWrapper:
 
         self.log.info("Describing EC2 instances")
         try:
-            paginator = self.ec2_client.get_paginator("describe_instances")
+            paginator = self.client.get_paginator("describe_instances")
 
             for page in paginator.paginate(Filters=parsed_filters):
                 if self.query is not None:
@@ -59,6 +50,5 @@ class EC2InstanceWrapper:
         :return: None
         """
         self.describe_ec2_instances()
-
         tui = Tui()
         tui.pretty_print(self.instances, output, colored)

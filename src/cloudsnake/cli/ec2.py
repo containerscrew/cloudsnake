@@ -32,6 +32,7 @@ def describe_instances(
     ),
 ):
     """Invoke ec2 describe-instances"""
-
-    ec2 = EC2InstanceWrapper.from_session(ctx.obj.session, filters=filters, query=query)
+    ec2 = EC2InstanceWrapper.with_client(
+        "ec2", ctx.obj.session, filters=filters, query=query
+    )
     ec2.print_ec2_instances(output, colored)
