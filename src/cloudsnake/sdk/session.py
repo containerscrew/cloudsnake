@@ -24,16 +24,17 @@ class SessionWrapper:
         )
         return boto3.Session(region_name=self.region, profile_name=self.profile)
 
-    # def with_sts_assume_role_session(self, role_arn) -> boto3.Session:
-    #     self.log.debug("Starting boto3 session with sts assume role")
-    #     session = boto3.Session(region_name=self.region, profile_name=self.profile)
-    #     sts = session.client("sts")
-    #     response = sts.assume_role(
-    #         RoleArn=role_arn,
-    #         RoleSessionName="custom-session-using-role"
-    #     )
-    #     new_session = boto3.Session(aws_access_key_id=response['Credentials']['AccessKeyId'],
-    #                                 aws_secret_access_key=response['Credentials']['SecretAccessKey'],
-    #                                 aws_session_token=response['Credentials']['SessionToken'])
-    #
-    #     return new_session
+    def with_sts_assume_role_session(self, role_arn) -> boto3.Session:
+        self.log.debug("Starting boto3 session with sts assume role")
+        session = boto3.Session(region_name=self.region, profile_name=self.profile)
+        sts = session.client("sts")
+        response = sts.assume_role(
+            RoleArn=role_arn, RoleSessionName="custom-session-using-role"
+        )
+        new_session = boto3.Session(
+            aws_access_key_id=response["Credentials"]["AccessKeyId"],
+            aws_secret_access_key=response["Credentials"]["SecretAccessKey"],
+            aws_session_token=response["Credentials"]["SessionToken"],
+        )
+
+        return new_session
