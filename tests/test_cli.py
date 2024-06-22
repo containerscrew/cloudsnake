@@ -5,6 +5,7 @@ from importlib.metadata import version
 runner = CliRunner()
 app_version = version("cloudsnake")
 
+
 def test_app():
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0

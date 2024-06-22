@@ -2,7 +2,8 @@ from typing import Optional
 import typer
 
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
-from cloudsnake.sdk.ssm import SSMParameterStoreWrapper, SSMStartSessionWrapper
+from cloudsnake.sdk.ssm_parameter_store import SSMParameterStoreWrapper
+from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 from cloudsnake.tui import Tui
 
 
@@ -50,5 +51,5 @@ def start_session(
 
 @ssm.command("get-parameters", help="Get parameters from parameter store")
 def get_parameters(ctx: typer.Context):
-    ssm = SSMParameterStoreWrapper.from_session(ctx.obj.session)
+    ssm = SSMParameterStoreWrapper.with_client("ssm", ctx.obj.session)
     ssm.describe_parameters()

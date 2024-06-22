@@ -147,6 +147,7 @@ make run-pre-commit
 
 * Documentation with docstrings
 * Testing with pytest and boto3 mock
+* Remove @classmethod
 * Other...
 
 # Improvements
@@ -187,7 +188,9 @@ Pytest github action: https://docs.github.com/en/actions/automating-builds-and-t
 3. SSM GET PARAMETERS
 4. MYSQL IAM CONNECTION
 5. AWS RESOURCE BY TAG OUTPUT TABLE
-6. All regions: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/describe_regions.html
+6. IAM policy detector
+7. All regions: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/describe_regions.html
+8. Search for a domain in your current route53 hosted zone
 
 # Poetry commands
 

@@ -1,10 +1,10 @@
+import contextlib
 import errno
 import json
-import logging
+import signal
 import subprocess
-from botocore.config import Config
+import sys
 from rich import print
-from botocore.exceptions import ClientError
 
 from cloudsnake.sdk.aws import App
 
@@ -17,6 +17,26 @@ SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
     "session-manager-plugin-not-found",
 )
 
+is_windows = sys.platform == 'win32'
+
+@contextlib.contextmanager
+def ignore_user_entered_signals():
+    """
+        Ignores user entered signals to avoid process getting killed.
+    """
+    if is_windows:
+        signal_list = [signal.SIGINT]
+    else:
+        signal_list = [signal.SIGINT, signal.SIGQUIT, signal.SIGTSTP]
+    actual_signals = []
+    for user_signal in signal_list:
+        actual_signals.append(signal.signal(user_signal, signal.SIG_IGN))
+    try:
+        yield
+    finally:
+        for sig, user_signal in enumerate(signal_list):
+            signal.signal(user_signal, actual_signals[sig])
+
 
 class SSMStartSessionWrapper(App):
     """Encapsulates Amazon SSM Start Session actions."""
@@ -28,7 +48,7 @@ class SSMStartSessionWrapper(App):
 
     def start_session_response(self, target: str) -> None:
         """
-        Start an SSM session and store the response.
+            Start an SSM session and store the response.
         """
         response = self.client.start_session(
             Target=target,
@@ -48,17 +68,18 @@ class SSMStartSessionWrapper(App):
             print(
                 f"[bold green]Connecting to the instance:[/bold green] {target} [red]Please wait[/red]:) :rocket:"
             )
-            subprocess.check_call(
-                [
-                    "session-manager-plugin",
-                    json.dumps(self.session_response_output),
-                    region,
-                    "StartSession",
-                    profile,
-                    json.dumps(dict(Target=target)),
-                    f"https://ssm.{region}.amazonaws.com",
-                ]
-            )
+            with ignore_user_entered_signals():
+                subprocess.check_call(
+                    [
+                        "session-manager-plugin",
+                        json.dumps(self.session_response_output),
+                        region,
+                        "StartSession",
+                        profile,
+                        json.dumps(dict(Target=target)),
+                        f"https://ssm.{region}.amazonaws.com",
+                    ]
+                )
             return 0
         except subprocess.CalledProcessError as e:
             self.log.error("Failed to start session", exc_info=True)
@@ -80,7 +101,7 @@ class SSMStartSessionWrapper(App):
 
     def terminate_session(self) -> None:
         """
-        Terminate the SSM session.
+            Terminate the SSM session.
         """
         if self.session_response_output and "SessionId" in self.session_response_output:
             self.ssm_client.terminate_session(
@@ -88,29 +109,3 @@ class SSMStartSessionWrapper(App):
             )
         else:
             self.log.warning("No active session to terminate")
-
-
-class SSMParameterStoreWrapper:
-    def __init__(self, ssm_client, parameter_response=None, **kwargs):
-        self.log = logging.getLogger("cloudsnake")
-        self.ssm_client = ssm_client
-        self.parameter_response = parameter_response
-
-    @classmethod
-    def from_session(cls, session, **kwargs):
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        ssm_client = session.client("ssm", config=config)
-        return cls(ssm_client, **kwargs)
-
-    def describe_parameters(self):
-        try:
-            paginator = self.ssm_client.get_paginator("describe_parameters")
-            for page in paginator.paginate():
-                return page
-        except ClientError as err:
-            self.log.error(
-                "Couldn't register device",
-                err.response["Error"]["Code"],
-                err.response["Error"]["Message"],
-            )
-            raise
