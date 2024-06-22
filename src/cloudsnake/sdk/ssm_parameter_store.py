@@ -1,8 +1,7 @@
-import logging
 from botocore.exceptions import ClientError
-from botocore.config import Config
 
 from cloudsnake.sdk.aws import App
+
 
 class SSMParameterStoreWrapper(App):
     def __init__(self, client, **kwargs):
@@ -24,4 +23,3 @@ class SSMParameterStoreWrapper(App):
                 err.response["Error"]["Message"],
             )
             raise
-    

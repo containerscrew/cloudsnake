@@ -17,12 +17,13 @@ SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
     "session-manager-plugin-not-found",
 )
 
-is_windows = sys.platform == 'win32'
+is_windows = sys.platform == "win32"
+
 
 @contextlib.contextmanager
 def ignore_user_entered_signals():
     """
-        Ignores user entered signals to avoid process getting killed.
+    Ignores user entered signals to avoid process getting killed.
     """
     if is_windows:
         signal_list = [signal.SIGINT]
@@ -48,7 +49,7 @@ class SSMStartSessionWrapper(App):
 
     def start_session_response(self, target: str) -> None:
         """
-            Start an SSM session and store the response.
+        Start an SSM session and store the response.
         """
         response = self.client.start_session(
             Target=target,
@@ -101,7 +102,7 @@ class SSMStartSessionWrapper(App):
 
     def terminate_session(self) -> None:
         """
-            Terminate the SSM session.
+        Terminate the SSM session.
         """
         if self.session_response_output and "SessionId" in self.session_response_output:
             self.ssm_client.terminate_session(
