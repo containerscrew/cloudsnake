@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 import typer
 
@@ -89,7 +90,7 @@ def rds_connect(
 def download_rds_certificate(
     ctx: typer.Context,
     save_path: Optional[str] = typer.Option(
-        "cert.pem", "--save-path", "-sp", help="Path to save the certificate"
+        os.getcwd(), "--save-path", "-sp", help="Path to save the certificate"
     ),
 ):
     """Invoke RDS download-cert"""

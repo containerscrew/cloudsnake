@@ -63,7 +63,31 @@ def ignore_user_entered_signals():
             signal.signal(user_signal, actual_signals[sig])
 
 
-def ensure_directory_exists(filepath):
-    """Ensure the directory path exists."""
-    if not os.path.exists(os.path.dirname(filepath)):
-        return
+def ensure_directory_exists(dirpath):
+    """
+    Ensure that the specified directory exists.
+
+    Args:
+        dirpath (str): The path of the directory to check.
+
+    Raises:
+        FileNotFoundError: If the directory does not exist.
+
+    """
+    if not os.path.exists(dirpath):
+        raise FileNotFoundError(f"Directory '{dirpath}' does not exist.")
+
+
+def ensure_is_valid_dir(dirpath):
+    """
+    Ensure that the given directory path is valid.
+
+    Args:
+        dirpath (str): The directory path to check.
+
+    Raises:
+        NotADirectoryError: If the given path is not a directory.
+
+    """
+    if not os.path.isdir(dirpath):
+        raise NotADirectoryError(f"'{dirpath}' is not a directory.")
