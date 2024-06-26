@@ -23,7 +23,9 @@ class SSMParameterStoreWrapper(App):
                 err.response["Error"]["Message"],
             )
             raise
+
     3
+
     def print_parameters(self, output, colored) -> None:
         """
         Print the result of describe-instances operation (with filers & query) in the console
@@ -32,5 +34,3 @@ class SSMParameterStoreWrapper(App):
         """
         tui = Tui()
         tui.pretty_print(self.parameters, output, colored)
-    
-

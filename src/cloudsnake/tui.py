@@ -47,9 +47,7 @@ class Tui:
 
     def print_text(self, data, colored) -> None:
         if colored:
-            print(
-                f"[bold green]{data}[/bold green]"
-            )
+            print(f"[bold green]{data}[/bold green]")
         else:
             print(f"{data}")
 

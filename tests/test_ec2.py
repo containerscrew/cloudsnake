@@ -1,4 +1,3 @@
-import os
 import boto3
 from moto import mock_aws
 import pytest
@@ -10,6 +9,7 @@ def ec2_client(aws_credentials):
     with mock_aws():
         yield boto3.client("ec2", region_name="eu-west-1")
 
+
 class TestEC2InstanceWrapper:
     @pytest.fixture(autouse=True)
     def setup_method(self, ec2_client):
@@ -20,13 +20,13 @@ class TestEC2InstanceWrapper:
             MaxCount=1,
             InstanceType="t2.micro",
         )
-    
+
     @mock_aws
     def test_describe_ec2_instances(self):
         """Test the custom ec2 describe instances function mocking EC2 with moto"""
         ec2 = EC2InstanceWrapper(self.ec2_client)
         ec2.describe_ec2_instances()
-        
+
         assert len(ec2.instances["Reservations"]) == 1
         assert (
             ec2.instances["Reservations"][0]["Instances"][0]["InstanceId"]
@@ -38,7 +38,7 @@ class TestEC2InstanceWrapper:
         filters = "Name=instance-type,Values=t2.micro"
         ec2 = EC2InstanceWrapper(self.ec2_client, filters=filters)
         ec2.describe_ec2_instances()
-        
+
         assert (
             ec2.instances["Reservations"][0]["Instances"][0]["InstanceType"]
             == self.instance["Instances"][0]["InstanceType"]
