@@ -8,7 +8,7 @@ from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.ec2 import ec2
 from cloudsnake.cli.ssm import ssm
 from cloudsnake.cli.rds import rds
-from cloudsnake.sdk.session import SessionWrapper
+from cloudsnake.sdk.boto3_session import SessionWrapper
 from cloudsnake.logger import init_logger
 
 

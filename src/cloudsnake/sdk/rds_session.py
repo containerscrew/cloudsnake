@@ -23,7 +23,7 @@ class RDSInstanceConnectWrapper(App):
         super().__init__(client, **kwargs)
         self.db_hostname = kwargs.get("hostname", None)
         self.db_username = kwargs.get("db_username", None)
-        self.port = kwargs.get("port", None)
+        self.port = kwargs.get("port", 3306)
         self.region = kwargs.get("region", None)
         self.cert = kwargs.get("cert", None)
 

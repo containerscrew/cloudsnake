@@ -50,7 +50,7 @@ generate-changelog: ## Generate changelog
 	git cliff -o CHANGELOG.md
 
 run-tests: ## Run pytest using poetry
-	poetry run pytest -v
+	poetry run pytest -v -s
 
 poetry-cache-clear: ## Clear poetry cache
 	poetry cache clear pypi --all
