@@ -3,6 +3,7 @@ import random
 
 from rich.console import Console
 from rich.table import Table
+from rich import print
 from simple_term_menu import TerminalMenu
 from cloudsnake.helpers import serialize_datetime
 
@@ -36,11 +37,21 @@ class Tui:
         match output:
             case "json":
                 self.print_json(data, colored)
+            case "text":
+                self.print_text(data, colored)
             case "table":
                 self.print_table(data, colored)
             case _:
                 """Default, print_json"""
                 self.print_json(data)
+
+    def print_text(self, data, colored) -> None:
+        if colored:
+            print(
+                f"[bold green]{data}[/bold green]"
+            )
+        else:
+            print(f"{data}")
 
     def print_json(self, data, colored) -> None:
         json_data = json.dumps(data, default=serialize_datetime)

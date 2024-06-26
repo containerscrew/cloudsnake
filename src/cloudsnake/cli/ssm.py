@@ -1,6 +1,7 @@
 from typing import Optional
 import typer
 
+from cloudsnake.cli.dto import OutputMode
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_parameter_store import SSMParameterStoreWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
@@ -50,6 +51,12 @@ def start_session(
 
 
 @ssm.command("get-parameters", help="Get parameters from parameter store")
-def get_parameters(ctx: typer.Context):
+def get_parameters(ctx: typer.Context,     output: Optional[OutputMode] = typer.Option(
+        OutputMode.json, "--output", "-o", help="Output mode", case_sensitive=True
+    ),
+    colored: Optional[bool] = typer.Option(
+        True, "--no-color", "-nc", help="Output with highlights."
+    ),):
     ssm = SSMParameterStoreWrapper.with_client("ssm", ctx.obj.session)
     ssm.describe_parameters()
+    ssm.print_parameters(output, colored)
