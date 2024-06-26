@@ -76,6 +76,7 @@ def rds_connect(
         port=port,
         db_username=username,
         region=ctx.obj.region,
+        cert=cert,
     )
     token = rds.get_db_auth_token()
     rds.db_connect(token)
