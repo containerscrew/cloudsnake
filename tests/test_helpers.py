@@ -1,6 +1,11 @@
 from datetime import datetime
+import os
 import pytest
-from cloudsnake.helpers import parse_filters, serialize_datetime
+from cloudsnake.helpers import (
+    ensure_directory_exists,
+    parse_filters,
+    serialize_datetime,
+)
 
 
 """Testing function parse_filters"""
@@ -58,3 +63,23 @@ def test_serialize_non_datetime():
     # Test para asegurarse de que un objeto que no es datetime lanza un TypeError.
     with pytest.raises(TypeError, match="Type not serializable"):
         serialize_datetime("2024-06-08T12:00:00")
+
+
+@pytest.fixture(scope="function")
+def mock_directory(tmpdir):
+    """Fixture that creates a temporary directory."""
+    return str(tmpdir.mkdir("test_dir"))
+
+
+def test_ensure_directory_exists_creates_directory(mock_directory):
+    """Test that ensure_directory_exists creates the directory if it doesn't exist."""
+    filepath = os.path.join(mock_directory, "test_file.txt")
+    ensure_directory_exists(filepath)
+    assert os.path.exists(os.path.dirname(filepath))
+
+
+def test_ensure_directory_exists_does_not_raise_error(mock_directory):
+    """Test that ensure_directory_exists doesn't raise an error if directory exists."""
+    filepath = os.path.join(mock_directory, "test_file.txt")
+    ensure_directory_exists(filepath)
+    assert os.path.exists(os.path.dirname(filepath))

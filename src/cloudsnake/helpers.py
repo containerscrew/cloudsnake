@@ -1,5 +1,6 @@
 import contextlib
 from datetime import datetime
+import os
 import signal
 import sys
 
@@ -42,6 +43,7 @@ def serialize_datetime(obj):
 
 is_windows = sys.platform == "win32"
 
+
 @contextlib.contextmanager
 def ignore_user_entered_signals():
     """
@@ -59,3 +61,9 @@ def ignore_user_entered_signals():
     finally:
         for sig, user_signal in enumerate(signal_list):
             signal.signal(user_signal, actual_signals[sig])
+
+
+def ensure_directory_exists(filepath):
+    """Ensure the directory path exists."""
+    if not os.path.exists(os.path.dirname(filepath)):
+        return
