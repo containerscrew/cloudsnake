@@ -1,6 +1,7 @@
 import errno
 import subprocess
-from cloudsnake.helpers import ignore_user_entered_signals
+import requests
+from cloudsnake.helpers import ensure_directory_exists, ignore_user_entered_signals
 from cloudsnake.sdk.aws import App
 from rich import print
 from botocore.exceptions import ClientError
@@ -9,7 +10,7 @@ from botocore.exceptions import ClientError
 MYSQL_CLIENT__ERROR_MESSAGE = (
     "Mysql binary client not found",
     "Please refer to mysql client installation here: ",
-    "https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing"
+    "https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing",
 )
 
 
@@ -49,7 +50,21 @@ class RDSInstanceConnectWrapper(App):
                 err.response["Error"]["Message"],
             )
             raise
-    
+
+    def download_cert(self, save_path="cert.pem"):
+        url = f"https://truststore.pki.rds.amazonaws.com/{self.region}/{self.region}-bundle.pem"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # This will raise an exception for error HTTP status codes
+            ensure_directory_exists(
+                save_path
+            )  # Create directories if they do not exist
+            with open(save_path, "wb") as file:
+                file.write(response.content)
+            print(f"Certificate downloaded and saved as {save_path}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error downloading the certificate: {e}")
+
     def db_connect(self, token: str):
         """
         Connects to the RDS instance using the provided token.
@@ -96,4 +111,3 @@ class RDSInstanceConnectWrapper(App):
             else:
                 self.log.error("OS error", exc_info=True)
                 raise
-    
