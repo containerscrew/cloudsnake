@@ -13,6 +13,7 @@ class Common:
 class OutputMode(str, Enum):
     json = "json"
     table = "table"
+    text = "text"
 
 
 class LoggingLevel(str, Enum):

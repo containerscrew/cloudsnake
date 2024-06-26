@@ -1,8 +1,13 @@
 import errno
 import os
 import subprocess
+import jmespath
 import requests
-from cloudsnake.helpers import ensure_directory_exists, ignore_user_entered_signals
+from cloudsnake.helpers import (
+    ensure_directory_exists,
+    ignore_user_entered_signals,
+    parse_filters,
+)
 from cloudsnake.sdk.aws import App
 from rich import print
 from botocore.exceptions import ClientError
@@ -26,6 +31,33 @@ class RDSInstanceConnectWrapper(App):
         self.port = kwargs.get("port", 3306)
         self.region = kwargs.get("region", None)
         self.cert = kwargs.get("cert", None)
+
+    def describe_db_instances(self):
+        instances = {}
+        if self.filters:
+            parsed_filters = parse_filters(self.filters)
+        else:
+            parsed_filters = []
+
+        self.log.info("Describing RDS instances")
+        try:
+            paginator = self.client.get_paginator("describe_db_instances")
+
+            for page in paginator.paginate(Filters=parsed_filters):
+                instances.update(page)
+
+            if self.query is not None:
+                result = jmespath.search(self.query, instances)
+                return result
+            else:
+                return instances
+        except ClientError as err:
+            self.log.error(
+                "Couldn't register device",
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise
 
     def get_db_auth_token(self) -> None:
         """
