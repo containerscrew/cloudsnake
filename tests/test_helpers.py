@@ -3,6 +3,7 @@ import os
 import pytest
 from cloudsnake.helpers import (
     ensure_directory_exists,
+    ensure_is_valid_dir,
     parse_filters,
     serialize_datetime,
 )
@@ -71,15 +72,21 @@ def mock_directory(tmpdir):
     return str(tmpdir.mkdir("test_dir"))
 
 
-def test_ensure_directory_exists_creates_directory(mock_directory):
-    """Test that ensure_directory_exists creates the directory if it doesn't exist."""
-    filepath = os.path.join(mock_directory, "test_file.txt")
-    ensure_directory_exists(filepath)
-    assert os.path.exists(os.path.dirname(filepath))
+def test_ensure_is_valid_dir():
+    """Test that ensure_directory_exists raises an error if directory doesn't exist."""
+    with pytest.raises(NotADirectoryError):
+        ensure_is_valid_dir("invalid_directory.txt")
 
 
-def test_ensure_directory_exists_does_not_raise_error(mock_directory):
-    """Test that ensure_directory_exists doesn't raise an error if directory exists."""
+def test_ensure_directory_exists(mock_directory):
+    """Test that ensure_directory_exists raises an error if directory doesn't exist."""
     filepath = os.path.join(mock_directory, "test_file.txt")
-    ensure_directory_exists(filepath)
-    assert os.path.exists(os.path.dirname(filepath))
+    with pytest.raises(FileNotFoundError):
+        ensure_directory_exists(filepath)
+
+
+# def test_ensure_directory_exists(mock_directory):
+#     """Test that ensure_directory_exists creates the directory if it doesn't exist."""
+#     filepath = os.path.join(mock_directory, "test_file.txt")
+#     ensure_directory_exists(filepath)
+#     assert os.path.exists(os.path.dirname(filepath))

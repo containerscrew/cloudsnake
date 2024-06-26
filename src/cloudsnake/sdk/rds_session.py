@@ -1,4 +1,5 @@
 import errno
+import os
 import subprocess
 import requests
 from cloudsnake.helpers import ensure_directory_exists, ignore_user_entered_signals
@@ -52,7 +53,7 @@ class RDSInstanceConnectWrapper(App):
             )
             raise
 
-    def download_cert(self, save_path="cert.pem"):
+    def download_cert(self, save_path: str):
         url = f"https://truststore.pki.rds.amazonaws.com/{self.region}/{self.region}-bundle.pem"
         try:
             response = requests.get(url)
@@ -60,9 +61,10 @@ class RDSInstanceConnectWrapper(App):
             ensure_directory_exists(
                 save_path
             )  # Create directories if they do not exist
-            with open(save_path, "wb") as file:
+            file_path = os.path.join(save_path, f"rds-cert-{self.region}.pem")
+            with open(file_path, "wb") as file:
                 file.write(response.content)
-            print(f"Certificate downloaded and saved as {save_path}")
+            print(f"Certificate downloaded and saved as {file_path}")
         except requests.exceptions.RequestException as e:
             print(f"Error downloading the certificate: {e}")
 
