@@ -7,6 +7,7 @@ from importlib.metadata import version
 from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.ec2 import ec2
 from cloudsnake.cli.ssm import ssm
+from cloudsnake.cli.rds import rds
 from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
 
@@ -23,8 +24,9 @@ app = typer.Typer(
 
 
 """Add subcommands/typer"""
-app.add_typer(ec2, name="ec2", help="Manage ec2 operations")
-app.add_typer(ssm, name="ssm", help="Manage ssm operations")
+app.add_typer(ec2, name="ec2", help="Manage EC2 operations")
+app.add_typer(ssm, name="ssm", help="Manage SSM operations")
+app.add_typer(rds, name="rds", help="Manage RDS operations")
 # app.add_typer(sso, name="sso", help="Manage sso operations")
 
 

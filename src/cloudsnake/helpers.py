@@ -1,4 +1,7 @@
+import contextlib
 from datetime import datetime
+import signal
+import sys
 
 from typing_extensions import List, Dict
 
@@ -35,3 +38,24 @@ def serialize_datetime(obj):
     if isinstance(obj, datetime):
         return obj.isoformat()
     raise TypeError("Type not serializable")
+
+
+is_windows = sys.platform == "win32"
+
+@contextlib.contextmanager
+def ignore_user_entered_signals():
+    """
+    Ignores user entered signals to avoid process getting killed.
+    """
+    if is_windows:
+        signal_list = [signal.SIGINT]
+    else:
+        signal_list = [signal.SIGINT, signal.SIGQUIT, signal.SIGTSTP]
+    actual_signals = []
+    for user_signal in signal_list:
+        actual_signals.append(signal.signal(user_signal, signal.SIG_IGN))
+    try:
+        yield
+    finally:
+        for sig, user_signal in enumerate(signal_list):
+            signal.signal(user_signal, actual_signals[sig])
