@@ -24,6 +24,7 @@ class RDSInstanceConnectWrapper(App):
         self.db_username = kwargs.get("db_username", None)
         self.port = kwargs.get("port", None)
         self.region = kwargs.get("region", None)
+        self.cert = kwargs.get("cert", None)
 
     def get_db_auth_token(self) -> None:
         """
@@ -91,7 +92,7 @@ class RDSInstanceConnectWrapper(App):
                         "mariadb",
                         f"--host={self.db_hostname}",
                         f"--port={self.port}",
-                        "--ssl-ca=cert.pem",
+                        f"--ssl-ca={self.cert}",
                         f"--user={self.db_username}",
                         f"--password={token}",
                     ]

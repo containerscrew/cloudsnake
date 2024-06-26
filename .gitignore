@@ -168,3 +168,6 @@ aws-sso-demo.py
 
 # DO NOT PUSH JSON FILES
 *.json
+
+# DO NOT PUSH .pem files
+*.pem
