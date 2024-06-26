@@ -7,7 +7,6 @@ from cloudsnake.helpers import ignore_user_entered_signals
 from cloudsnake.sdk.aws import App
 
 
-
 SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
     "SessionManagerPlugin is not found. ",
     "Please refer to SessionManager Documentation here: ",
