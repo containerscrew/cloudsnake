@@ -88,6 +88,9 @@ class RDSInstanceConnectWrapper(App):
             print(
                 f"[bold green]Connecting to the RDS instance:[/bold green] {self.db_hostname} [red]Please wait[/red]:) :rocket:"
             )
+            print(
+                "[bold red]IMPORTANT! For security reasons TLS/SSL is always necessary to connect to the RDS instance. --skip-ssl is not allowed by the moment[/bold red]"
+            )
             with ignore_user_entered_signals():
                 subprocess.check_call(
                     [
