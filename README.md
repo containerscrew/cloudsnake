@@ -15,6 +15,7 @@
 
 - [Why cloudsnake](#why-cloudsnake)
 - [Badges](#badges)
+- [Available implementations](#available-implementations)
 - [Examples](#examples)
   - [Connect to the EC2 instance using SSM](#connect-to-the-ec2-instance-using-ssm)
     - [Example](#example)
@@ -52,7 +53,13 @@
 The main intention of this tool is to continue improving my python skills, get to know the AWS [boto3](https://aws.amazon.com/es/sdk-for-python/) SDK better, and learn how to create a CLI using [typer](https://typer.tiangolo.com/), [rich](https://github.com/Textualize/rich), and [textual](https://textual.textualize.io/). The tool tries to implement some commands from the official AWS cli ([aws cli](https://github.com/aws/aws-cli)), adding my own logic and with highlights (pretty print json output/table with typer/rich).
 
 > [!IMPORTANT]
-> Do not try to use part of this code in a productive app as it is currently untested. (visit #TODO page). I also don't know if this is the best way to use any of the tools that the application uses (boto3, typer, rich...), that is why any PR is welcome, it will be appreciated so I can continue improving my skills.
+> Do not try to use part of this code in a productive app as it is currently untested. (visit [#TO DO](# Available implementations
+
+* Connect to EC2 instances using SSM. You can pass the instance id (`--target`) or use the interactive menu (`--with-instance-selector`)
+
+* Connect to the RDS instances using IAM db authentication.
+
+> See examples in the next section)section). I also don't know if this is the best way to use any of the tools that the application uses (boto3, typer, rich...), that is why any PR is welcome, it will be appreciated so I can continue improving my skills.
 
 > [!IMPORTANT]
 > In the end, the purpose of this tool is also to be able to facilitate the day to day, creating tools that help me to operate the platform. For example, to quickly connect to EC2, RDS...etc.
@@ -66,6 +73,15 @@ The main intention of this tool is to continue improving my python skills, get t
 | Package | [![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)[![PyPI - Version](https://img.shields.io/pypi/v/hatch-showcase.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-showcase/) ![packaging](https://img.shields.io/badge/packaging-poetry-cyan.svg) |
 | Meta    | [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/)                                                                                             |
 | Linter  | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)                                                                                                                                                                                            |
+
+
+# Available implementations
+
+* Connect to EC2 instances using SSM. You can pass the instance id (`--target`) or use the interactive menu (`--with-instance-selector`)
+
+* Connect to the RDS instances using IAM db authentication.
+
+> See examples in the next section
 
 # Examples
 
