@@ -28,12 +28,13 @@
     - [Actually](#actually)
     - [Wants](#wants)
 - [TOP LINKS](#top-links)
-- [Available wrapper commands](#available-wrapper-commands)
 - [Poetry commands](#poetry-commands)
 - [Cloudsnake commands](#cloudsnake-commands)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+![example](./example.png)
 
 # Why cloudsnake
 
@@ -42,13 +43,15 @@ The main intention of this tool is to continue improving my python skills, get t
 > [!IMPORTANT]
 > Do not try to use part of this code in a productive app as it is currently untested. (visit #TODO page). I also don't know if this is the best way to use any of the tools that the application uses (boto3, typer, rich...), that is why any PR is welcome, it will be appreciated so I can continue improving my skills.
 
+> [!IMPORTANT]
+> In the end, the purpose of this tool is also to be able to facilitate the day to day, creating tools that help me to operate the platform. For example, to quickly connect to EC2, RDS...etc.
 
 # Badges
 
 |         |                                                                                                                                                                                                                                                                                                                                                         |
 |---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Code    | ![Code Size](https://img.shields.io/github/languages/code-size/containerscrew/tftools)                                                                                                                                                                                                                                                                  |
-| CI/CD   | [![CI - Test](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml) [![CD - Build](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/build.yml)                        |
+| CI/CD   | [![CI - Test](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml/badge.svg)](https://github.com/ofek/hatch-showcase/actions/workflows/test.yml) [![CD - Build](https://github.com/containerscrew/cloudsnake/actions/workflows/build.yml/badge.svg)](https://github.com/containerscrew/cloudsnake/actions/workflows/build.yml)                        |
 | Package | [![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)[![PyPI - Version](https://img.shields.io/pypi/v/hatch-showcase.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-showcase/) ![packaging](https://img.shields.io/badge/packaging-poetry-cyan.svg) |
 | Meta    | [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/)                                                                                             |
 | Linter  | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)                                                                                                                                                                                            |
@@ -166,41 +169,13 @@ cloudsnake --log-level debug --region us-east-1 --profile default ec2 describe-i
 cloudsnake ec2 describe-instances --log-level debug --region us-east-1 --profile default --other-specific-flags-for-this-subdommand
 ```
 
-
 # TOP LINKS
 
-https://github.com/aws/aws-cli/blob/b6e7c5b79e4471713b2f7c660eff99b36d977064/awscli/customizations/sessionmanager.py#L83
-https://stackoverflow.com/questions/57868722/unable-to-decode-aws-session-manager-websocket-output-in-python
-https://github.com/aws/session-manager-plugin/blob/mainline/src/sessionmanagerplugin/session/shellsession/shellsession.go
-Logger: https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
-Textual for beginners: https://mathspp.com/blog/textual-for-beginners
-More of textual: https://dev.to/wiseai/textual-the-definitive-guide-part-1-1i0p
-[Packaging projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
-[Poetry](https://python-poetry.org/docs/)
-Some examples using boto3 SDK https://docs.aws.amazon.com/code-library/latest/ug/python_3_ec2_code_examples.html
-Mocking: https://github.com/getmoto/moto
-Pytest github action: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-# Available wrapper commands
-
-1. EC2 SSM CONNECTION
-2. ECS SSM CONNECTION
-3. SSM GET PARAMETERS
-4. MYSQL IAM CONNECTION
-5. AWS RESOURCE BY TAG OUTPUT TABLE
-6. IAM policy detector
-7. All regions: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/describe_regions.html
-8. Search for a domain in your current route53 hosted zone
+[`links.md`](./docs/links.md)
 
 # Poetry commands
 
-```shell
-poetry add boto3 dacite
-poetry config pypi-token.pypi pypi-
-poetry publish --build
-poetry config repositories.testpypi https://test.pypi.org/legacy/
-poetry publish --build -r testpypi
-```
+[`poetry.md`](./docs/poetry.md)
 
 # Cloudsnake commands
 
@@ -208,10 +183,11 @@ poetry publish --build -r testpypi
 cloudsnake --help
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].{Instance:InstanceId,VpcId:VpcId,AZ:Placement.AvailabilityZone,Name:Tags[?Key==`Name`]|[0].Value}' --output json
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output json
-# Get instance name of running instances
 cloudsnake ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].{InstanceName:Tags[?Key==`Name`]|[0].Value}' --output json
 cloudsnake ec2 describe-instances  --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].Tags[?Key==`Name`].Value[][]'
 cloudsnake rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'
+cloudsnake ssm start-session --with-instance-selector
+cloudsnake ssm start-session --target i-xxxxxxx
 ```
 
 # License
