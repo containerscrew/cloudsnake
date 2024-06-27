@@ -53,13 +53,7 @@
 The main intention of this tool is to continue improving my python skills, get to know the AWS [boto3](https://aws.amazon.com/es/sdk-for-python/) SDK better, and learn how to create a CLI using [typer](https://typer.tiangolo.com/), [rich](https://github.com/Textualize/rich), and [textual](https://textual.textualize.io/). The tool tries to implement some commands from the official AWS cli ([aws cli](https://github.com/aws/aws-cli)), adding my own logic and with highlights (pretty print json output/table with typer/rich).
 
 > [!IMPORTANT]
-> Do not try to use part of this code in a productive app as it is currently untested. (visit [#TO DO](# Available implementations
-
-* Connect to EC2 instances using SSM. You can pass the instance id (`--target`) or use the interactive menu (`--with-instance-selector`)
-
-* Connect to the RDS instances using IAM db authentication.
-
-> See examples in the next section)section). I also don't know if this is the best way to use any of the tools that the application uses (boto3, typer, rich...), that is why any PR is welcome, it will be appreciated so I can continue improving my skills.
+> Do not try to use part of this code in a productive app as it is currently untested. (visit [#TO DO](https://github.com/containerscrew/cloudsnake?tab=readme-ov-file#to-do)section). I also don't know if this is the best way to use any of the tools that the application uses (boto3, typer, rich...), that is why any PR is welcome, it will be appreciated so I can continue improving my skills.
 
 > [!IMPORTANT]
 > In the end, the purpose of this tool is also to be able to facilitate the day to day, creating tools that help me to operate the platform. For example, to quickly connect to EC2, RDS...etc.
