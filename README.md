@@ -1,3 +1,7 @@
+> [!WARNING]
+> There is no "stable" version published on pypip yet. This tool is under development.
+
+
 <p align="center" >
     <img src="logo.png" alt="logo" width="250"/>
     <h3 align="center">cloudsnake 🐍</h3>
@@ -12,6 +16,12 @@
 - [Why cloudsnake](#why-cloudsnake)
 - [Badges](#badges)
 - [Examples](#examples)
+  - [Connect to the EC2 instance using SSM](#connect-to-the-ec2-instance-using-ssm)
+    - [Example](#example)
+  - [Connect to the RDS instance using IAM authentication db token](#connect-to-the-rds-instance-using-iam-authentication-db-token)
+    - [Download the cert](#download-the-cert)
+    - [Connect to the instance](#connect-to-the-instance)
+    - [Example](#example-1)
 - [Installation](#installation)
   - [Using pip](#using-pip)
   - [Using pipx with virtualenv (recommended)](#using-pipx-with-virtualenv-recommended)
@@ -22,6 +32,7 @@
 - [Local development](#local-development)
   - [Local run with poetry](#local-run-with-poetry)
   - [Run & install pre-commit](#run--install-pre-commit)
+  - [Testing](#testing)
 - [TO DO](#to-do)
 - [Improvements](#improvements)
   - [Positional flags](#positional-flags)
@@ -58,8 +69,50 @@ The main intention of this tool is to continue improving my python skills, get t
 
 # Examples
 
-Pending to add examples...
+For the examples, you need to be authenticated to AWS account using your local credentials.
 
+In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`)
+
+## Connect to the EC2 instance using SSM
+
+```shell
+cloudsnake ssm start-session --with-instance-selector # will print all your instances in a terminal menu
+cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specifying the target id
+```
+
+### Example
+
+![example_ssm_connect](./example_ssm_connect.png)
+
+## Connect to the RDS instance using IAM authentication db token
+
+Please follow [this instructions](./docs/rds.md) to setup your RDS IAM authentication.
+
+### Download the cert
+
+By default, `cloudsnake` forces to use TLS/SSL connections.
+
+```shell
+cloudsnake rds download-cert --save-path /tmp
+```
+
+Other region:
+
+```shell
+cloudsnake --region us-east-1 download-cert --save-path /tmp
+```
+
+### Connect to the instance
+
+Example for the region `eu-west-1`:
+
+```shell
+cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --cert /tmp/rds-cert-eu-west-1.pem
+```
+
+### Example
+
+![example_rds](./example_rds.png)
 
 # Installation
 
@@ -146,11 +199,22 @@ make pre-commit-install
 make run-pre-commit
 ```
 
+## Testing
+
+```shell
+git clone https://github.com/containerscrew/cloudsnake.git
+cd cloudsnake
+make run-tests
+```
+
 # TO DO
 
 * Documentation with docstrings
-* Testing with pytest and boto3 mock
+* Add more tests with pytest and boto3 mock
 * Remove @classmethod
+* Ruff linter
+* Cliff: changelog
+* Pipelines with github actions. Automatic publish new version to `pypip`
 * Other...
 
 # Improvements

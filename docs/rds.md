@@ -3,14 +3,21 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [RDS](#rds)
+  - [Enable IAM authentication in your DB](#enable-iam-authentication-in-your-db)
   - [Creating a user to authenticate using IAM](#creating-a-user-to-authenticate-using-iam)
   - [Download TL/SSLS cert](#download-tlssls-cert)
   - [Test your token before using `cloudsnake`](#test-your-token-before-using-cloudsnake)
-- [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # RDS
+
+[Official documentation, the good one](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html)
+
+## Enable IAM authentication in your DB
+
+Follow [this](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Enabling.html) instructions
+
 
 ## Creating a user to authenticate using IAM
 
@@ -23,6 +30,8 @@ FLUSH PRIVILEGES;
 
 > [!IMPORTANT]
 > If you are assuming a role/iam user that has `Administrator privileges`, you don´t need to edit any IAM policy. You will be able to get the token to connect to the instance
+
+If not, you need to edit the policies, like [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html)
 
 ## Download TL/SSLS cert
 
@@ -42,9 +51,3 @@ admin)
 mariadb --host=sbx-rds-test.cyvl1212frfjnfrfregegspjksq.eu-west-1.rds.amazonaws.com --port=3306 --ssl-ca=cert.pem --user=admin --password=$TOKEN
 select user from mysql.users;
 ```
-
-# Links
-
-All the official documentation, from this link:
-
-• https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
