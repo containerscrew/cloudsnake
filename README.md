@@ -1,5 +1,5 @@
 > [!WARNING]
-> There is no "stable" version published on pypip yet. This tool is under development.
+> There is no "stable" version. This tool is under development. The only version by the moment is 0.4.0.
 
 
 <p align="center" >
