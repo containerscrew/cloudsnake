@@ -12,6 +12,9 @@ run: ## Execute the cli locally using poetry
 build: ## Build project using poetry
 	poetry build
 
+run-coverage: ## Run pytest with coverage
+	poetry run pytest --cov=cloudsnake tests/
+
 publish: ## Publish package to pypi.org
 	poetry publish --build
 
