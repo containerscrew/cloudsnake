@@ -3,9 +3,9 @@ from cloudsnake.cli.cli import app
 
 def main() -> None:
     """
-    Start cloudsnake. THis is the CLI entrypoint
+    Entry point of the application.
+    Starts the CLI.
     """
-    # Run the cli
     app()
 
 

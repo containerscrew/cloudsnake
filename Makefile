@@ -9,6 +9,9 @@ help: ## this help
 run: ## Execute the cli locally using poetry
 	poetry run python src/cloudsnake/__main__.py
 
+install: ## Install dependencies
+	poetry install
+
 build: ## Build project using poetry
 	poetry build
 
