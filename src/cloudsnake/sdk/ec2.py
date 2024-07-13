@@ -9,7 +9,7 @@ class EC2InstanceWrapper(App):
     Wrapper class for managing EC2 instances.
     """
 
-    def __init__(self, client="ec2", filters="", query="", **kwargs):
+    def __init__(self, client="ec2", filters=None, query=None, **kwargs):
         """
         Initialize the EC2 class.
 
