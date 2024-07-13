@@ -1,10 +1,8 @@
 import os
 from typing import Optional
 import typer
-
 from cloudsnake.cli.dto import OutputMode
 from cloudsnake.sdk.rds_session import RDSInstanceConnectWrapper
-from cloudsnake.tui import Tui
 
 
 rds = typer.Typer(
@@ -12,8 +10,6 @@ rds = typer.Typer(
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
 )
-
-tui = Tui()
 
 
 @rds.command(
@@ -48,7 +44,7 @@ def generate_db_auth_token(
     )
     token = rds.get_db_auth_token()
     if print:
-        tui.pretty_print(token, "text", True)
+        ctx.obj.tui.pretty_print(token, "text", True)
 
 
 def validate_hostname(ctx: typer.Context, param: typer.CallbackParam, value: str):
@@ -143,4 +139,4 @@ def describe_db_instances(
         "rds", ctx.obj.session, filters=filters, query=query
     )
     db_instances = rds.describe_db_instances()
-    tui.pretty_print(db_instances, output, colored)
+    ctx.obj.tui.pretty_print(db_instances, output, colored)

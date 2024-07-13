@@ -31,8 +31,7 @@ def describe_instances(
         True, "--no-color", "-nc", help="Output with highlights."
     ),
 ):
-    """Invoke ec2 describe-instances"""
-    ec2 = EC2InstanceWrapper.with_client(
-        "ec2", ctx.obj.session, filters=filters, query=query
-    )
-    ec2.print_ec2_instances(output, colored)
+    ec2 = EC2InstanceWrapper(filters=filters, query=query)
+    ec2.create_client(ctx.obj.session)
+    instances = ec2.describe_ec2_instances()
+    ctx.obj.tui.pretty_print(instances, output, colored)

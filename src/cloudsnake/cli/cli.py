@@ -1,6 +1,4 @@
 import os
-
-
 import typer
 from typing import Optional
 from importlib.metadata import version
@@ -10,20 +8,20 @@ from cloudsnake.cli.ssm import ssm
 from cloudsnake.cli.rds import rds
 from cloudsnake.sdk.boto3_session import SessionWrapper
 from cloudsnake.logger import init_logger
+from cloudsnake.tui import Tui
 
 
+# App version reading the package version from the pyproject.toml
 app_version = version("cloudsnake")
 
-
-"""Register new app typer"""
+# Main app Typer
 app = typer.Typer(
     no_args_is_help=True,
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
 )
 
-
-"""Add subcommands/typer"""
+# Add subcommands to the main typer
 app.add_typer(ec2, name="ec2", help="Manage EC2 operations")
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
 app.add_typer(rds, name="rds", help="Manage RDS operations")
@@ -73,12 +71,17 @@ def entrypoint(
     ),
 ):
     """
-    cloudsnake is an AWS cli wrapper with beautiful TUI using rich, typer and textual. It does not implement all the
-    commands, flags... of the official cli. It's just an example to see how to use aws sdk boto3, rich and
-    typer.
-    Example: cloudsnake ec2 describe-instances
+    Entry point function for the cloudsnake CLI.
+
+    Args:
+        ctx (typer.Context): The Typer context object.
+        profile (Optional[str], optional): AWS profile to use. Defaults to the value of the AWS_PROFILE environment variable.
+        log_level (Optional[LoggingLevel], optional): Logging level for the app custom code and boto3. Defaults to LoggingLevel.WARNING.
+        region (Optional[str], optional): AWS region. Defaults to "eu-west-1".
+        version (Optional[bool], optional): Show the application's version and exit. Defaults to None.
     """
     session = SessionWrapper(profile, region).with_local_session()
-    ctx.obj = Common(session, profile, region)
+    tui = Tui()
+    ctx.obj = Common(session, profile, region, tui)
     logger = init_logger(log_level.value)
     logger.info("Starting cloudsnake 🐍☁")
