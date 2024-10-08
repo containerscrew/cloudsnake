@@ -114,8 +114,8 @@ class Tui:
     def get_target_id_by_name(data, name):
         for sublist in data:
             for item in sublist:
-                if item.get("Name") == name:
-                    return item.get("TargetId")
+                if item["Name"] == name:
+                    return item["TargetId"]
         return None
 
     @staticmethod

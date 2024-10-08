@@ -5,7 +5,6 @@ from cloudsnake.cli.dto import OutputMode
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_parameter_store import SSMParameterStoreWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
-from cloudsnake.tui import Tui
 
 
 ssm = typer.Typer(
@@ -31,23 +30,22 @@ def start_session(
         help="Prompt a terminal menu and select the instance you want to connect. --target flag is no longer used",
     ),
 ):
-    ssm_session = SSMStartSessionWrapper.with_client(
-        "ssm", ctx.obj.session, reason=reason
-    )
+    ssm = SSMStartSessionWrapper()
+    ssm.create_client(ctx.obj.session)
     if with_instance_selector:
         filters = "Name=instance-state-name,Values=running"
-        query = "Reservations[*].Instances[*].{TargetId:InstanceId,Name:Tags[?Key==`Name`]|[0].Value}"
-        ec2 = EC2InstanceWrapper.with_client(
-            "ec2", ctx.obj.session, filters=filters, query=query
+        query = "Reservations[*].Instances[*].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
+        ec2 = EC2InstanceWrapper(filters=filters, query=query)
+        ec2.create_client(ctx.obj.session)
+        instances = ec2.describe_ec2_instances()
+        print(instances)
+        instance_name = ctx.obj.tui.interactive_menu(
+            instances, title="Select the EC2 you want to connect"
         )
-        ec2.describe_ec2_instances()
-        instance_name = Tui.interactive_menu(
-            ec2.instances, title="Select the EC2 you want to connect"
-        )
-        instance_id = Tui.get_target_id_by_name(ec2.instances, instance_name)
-        ssm_session.start_session(instance_id, ctx.obj.region, ctx.obj.profile)
+        instance_id = ctx.obj.tui.get_target_id_by_name(instances, instance_name)
+        ssm.start_session(instance_id, ctx.obj.region, ctx.obj.profile)
     else:
-        ssm_session.start_session(target, ctx.obj.region, ctx.obj.profile)
+        ssm.start_session(target, ctx.obj.region, ctx.obj.profile)
 
 
 @ssm.command("get-parameters", help="Get parameters from parameter store")
@@ -60,6 +58,7 @@ def get_parameters(
         True, "--no-color", "-nc", help="Output with highlights."
     ),
 ):
-    ssm = SSMParameterStoreWrapper.with_client("ssm", ctx.obj.session)
+    ssm = SSMParameterStoreWrapper()
+    ssm.create_client
     ssm.describe_parameters()
     ssm.print_parameters(output, colored)

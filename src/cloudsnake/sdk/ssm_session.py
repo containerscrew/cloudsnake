@@ -19,7 +19,7 @@ SESSION_MANAGER__PLUGIN_ERROR_MESSAGE = (
 class SSMStartSessionWrapper(App):
     """Encapsulates Amazon SSM Start Session actions."""
 
-    def __init__(self, client, session_response_output=None, **kwargs):
+    def __init__(self, client="ssm", session_response_output=None, **kwargs):
         # Call the superclass __init__ method
         super().__init__(client, **kwargs)
         self.session_response_output = session_response_output
