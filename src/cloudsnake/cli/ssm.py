@@ -38,7 +38,9 @@ def start_session(
         ec2 = EC2InstanceWrapper(filters=filters, query=query)
         ec2.create_client(ctx.obj.session)
         instances = ec2.describe_ec2_instances()
-        print(instances)
+        if len(instances) == 0:
+            typer.echo("No running instances found.")
+            exit(1)
         instance_name = ctx.obj.tui.interactive_menu(
             instances, title="Select the EC2 you want to connect"
         )
