@@ -10,23 +10,20 @@ from cloudsnake.sdk.boto3_session import SessionWrapper
 from cloudsnake.logger import init_logger
 from cloudsnake.tui import Tui
 
-
 # App version reading the package version from the pyproject.toml
 app_version = version("cloudsnake")
 
-# Main app Typer
+# Declare app and add subcommands
 app = typer.Typer(
     no_args_is_help=True,
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
 )
 
-# Add subcommands to the main typer
 app.add_typer(ec2, name="ec2", help="Manage EC2 operations")
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
 app.add_typer(rds, name="rds", help="Manage RDS operations")
 # app.add_typer(sso, name="sso", help="Manage sso operations")
-
 
 def _version_callback(value: bool) -> None:
     if value:
@@ -44,11 +41,11 @@ def _version_callback(value: bool) -> None:
 def entrypoint(
     ctx: typer.Context,
     profile: Optional[str] = typer.Option(
-        os.getenv("AWS_PROFILE"),
+        os.getenv("AWS_PROFILE", ""),
         "--profile",
         "-p",
         help="AWS profile to use",
-        show_default=True,
+        envvar="AWS_PROFILE",
     ),
     log_level: Optional[LoggingLevel] = typer.Option(
         LoggingLevel.WARNING,
