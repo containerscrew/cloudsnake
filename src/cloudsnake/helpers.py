@@ -43,6 +43,7 @@ def serialize_datetime(obj):
 
 is_windows = sys.platform == "win32"
 
+
 @contextlib.contextmanager
 def ignore_user_entered_signals():
     """
