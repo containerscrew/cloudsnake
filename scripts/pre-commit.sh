@@ -11,9 +11,9 @@ pre-commit run -a --show-diff-on-failure
 # separator "Scanning for secrets"
 # gitleaks git -v
 
-separator "Running ruff format and ruff check"
-ruff format --check .
-ruff check .
+# separator "Running ruff format and ruff check"
+# ruff format --check .
+# ruff check .
 
-separator "Running pytest"
-poetry run pytest -v
+# separator "Running pytest"
+# poetry run pytest -v

@@ -28,7 +28,6 @@ class App:
         self.session = session
         self.client = None
 
-
     def create_client(self, session):
         """
         Create a boto3 client using the provided session.
@@ -38,7 +37,7 @@ class App:
         try:
             if not self.region:
                 self.region = session.region_name
-            if not self.profile and hasattr(session, 'profile_name'):
+            if not self.profile and hasattr(session, "profile_name"):
                 self.profile = session.profile_name
         except Exception:
             pass

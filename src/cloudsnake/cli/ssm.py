@@ -10,8 +10,8 @@ EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 
 EC2_INSTANCE_SELECTOR_QUERY = (
     "Reservations[*].Instances[*].{"
-        "TargetId: InstanceId, "
-        "Name: Tags[?Key=='Name'].Value | [0]"
+    "TargetId: InstanceId, "
+    "Name: Tags[?Key=='Name'].Value | [0]"
     "}"
 )
 
@@ -20,6 +20,7 @@ ssm = typer.Typer(
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
 )
+
 
 @ssm.command(
     "start-session", help="Start session with the given target id", no_args_is_help=True
@@ -56,8 +57,7 @@ def start_session(
             raise typer.Exit(1)
 
         instance_name = ctx.obj.tui.interactive_menu(
-            instances,
-            title="Select the EC2 you want to connect"
+            instances, title="Select the EC2 you want to connect"
         )
         instance_id = ctx.obj.tui.get_target_id_by_name(instances, instance_name)
 

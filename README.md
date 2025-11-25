@@ -147,4 +147,4 @@ cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --ce
 
 # License
 
-`cloudsnake` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`cloudsnake` is distributed under the terms of the [GPL3](https://spdx.org/licenses/GPL-3.0-or-later.html) license.
