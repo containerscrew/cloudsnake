@@ -23,7 +23,7 @@ app = typer.Typer(
 app.add_typer(ec2, name="ec2", help="Manage EC2 operations")
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
 app.add_typer(rds, name="rds", help="Manage RDS operations")
-# app.add_typer(sso, name="sso", help="Manage sso operations")
+
 
 def _version_callback(value: bool) -> None:
     if value:

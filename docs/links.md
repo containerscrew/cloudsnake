@@ -1,11 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [USEFUL LINKS](#useful-links)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # USEFUL LINKS
 
 * https://github.com/aws/aws-cli/blob/b6e7c5b79e4471713b2f7c660eff99b36d977064/awscli/customizations/sessionmanager.py#L83
