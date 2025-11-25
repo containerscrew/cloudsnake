@@ -19,7 +19,9 @@ class SessionWrapper:
         if not self.profile:
             self.log.warning("No AWS profile provided. Using environment default.")
 
-        self.log.debug(f"SessionWrapper initialized with profile={self.profile} region={self.region}")
+        self.log.debug(
+            f"SessionWrapper initialized with profile={self.profile} region={self.region}"
+        )
 
     def with_local_session(self) -> boto3.Session:
         """Return a boto3 Session using ~/.aws/credentials"""
