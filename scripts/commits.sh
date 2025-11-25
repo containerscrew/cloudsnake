@@ -30,4 +30,3 @@ return message
 echo "✔ Git history rewritten successfully."
 echo "⚠ If you want to push the rewritten history, use:"
 echo "   git push --force --all"
-
