@@ -82,7 +82,7 @@ class SSMStartSessionWrapper(App):
         Terminate the SSM session.
         """
         if self.session_response_output and "SessionId" in self.session_response_output:
-            self.ssm_client.terminate_session(
+            self.client.terminate_session(
                 SessionId=self.session_response_output["SessionId"]
             )
         else:

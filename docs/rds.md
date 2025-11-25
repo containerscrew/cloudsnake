@@ -1,15 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [RDS](#rds)
-  - [Enable IAM authentication in your DB](#enable-iam-authentication-in-your-db)
-  - [Creating a user to authenticate using IAM](#creating-a-user-to-authenticate-using-iam)
-  - [Download TL/SSLS cert](#download-tlssls-cert)
-  - [Test your token before using `cloudsnake`](#test-your-token-before-using-cloudsnake)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # RDS
 
 [Official documentation, the good one](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html)
