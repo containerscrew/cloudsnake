@@ -4,25 +4,46 @@ from botocore.config import Config
 
 class App:
     """
-    Encapsulate some logic will be used in all the nested wrappers (EC2,SSM,VPC,ROUTE53...)
+    Common AWS wrapper base class for cloudsnake SDK.
+    Provides: logging, client creation, session storage, region/profile propagation.
     """
 
-    def __init__(self, client=None, filters=None, query=None, **kwargs):
-        """
-        :param filters: filter the output. Available filters: https://awscli.amazonaws.com/v2/documentation/api/2.0.33/reference/ec2/describe-instances.html#options
-        :param query: Parse the output using json query language. Example: --query "Reservations[*].Instances[*].{Instance:InstanceId,Subnet:SubnetId}"
-        """
+    def __init__(
+        self,
+        client=None,
+        filters=None,
+        query=None,
+        profile=None,
+        region=None,
+        session=None,
+        **kwargs,
+    ):
         self.log = logging.getLogger("cloudsnake")
+
         self.filters = filters
         self.query = query
-        self.client = client
+        self.client_name = client
+        self.profile = profile
+        self.region = region
+        self.session = session
+        self.client = None
+
 
     def create_client(self, session):
         """
-        Create a boto3 client from a boto3 session
+        Create a boto3 client using the provided session.
+        Stores the session, region, and profile internally.
         """
-        # TODO this should be parametrized: max_attempts & mode
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
-        client = session.client(self.client, config=config)
+        self.session = session
+        try:
+            if not self.region:
+                self.region = session.region_name
+            if not self.profile and hasattr(session, 'profile_name'):
+                self.profile = session.profile_name
+        except Exception:
+            pass
 
-        self.client = client
+        config = Config(retries={"max_attempts": 10, "mode": "standard"})
+
+        self.client = session.client(self.client_name, config=config)
+        return self.client
