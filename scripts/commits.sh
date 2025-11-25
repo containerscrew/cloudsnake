@@ -13,7 +13,7 @@ CONVENTIONAL_REGEX='^(feat|fix|chore|refactor|docs|test|style|perf|build|ci)(\(.
 
 echo "Rewriting Git history..."
 
-git filter-repo --force \
+git filter-repo \
   --message-callback '
 import re
 
