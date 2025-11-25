@@ -1,7 +1,6 @@
 <p align="center" >
     <h3 align="center">cloudsnake 🐍</h3>
-    <p align="center">Some AWS CLI commands with a beautiful TUI</p>
-    <p align="center">Implement some useful commands to operate AWS. Like EC2 SSM instance connection or RDS connection using IAM authentication</p>
+    <p align="center">Wrapping some useful AWS cli commands to operate AWS like EC2 SSM instance connection or RDS connection using IAM authentication</p>
     <p align="center">Built with ❤ in Python</p>
 </p>
 
