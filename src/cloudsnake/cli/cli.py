@@ -3,9 +3,7 @@ import typer
 from typing import Optional
 from importlib.metadata import version
 from cloudsnake.cli.dto import Common, LoggingLevel
-from cloudsnake.cli.ec2 import ec2
 from cloudsnake.cli.ssm import ssm
-from cloudsnake.cli.rds import rds
 from cloudsnake.sdk.boto3_session import SessionWrapper
 from cloudsnake.logger import init_logger
 from cloudsnake.tui import Tui
@@ -20,21 +18,26 @@ APP_VERSION = version("cloudsnake")
 # Declare app and add subcommands
 app = typer.Typer(
     name="cloudsnake",
-    help="🐍☁  A modern CLI to interact with AWS resources (EC2, SSM, RDS).",
+    help="🐍☁  A modern CLI to interact with AWS resources (EC2, SSM, RDS). By github.com/containerscrew",
     no_args_is_help=True,
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
     rich_markup_mode="rich",
 )
 
-app.add_typer(ec2, name="ec2", help="Manage EC2 operations")
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
-app.add_typer(rds, name="rds", help="Manage RDS operations")
+#app.add_typer(rds, name="rds", help="Manage RDS operations")
 
 
 @app.command("version", help="Show cloudsnake app version")
 def version_cmd():
-    console.print(f"[bold green]cloudsnake v{APP_VERSION}[/bold green]")
+    typer.echo(
+        typer.style(
+            f"cloudsnake version: {APP_VERSION}",
+            fg=typer.colors.GREEN,
+            bold=True,
+        )
+    )
 
 @app.callback()
 def entrypoint(
@@ -61,8 +64,19 @@ def entrypoint(
     """
         Entry point for the cloudsnake CLI.
     """
+    logger = init_logger(log_level.value)
+    logger.info("Initializing cloudsnake 🐍☁")
+
+    # Create resources
     session = SessionWrapper(profile, region).with_local_session()
     tui = Tui()
-    ctx.obj = Common(session, profile, region, tui)
-    logger = init_logger(log_level.value)
-    logger.info("Starting cloudsnake 🐍☁")
+
+    # Store shared context
+    ctx.obj = Common(
+        session=session,
+        profile=profile,
+        region=region,
+        tui=tui,
+    )
+
+    logger.debug("Context initialized successfully")

@@ -4,37 +4,54 @@ import boto3
 
 
 class SessionWrapper:
-    """Encapsulates Amazon boto3 Session operations"""
+    """Encapsulates AWS boto3 Session operations"""
 
-    def __init__(
-        self, profile: str = os.getenv("AWS_PROFILE"), region: str = "us-east-1"
-    ):
+    def __init__(self, profile: str | None = None, region: str = "us-east-1"):
         """
-        :param profile: AWS credentials profile to be used. Check your ~/.aws/credentials
-        :param region: AWS region to operate.
-        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html
+        :param profile: AWS credentials profile (defaults to value in AWS_PROFILE).
+        :param region: AWS region.
         """
-        self.log = logging.getLogger("cloudsnake")
+        self.log = logging.getLogger("cloudsnake.session")
+
+        self.profile = profile or os.getenv("AWS_PROFILE")
         self.region = region
-        self.profile = profile
+
+        if not self.profile:
+            self.log.warning("No AWS profile provided. Using environment default.")
+
+        self.log.debug(f"SessionWrapper initialized with profile={self.profile} region={self.region}")
 
     def with_local_session(self) -> boto3.Session:
-        self.log.debug(
-            "Starting boto3 session using local credentials located in ~/.aws/credentials"
+        """Return a boto3 Session using ~/.aws/credentials"""
+        self.log.debug("Using local AWS credentials via ~/.aws/credentials")
+        return boto3.Session(
+            profile_name=self.profile,
+            region_name=self.region,
         )
-        return boto3.Session(region_name=self.region, profile_name=self.profile)
 
-    def with_sts_assume_role_session(self, role_arn) -> boto3.Session:
-        self.log.debug("Starting boto3 session with sts assume role")
-        session = boto3.Session(region_name=self.region, profile_name=self.profile)
-        sts = session.client("sts")
+    def with_sts_assume_role_session(self, role_arn: str) -> boto3.Session:
+        """Return a boto3 Session via STS AssumeRole"""
+        self.log.debug(f"Assuming role via STS: {role_arn}")
+
+        base_session = boto3.Session(
+            profile_name=self.profile,
+            region_name=self.region,
+        )
+        sts = base_session.client("sts")
+
         response = sts.assume_role(
-            RoleArn=role_arn, RoleSessionName="custom-session-using-role"
-        )
-        new_session = boto3.Session(
-            aws_access_key_id=response["Credentials"]["AccessKeyId"],
-            aws_secret_access_key=response["Credentials"]["SecretAccessKey"],
-            aws_session_token=response["Credentials"]["SessionToken"],
+            RoleArn=role_arn,
+            RoleSessionName="cloudsnake-session",
         )
 
-        return new_session
+        creds = response["Credentials"]
+
+        assumed = boto3.Session(
+            aws_access_key_id=creds["AccessKeyId"],
+            aws_secret_access_key=creds["SecretAccessKey"],
+            aws_session_token=creds["SessionToken"],
+            region_name=self.region,
+        )
+
+        self.log.debug("AssumeRole session created successfully")
+        return assumed

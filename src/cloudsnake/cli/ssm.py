@@ -45,22 +45,22 @@ def start_session(
             instances, title="Select the EC2 you want to connect"
         )
         instance_id = ctx.obj.tui.get_target_id_by_name(instances, instance_name)
-        ssm.start_session(instance_id, ctx.obj.region, ctx.obj.profile)
+        ssm.start_session(instance_id)
     else:
-        ssm.start_session(target, ctx.obj.region, ctx.obj.profile)
+        ssm.start_session(target)
 
 
-@ssm.command("get-parameters", help="Get parameters from parameter store")
-def get_parameters(
-    ctx: typer.Context,
-    output: Optional[OutputMode] = typer.Option(
-        OutputMode.json, "--output", "-o", help="Output mode", case_sensitive=True
-    ),
-    colored: Optional[bool] = typer.Option(
-        True, "--no-color", "-nc", help="Output with highlights."
-    ),
-):
-    ssm = SSMParameterStoreWrapper()
-    ssm.create_client
-    ssm.describe_parameters()
-    ssm.print_parameters(output, colored)
+# @ssm.command("get-parameters", help="Get parameters from parameter store")
+# def get_parameters(
+#     ctx: typer.Context,
+#     output: Optional[OutputMode] = typer.Option(
+#         OutputMode.json, "--output", "-o", help="Output mode", case_sensitive=True
+#     ),
+#     colored: Optional[bool] = typer.Option(
+#         True, "--no-color", "-nc", help="Output with highlights."
+#     ),
+# ):
+#     ssm = SSMParameterStoreWrapper()
+#     ssm.create_client
+#     ssm.describe_parameters()
+#     ssm.print_parameters(output, colored)
