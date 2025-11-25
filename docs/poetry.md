@@ -7,4 +7,5 @@ poetry publish --build ## publich the package to pypip
 poetry config repositories.testpypi https://test.pypi.org/legacy/ ## config for pypip test
 poetry publish --build -r testpypi # publish to pypip test
 poetry run python3 src/cloudsnake/__main__.py --help # run cloudsnake locally using poetry
+poetry env use python3.14 # set the python version
 ```

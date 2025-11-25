@@ -75,7 +75,7 @@ cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --ce
 
 ### Example
 
-![example_rds](./example_rds.png)
+pending to add new example
 
 # Installation
 
