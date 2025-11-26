@@ -8,12 +8,7 @@ from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 
-EC2_INSTANCE_SELECTOR_QUERY = (
-    "Reservations[*].Instances[*].{"
-    "TargetId: InstanceId, "
-    "Name: Tags[?Key=='Name'].Value | [0]"
-    "}"
-)
+EC2_INSTANCE_SELECTOR_QUERY = "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
 
 ssm = typer.Typer(
     no_args_is_help=True,
@@ -39,18 +34,20 @@ def start_session(
     ),
 ):
     ssm = SSMStartSessionWrapper(
+        session=ctx.obj.session,
         profile=ctx.obj.profile,
         region=ctx.obj.region,
     )
-    ssm.create_client(ctx.obj.session)
+
     if with_instance_selector:
         ec2 = EC2InstanceWrapper(
+            session=ctx.obj.session,
             filters=EC2_RUNNING_FILTER,
             query=EC2_INSTANCE_SELECTOR_QUERY,
             profile=ctx.obj.profile,
             region=ctx.obj.region,
         )
-        ec2.create_client(ctx.obj.session)
+
         instances = ec2.describe_ec2_instances()
         if not instances:
             typer.echo("No running instances found.")
