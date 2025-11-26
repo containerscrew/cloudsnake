@@ -1,48 +1,51 @@
+from __future__ import annotations
+
 import logging
+from abc import ABC, abstractmethod
+from typing import Optional, Any
+
+import boto3
 from botocore.config import Config
 
 
-class App:
-    """
-    Common AWS wrapper base class for cloudsnake SDK.
-    Provides: logging, client creation, session storage, region/profile propagation.
-    """
-
+class App(ABC):
     def __init__(
         self,
-        client=None,
-        filters=None,
-        query=None,
-        profile=None,
-        region=None,
-        session=None,
+        session: Optional[boto3.Session] = None,
+        region: Optional[str] = None,
+        profile: Optional[str] = None,
+        filters: Optional[dict] = None,
+        query: Optional[Any] = None,
+        retries: int = 10,
         **kwargs,
     ):
-        self.log = logging.getLogger("cloudsnake")
-
+        self.log = logging.getLogger(self.__class__.__name__)
         self.filters = filters
         self.query = query
-        self.client_name = client
+        self.session = session
         self.profile = profile
         self.region = region
-        self.session = session
-        self.client = None
+        self.retries = retries
+        self._client = None
 
-    def create_client(self, session):
-        """
-        Create a boto3 client using the provided session.
-        Stores the session, region, and profile internally.
-        """
-        self.session = session
-        try:
-            if not self.region:
-                self.region = session.region_name
-            if not self.profile and hasattr(session, "profile_name"):
-                self.profile = session.profile_name
-        except Exception:
-            pass
+    @property
+    @abstractmethod
+    def client_name(self) -> str:
+        pass
 
-        config = Config(retries={"max_attempts": 10, "mode": "standard"})
+    @property
+    def client(self):
+        if self._client is None:
+            if not self.session:
+                raise RuntimeError("No boto3 session available")
+            self._client = self._create_client()
+        return self._client
 
-        self.client = session.client(self.client_name, config=config)
-        return self.client
+    def _create_client(self):
+        if not self.region and self.session.region_name:
+            self.region = self.session.region_name
+        if not self.profile and getattr(self.session, "profile_name", None):
+            self.profile = self.session.profile_name
+
+        cfg = Config(retries={"max_attempts": self.retries, "mode": "standard"})
+        return self.session.client(self.client_name, config=cfg)

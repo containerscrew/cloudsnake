@@ -39,7 +39,6 @@ def version_cmd():
         )
     )
 
-
 @app.callback()
 def entrypoint(
     ctx: typer.Context,
