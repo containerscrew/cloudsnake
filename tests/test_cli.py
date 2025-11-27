@@ -7,6 +7,6 @@ app_version = version("cloudsnake")
 
 
 def test_app():
-    result = runner.invoke(app, ["--version"])
+    result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
-    assert f"Using cloudsnake version: v{app_version}" in result.stdout
+    assert f"cloudsnake version: {app_version}" in result.stdout
