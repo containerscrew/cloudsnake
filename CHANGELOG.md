@@ -1,7 +1,13 @@
-## Unreleased (964dbd0..e554643)
+## Unreleased (964dbd0..80a1c23)
+#### Bug Fixes
+- tests - (2387dfe) - containerscrew
+#### Documentation
+- update README.md and examples - (80a1c23) - containerscrew
+- update README.md and examples - (3516cb5) - containerscrew
 #### Features
 - refactor rds session - (bae0db4) - containerscrew
 #### Miscellaneous Chores
+- add CHANGELOG.md after fixing non conventional commits - (b67a52a) - containerscrew
 - auto-fix non-conventional commit - Merge pull request #10 from containerscrew/dependabot/pip/boto3-1.41.5 - (e554643) - github-actions[bot]
 - auto-fix non-conventional commit - Bump boto3 from 1.41.4 to 1.41.5 - (9775ba5) - dependabot[bot]
 - update scripts/commits.sh - (e5da3d0) - containerscrew
@@ -90,6 +96,8 @@
 - auto-fix non-conventional commit - Update README - (26b5250) - containerscrew
 - auto-fix non-conventional commit - Initial commit - (964dbd0) - containerscrew
 #### Refactoring
+- session file name - (82922b7) - containerscrew
+- ruff checks - (29e52e9) - containerscrew
 - sdk and cli commands - (117b9d9) - containerscrew
 - code structure and doc - (c450f30) - containerscrew
 - code structure - (90d2678) - containerscrew
