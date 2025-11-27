@@ -5,6 +5,10 @@
 
 ---
 
+![example gif](./example.gif)
+
+---
+
 <p align="center" >
     <img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white">
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/containerscrew/cloudsnake">
@@ -39,10 +43,6 @@ cloudsnake ssm start-session -is # will print all your instances in a terminal m
 cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specifying the target id
 ```
 ---
-
-![example gif](./example.gif)
-
-![example instance connection](./example.png)
 
 # Installation
 
