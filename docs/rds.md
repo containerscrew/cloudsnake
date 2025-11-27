@@ -39,3 +39,29 @@ admin)
 mariadb --host=sbx-rds-test.cyvl1212frfjnfrfregegspjksq.eu-west-1.rds.amazonaws.com --port=3306 --ssl-ca=cert.pem --user=admin --password=$TOKEN
 select user from mysql.users;
 ```
+
+## Connect to the RDS instance using IAM authentication db token
+
+Please follow [this instructions](./docs/rds.md) to setup your RDS IAM authentication.
+
+### Download the cert
+
+By default, `cloudsnake` forces to use TLS/SSL connections.
+
+```shell
+cloudsnake rds download-cert --save-path /tmp
+```
+
+Other region:
+
+```shell
+cloudsnake --region us-east-1 download-cert --save-path /tmp
+```
+
+### Connect to the instance
+
+Example for the region `eu-west-1`:
+
+```shell
+cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --cert /tmp/rds-cert-eu-west-1.pem
+```

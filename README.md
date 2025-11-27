@@ -1,7 +1,6 @@
 <p align="center" >
     <h3 align="center">cloudsnake 🐍</h3>
     <p align="center">Wrapping some useful AWS cli commands to operate AWS like EC2 SSM instance connection or RDS connection using IAM authentication</p>
-    <p align="center">Built with ❤ in Python</p>
 </p>
 
 ---
@@ -25,9 +24,7 @@
 # Available implementations
 
 * Connect to EC2 instances using SSM. You can pass the instance id (`--target`) or use the interactive menu (`--with-instance-selector`)
-
-* Connect to the RDS instances using IAM db authentication.
-
+* (In progress) Connect to RDS instances using IAM authentication db token
 
 # Examples
 
@@ -38,43 +35,14 @@ In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the
 ## Connect to the EC2 instance using SSM
 
 ```shell
-cloudsnake ssm start-session --with-instance-selector # will print all your instances in a terminal menu
+cloudsnake ssm start-session -is # will print all your instances in a terminal menu
 cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specifying the target id
 ```
+---
 
-### Example
+![example gif](./example.gif)
 
-![example_ssm_connect](./example_ssm_connect.png)
-
-## Connect to the RDS instance using IAM authentication db token
-
-Please follow [this instructions](./docs/rds.md) to setup your RDS IAM authentication.
-
-### Download the cert
-
-By default, `cloudsnake` forces to use TLS/SSL connections.
-
-```shell
-cloudsnake rds download-cert --save-path /tmp
-```
-
-Other region:
-
-```shell
-cloudsnake --region us-east-1 download-cert --save-path /tmp
-```
-
-### Connect to the instance
-
-Example for the region `eu-west-1`:
-
-```shell
-cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --cert /tmp/rds-cert-eu-west-1.pem
-```
-
-### Example
-
-pending to add new example
+![example instance connection](./example.png)
 
 # Installation
 
@@ -114,7 +82,7 @@ hint: See PEP 668 for the detailed specification.
 </pre>
 </details>
 
-## Using pipx
+## Using pipx (Recommended)
 
 Install `pipx` with your system package manager (`apt`, `dnf`, `pacman`...).
 
@@ -124,25 +92,10 @@ pipx install cloudsnake
 
 # Uninstall
 
-## Using pip
-
 ```console
 pip3 uninstall cloudsnake
-```
-
-## Using pipx
-
-```console
+# or
 pipx uninstall cloudsnake
-```
-
-# Cloudsnake commands
-
-```shell
-cloudsnake --help
-cloudsnake ssm start-session --with-instance-selector
-cloudsnake ssm start-session --target i-xxxxxxx
-cloudsnake rds connect -h XXXXX.XXXXXX.eu-west-1.rds.amazonaws.com -u ADMIN --cert /tmp/rds-cert-eu-west-1.pem
 ```
 
 # License
