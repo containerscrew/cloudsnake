@@ -1,0 +1,99 @@
+## Unreleased (964dbd0..e554643)
+#### Features
+- refactor rds session - (bae0db4) - containerscrew
+#### Miscellaneous Chores
+- auto-fix non-conventional commit - Merge pull request #10 from containerscrew/dependabot/pip/boto3-1.41.5 - (e554643) - github-actions[bot]
+- auto-fix non-conventional commit - Bump boto3 from 1.41.4 to 1.41.5 - (9775ba5) - dependabot[bot]
+- update scripts/commits.sh - (e5da3d0) - containerscrew
+- update scripts/commits.sh - (ca9be1f) - containerscrew
+- change permissions to scripts/commits.sh - (92c3366) - containerscrew
+- add script to rewrite commits to conventional commits - (5d958a1) - containerscrew
+- add auto-merge pipeline - (c75894a) - containerscrew
+- auto-fix non-conventional commit - Merge pull request #7 from containerscrew/dependabot/pip/typer-0.20.0 - (42604fc) - containerscrew
+- auto-fix non-conventional commit - Merge branch 'main' into dependabot/pip/typer-0.20.0 - (8accead) - containerscrew
+- auto-fix non-conventional commit - Merge pull request #5 from containerscrew/dependabot/pip/testfixtures-10.0.0 - (8a29d09) - containerscrew
+- auto-fix non-conventional commit - Bump typer from 0.12.5 to 0.20.0 - (549c5a0) - dependabot[bot]
+- auto-fix non-conventional commit - Bump testfixtures from 8.3.0 to 10.0.0 - (48a7cc2) - dependabot[bot]
+- auto-fix non-conventional commit - Merge pull request #3 from containerscrew/dependabot/pip/rich-14.2.0 - (ed14073) - containerscrew
+- auto-fix non-conventional commit - Bump rich from 13.9.4 to 14.2.0 - (7a85bc2) - dependabot[bot]
+- auto-fix non-conventional commit - Merge pull request #4 from containerscrew/dependabot/pip/pytest-randomly-4.0.1 - (be54ad3) - containerscrew
+- auto-fix non-conventional commit - Bump pytest-randomly from 3.16.0 to 4.0.1 - (8bed8db) - dependabot[bot]
+- auto-fix non-conventional commit - Merge pull request #8 from containerscrew/dependabot/pip/click-8.3.1 - (cba60a6) - containerscrew
+- auto-fix non-conventional commit - Bump click from 8.1.8 to 8.3.1 - (554e457) - dependabot[bot]
+- auto-fix non-conventional commit - Merge pull request #2 from containerscrew/dependabot/pip/pytest-cov-7.0.0 - (30fc822) - containerscrew
+- auto-fix non-conventional commit - Bump pytest-cov from 5.0.0 to 7.0.0 - (680f6ce) - dependabot[bot]
+- update poetry.lock - (9c78aa0) - containerscrew
+- auto-fix non-conventional commit - Merge pull request #9 from containerscrew/dependabot/pip/pytest-9.0.1 - (1547833) - containerscrew
+- update README.md & ignore ruff check & tests - (7bd9704) - containerscrew
+- auto-fix non-conventional commit - Bump pytest from 8.4.2 to 9.0.1 - (60b1deb) - dependabot[bot]
+- pre-commit - (217e29f) - containerscrew
+- auto-fix non-conventional commit - Set default profile to env AWS_PROFILE - (eda4c27) - containerscrew
+- auto-fix non-conventional commit - Fix SSM when no running instances found - (6ef7c7b) - containerscrew
+- auto-fix non-conventional commit - Fix ssm start interative session - (d19433d) - containerscrew
+- auto-fix non-conventional commit - Fix EC2 tests - (4eb21ec) - containerscrew
+- auto-fix non-conventional commit - Refactor EC2InstanceWrapper. Improving failing tests - (b26e140) - containerscrew
+- auto-fix non-conventional commit - Merge pull request #1 from containerscrew/dependabot/pip/certifi-2024.7.4 - (2beb0f1) - danielsdotrs
+- auto-fix non-conventional commit - Bump certifi from 2024.6.2 to 2024.7.4 - (9e4e40f) - dependabot[bot]
+- auto-fix non-conventional commit - New version 0.4.0 - (3dfc556) - containerscrew
+- auto-fix non-conventional commit - Update doc - (7463a0a) - containerscrew
+- auto-fix non-conventional commit - Update doc - (822f004) - containerscrew
+- auto-fix non-conventional commit - Update doc - (de49252) - containerscrew
+- auto-fix non-conventional commit - Update doc - (36aa7b8) - containerscrew
+- auto-fix non-conventional commit - Update doc - (baa9e3b) - containerscrew
+- auto-fix non-conventional commit - ♻️ Refactor & implement some tests - (8c8b449) - containerscrew
+- auto-fix non-conventional commit - 📝 Add docu - (6f5773e) - containerscrew
+- auto-fix non-conventional commit - ♻️ Fix some tests - (75cc7e6) - containerscrew
+- auto-fix non-conventional commit - 🚨 Fix linter - (ceb932d) - containerscrew
+- auto-fix non-conventional commit - ♻️ Fix rds connect cert - (68680b1) - containerscrew
+- auto-fix non-conventional commit - ♻️ Add new RDS command - (b31d6cd) - containerscrew
+- auto-fix non-conventional commit - ✨ Refactoring AWS SDK & implement RDS operations - (b6717cf) - containerscrew
+- auto-fix non-conventional commit - ✏️ Fix ruff lint - (43d96f2) - containerscrew
+- auto-fix non-conventional commit - 🎨 Improving class - (e9abe83) - containerscrew
+- auto-fix non-conventional commit - ♻️ Refactor class/subclass for the app - (d876fca) - containerscrew
+- auto-fix non-conventional commit - ✅ Update tests - (72176e0) - containerscrew
+- update dependencies with poetry - (798bedb) - containerscrew
+- auto-fix non-conventional commit - Remove print - (0b7e8aa) - containerscrew
+- auto-fix non-conventional commit - Run-precommit - (de8e230) - containerscrew
+- auto-fix non-conventional commit - Feat: adding new tests with moto boto3 mock - (0fc37c2) - containerscrew
+- auto-fix non-conventional commit - Add tag pattern in cliff.toml - (020c02e) - containerscrew
+- auto-fix non-conventional commit - Merge branch 'develop' into main - (724040d) - containerscrew
+- auto-fix non-conventional commit - Working with SSM - (2fef2f1) - containerscrew
+- auto-fix non-conventional commit - Wip - (c249e7c) - containerscrew
+- auto-fix non-conventional commit - Update dependencies - (bf2688c) - containerscrew
+- auto-fix non-conventional commit - Refactor classes - (aaafb23) - containerscrew
+- auto-fix non-conventional commit - Wip: SSM operations - (f615dba) - containerscrew
+- auto-fix non-conventional commit - Lint - (2d66291) - containerscrew
+- auto-fix non-conventional commit - Implement SSM start-session command - (dfce684) - containerscrew
+- auto-fix non-conventional commit - Implement args and kwargs - (eeb40e7) - containerscrew
+- auto-fix non-conventional commit - Wip - (e2aa779) - containerscrew
+- auto-fix non-conventional commit - Refactor classes - (c0819ec) - containerscrew
+- auto-fix non-conventional commit - Wip - (faee58a) - containerscrew
+- auto-fix non-conventional commit - Add retry config - (dc4f25b) - containerscrew
+- auto-fix non-conventional commit - Add config retry - (11e2570) - containerscrew
+- auto-fix non-conventional commit - Fix imports - (94cf797) - containerscrew
+- auto-fix non-conventional commit - Refactor InstanceWrapper - (cf63f89) - containerscrew
+- auto-fix non-conventional commit - Refactor InstanceWrapper - (48da6cd) - containerscrew
+- auto-fix non-conventional commit - WIp - (09fe8b4) - containerscrew
+- auto-fix non-conventional commit - Refactor tui - (506b890) - containerscrew
+- auto-fix non-conventional commit - Implement print table - (04d9e38) - containerscrew
+- auto-fix non-conventional commit - Working with TUI - (549c1bc) - containerscrew
+- auto-fix non-conventional commit - Wip - (9ba0cca) - containerscrew
+- auto-fix non-conventional commit - Ruff linter - (7584df5) - containerscrew
+- auto-fix non-conventional commit - Wip: refactor logger, ec2 wrappers - (fe56b29) - containerscrew
+- auto-fix non-conventional commit - Ruff linter - (fe2508b) - containerscrew
+- auto-fix non-conventional commit - Wip: refactor code - (0a723c2) - containerscrew
+- auto-fix non-conventional commit - Massive pre-commit - (41b4afe) - containerscrew
+- auto-fix non-conventional commit - Update README - (7c0e6a2) - containerscrew
+- auto-fix non-conventional commit - Update README - (0740634) - containerscrew
+- auto-fix non-conventional commit - Update README - (95ffe56) - containerscrew
+- auto-fix non-conventional commit - Update README - (984f8c2) - containerscrew
+- auto-fix non-conventional commit - Update README - (26b5250) - containerscrew
+- auto-fix non-conventional commit - Initial commit - (964dbd0) - containerscrew
+#### Refactoring
+- sdk and cli commands - (117b9d9) - containerscrew
+- code structure and doc - (c450f30) - containerscrew
+- code structure - (90d2678) - containerscrew
+- code and doc - (686cd5c) - containerscrew
+- documentation and code - (7c93213) - containerscrew
+
+
