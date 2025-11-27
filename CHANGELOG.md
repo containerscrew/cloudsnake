@@ -95,5 +95,3 @@
 - code structure - (90d2678) - containerscrew
 - code and doc - (686cd5c) - containerscrew
 - documentation and code - (7c93213) - containerscrew
-
-

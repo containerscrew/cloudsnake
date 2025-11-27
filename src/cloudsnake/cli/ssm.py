@@ -1,9 +1,7 @@
 from typing import Optional
 import typer
 
-from cloudsnake.cli.dto import OutputMode
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
-from cloudsnake.sdk.ssm_parameter_store import SSMParameterStoreWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"

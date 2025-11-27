@@ -1,11 +1,5 @@
-import json
-import random
-
 from rich.console import Console
-from rich.table import Table
-from rich import print
 from simple_term_menu import TerminalMenu
-from cloudsnake.helpers import serialize_datetime
 
 """
 Color list

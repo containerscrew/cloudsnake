@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import jmespath
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from cloudsnake.helpers import parse_filters
 from cloudsnake.sdk.aws import App

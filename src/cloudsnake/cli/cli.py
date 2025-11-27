@@ -8,7 +8,6 @@ from cloudsnake.sdk.boto3_session import SessionWrapper
 from cloudsnake.logger import init_logger
 from cloudsnake.tui import Tui
 from rich import traceback
-from rich.console import Console
 
 traceback.install(show_locals=False)
 
