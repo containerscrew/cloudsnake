@@ -14,6 +14,7 @@ colors_hex = {
     "green": "#008000",
 }
 
+
 class Tui:
     def __init__(self):
         """
@@ -25,6 +26,7 @@ class Tui:
         self.color_list = list(colors_hex.values())
 
         # Get colors from https://rich.readthedocs.io/en/stable/appendix/colors.html
+
     @staticmethod
     def get_instance_names(data):
         return [f"{item['Name']}  ({item['TargetId']})" for item in data]

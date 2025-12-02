@@ -6,7 +6,9 @@ from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 
-EC2_INSTANCE_SELECTOR_QUERY = "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
+EC2_INSTANCE_SELECTOR_QUERY = (
+    "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
+)
 
 ssm = typer.Typer(
     no_args_is_help=True,

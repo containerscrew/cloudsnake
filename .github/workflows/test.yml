@@ -3,18 +3,20 @@ name: Testing
 on:
   pull_request:
   push:
-  branch:
-    - main
+    branches:
+      - main
+    tags:
+      - "*.*.*"
 
 jobs:
   linting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: "3.14"
 
       - uses: actions/cache@v4
         with:
@@ -22,24 +24,25 @@ jobs:
           key: ${{ runner.os }}-pip
           restore-keys: ${{ runner.os }}-pip
 
-      - uses: chartboost/ruff-action@v1
-        with:
-          args: 'format --check'
+      - uses: astral-sh/ruff-action@v3
+      - run: ruff check --fix
+      - run: ruff format
+
   test:
     needs: linting
     strategy:
       fail-fast: true
       matrix:
-        os: [ "ubuntu-latest", "macos-latest" ]
-        python-version: [ "3.12" ]
+        os: ["ubuntu-latest", "macos-latest"]
+        python-version: ["3.14"]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up python ${{ matrix.python-version }}
         id: setup-python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 

@@ -34,7 +34,11 @@ class EC2InstanceWrapper(App):
                         if iid:
                             self.instances[iid] = instance
 
-            return jmespath.search(self.query, list(self.instances.values())) if self.query else list(self.instances.values())
+            return (
+                jmespath.search(self.query, list(self.instances.values()))
+                if self.query
+                else list(self.instances.values())
+            )
 
         except ClientError as err:
             self.log.error(

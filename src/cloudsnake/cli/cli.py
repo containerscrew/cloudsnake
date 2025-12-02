@@ -37,6 +37,7 @@ def version_cmd():
         )
     )
 
+
 @app.callback()
 def entrypoint(
     ctx: typer.Context,
@@ -60,7 +61,7 @@ def entrypoint(
     ),
 ):
     """
-        Entry point for the cloudsnake CLI.
+    Entry point for the cloudsnake CLI.
     """
     logger = init_logger(log_level.value)
     logger.info("Initializing cloudsnake 🐍☁")
