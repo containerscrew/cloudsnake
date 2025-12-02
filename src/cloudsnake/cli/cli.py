@@ -4,7 +4,7 @@ from typing import Optional
 from importlib.metadata import version
 from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.ssm import ssm
-from cloudsnake.sdk.boto3_session import SessionWrapper
+from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
 from cloudsnake.tui import Tui
 from rich import traceback
@@ -25,7 +25,6 @@ app = typer.Typer(
 )
 
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
-# app.add_typer(rds, name="rds", help="Manage RDS operations")
 
 
 @app.command("version", help="Show cloudsnake app version")
@@ -61,7 +60,7 @@ def entrypoint(
     ),
 ):
     """
-    Entry point for the cloudsnake CLI.
+        Entry point for the cloudsnake CLI.
     """
     logger = init_logger(log_level.value)
     logger.info("Initializing cloudsnake 🐍☁")
