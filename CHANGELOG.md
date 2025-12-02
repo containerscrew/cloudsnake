@@ -1,12 +1,25 @@
-## Unreleased (964dbd0..80a1c23)
+## Unreleased (964dbd0..f673a91)
 #### Bug Fixes
+- signal handler - (721572d) - containerscrew
+- import cloudsnake.sdk.boto3_session - (1700081) - containerscrew
 - tests - (2387dfe) - containerscrew
 #### Documentation
+- update README.md - (196a751) - containerscrew
+- update README.md and examples - (a42a202) - containerscrew
 - update README.md and examples - (80a1c23) - containerscrew
 - update README.md and examples - (3516cb5) - containerscrew
 #### Features
+- implement SSM get parameter - (c7f9943) - containerscrew
 - refactor rds session - (bae0db4) - containerscrew
 #### Miscellaneous Chores
+- new release 0.6.0 - (f673a91) - containerscrew
+- pre-commit - (290ed63) - containerscrew
+- ruff checks - (727f9ab) - containerscrew
+- test pipeline - (3f079ea) - containerscrew
+- bump werkzeug from 3.1.3 to 3.1.4 - (fb7206d) - dependabot[bot]
+- bump boto3 from 1.41.5 to 1.42.0 - (1f09e59) - dependabot[bot]
+- bump moto from 5.1.17 to 5.1.18 - (304bc0b) - dependabot[bot]
+- CHANGELOG.md - (95ad488) - containerscrew
 - add CHANGELOG.md after fixing non conventional commits - (b67a52a) - containerscrew
 - auto-fix non-conventional commit - Merge pull request #10 from containerscrew/dependabot/pip/boto3-1.41.5 - (e554643) - github-actions[bot]
 - auto-fix non-conventional commit - Bump boto3 from 1.41.4 to 1.41.5 - (9775ba5) - dependabot[bot]
