@@ -6,7 +6,6 @@ from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.ssm import ssm
 from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
-from cloudsnake.tui import Tui
 from rich import traceback
 
 traceback.install(show_locals=False)
@@ -68,14 +67,12 @@ def entrypoint(
 
     # Create resources
     session = SessionWrapper(profile, region).with_local_session()
-    tui = Tui()
 
     # Store shared context
     ctx.obj = Common(
         session=session,
         profile=profile,
         region=region,
-        tui=tui,
     )
 
     logger.debug("Context initialized successfully")

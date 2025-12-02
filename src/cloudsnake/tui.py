@@ -15,7 +15,42 @@ colors_hex = {
 }
 
 
-class Tui:
+class SSMTui:
+    def __init__(self):
+        """
+        Create your own terminal user interface using Rich library
+        About used colors: https://rich.readthedocs.io/en/stable/appendix/colors.html
+        :param output:
+        """
+        self.console = Console()
+        self.color_list = list(colors_hex.values())
+
+        # Get colors from https://rich.readthedocs.io/en/stable/appendix/colors.html
+
+    @staticmethod
+    def get_parameter_by_name(data):
+        return [f"{item['Name']}" for item in data]
+
+    @staticmethod
+    def interactive_menu(data, title="Select parameter store parameter"):
+        parameters = SSMTui.get_parameter_by_name(data)
+
+        terminal_menu = TerminalMenu(
+            parameters,
+            title=title,
+            menu_cursor="> ",
+            menu_cursor_style=("fg_red", "bold"),
+            menu_highlight_style=("fg_black", "bg_yellow", "bold"),
+            cycle_cursor=True,
+            clear_screen=True,
+        )
+
+        idx = terminal_menu.show()
+
+        return parameters[idx]
+
+
+class EC2Tui:
     def __init__(self):
         """
         Create your own terminal user interface using Rich library
@@ -39,7 +74,7 @@ class Tui:
 
     @staticmethod
     def interactive_menu(data, title="Select instance"):
-        instance_names = Tui.get_instance_names(data)
+        instance_names = EC2Tui.get_instance_names(data)
 
         terminal_menu = TerminalMenu(
             instance_names,

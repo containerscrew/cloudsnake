@@ -35,6 +35,18 @@ cloudsnake ssm start-session -is # will print all your instances in a terminal m
 cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specifying the target id
 ```
 
+---
+
+<p align="center">
+    <img align="center" alt="SSM get parameter" src="docs/img/cloudsnake-ssm-parameter.gif">
+<h3 align="center">SSM get parameter</h3>
+</p>
+
+```shell
+cloudsnake ssm get-parameter # default region eu-west-1
+cloudsnake --region us-east-1 ssm get-parameters # specify region
+```
+
 # Installation
 
 ## Using pipx (Recommended)
