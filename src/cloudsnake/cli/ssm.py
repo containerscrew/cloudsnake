@@ -1,3 +1,5 @@
+import signal
+import sys
 from typing import Optional
 import typer
 
@@ -9,6 +11,12 @@ EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 EC2_INSTANCE_SELECTOR_QUERY = (
     "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
 )
+
+
+def signal_handler(sig, frame):
+    typer.echo("You pressed Ctrl+C! Exiting gracefully...")
+    sys.exit(0)
+
 
 ssm = typer.Typer(
     no_args_is_help=True,
@@ -33,6 +41,7 @@ def start_session(
         help="Prompt a terminal menu and select the instance you want to connect. --target flag is no longer used",
     ),
 ):
+    signal.signal(signal.SIGINT, signal_handler)
     ssm = SSMStartSessionWrapper(
         session=ctx.obj.session,
         profile=ctx.obj.profile,
