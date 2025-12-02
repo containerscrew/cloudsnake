@@ -5,10 +5,6 @@
 
 ---
 
-![example gif](./example.gif)
-
----
-
 <p align="center" >
     <img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white">
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/containerscrew/cloudsnake">
@@ -25,26 +21,27 @@
 
 ---
 
-# Available implementations
-
-* Connect to EC2 instances using SSM. You can pass the instance id (`--target`) or use the interactive menu (`--with-instance-selector`)
-* (In progress) Connect to RDS instances using IAM authentication db token
-
-# Examples
-
-For the examples, you need to be authenticated to AWS account using your local credentials.
+<p align="center">
+    <img align="center" alt="SSM session" src="docs/img//cloudsnake-ssm-session.gif">
+<h3 align="center">SSM session</h3>
+</p>
 
 In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`)
-
-## Connect to the EC2 instance using SSM
 
 ```shell
 cloudsnake ssm start-session -is # will print all your instances in a terminal menu
 cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specifying the target id
 ```
----
 
 # Installation
+
+## Using pipx (Recommended)
+
+Install `pipx` with your system package manager (`apt`, `dnf`, `pacman`...).
+
+```console
+pipx install cloudsnake
+```
 
 ## Using pip
 
@@ -65,8 +62,8 @@ error: externally-managed-environment
 
 × This environment is externally managed
 ╰─> To install Python packages system-wide, try 'pacman -S
-    python-xyz', where xyz is the package you are trying to
-    install.
+python-xyz', where xyz is the package you are trying to
+install.
 
     If you wish to install a non-Arch-packaged Python package,
     create a virtual environment using 'python -m venv path/to/venv'.
@@ -79,23 +76,16 @@ error: externally-managed-environment
 
 note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
 hint: See PEP 668 for the detailed specification.
+
 </pre>
 </details>
-
-## Using pipx (Recommended)
-
-Install `pipx` with your system package manager (`apt`, `dnf`, `pacman`...).
-
-```console
-pipx install cloudsnake
-```
 
 # Uninstall
 
 ```console
-pip3 uninstall cloudsnake
-# or
 pipx uninstall cloudsnake
+# or
+pip3 uninstall cloudsnake
 ```
 
 # License
