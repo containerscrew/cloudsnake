@@ -26,7 +26,9 @@
 <h3 align="center">SSM session</h3>
 </p>
 
-In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`)
+In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`). Also install the [REQUIRED plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) to use SSM sessions.
+
+Then run:
 
 ```shell
 cloudsnake ssm start-session -is # will print all your instances in a terminal menu
