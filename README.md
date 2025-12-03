@@ -21,14 +21,23 @@
 
 ---
 
+In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`). Copy [this helper function](./aws-profile.sh) called `aws-profile` into your favourite shell (`.bashrc`, `.zshrc`, `~/.config/fish/function`) to easily switch between AWS profiles. In case of using `fish` shell, use [this other function](./aws-profile.fish).
+
+<br><br>
+<p align="center">
+    <img align="center" alt="SSM session" src="docs/img/aws-profile.gif">
+<h3 align="center">aws-profile</h3>
+</p>
+
+---
+<br><br>
 <p align="center">
     <img align="center" alt="SSM session" src="docs/img//cloudsnake-ssm-session.gif">
 <h3 align="center">SSM session</h3>
 </p>
 
-In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the default. (`~/.aws/credentials`). Also install the [REQUIRED plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) to use SSM sessions.
+Install the [REQUIRED plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) to use SSM sessions.
 
-Then run:
 
 ```shell
 cloudsnake ssm start-session -is # will print all your instances in a terminal menu
@@ -37,6 +46,7 @@ cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specif
 
 ---
 
+<br><br>
 <p align="center">
     <img align="center" alt="SSM get parameter" src="docs/img/cloudsnake-ssm-parameter.gif">
 <h3 align="center">SSM parameter</h3>
@@ -96,7 +106,7 @@ hint: See PEP 668 for the detailed specification.
 
 # Uninstall
 
-```console
+```bash
 pipx uninstall cloudsnake
 # or
 pip3 uninstall cloudsnake
