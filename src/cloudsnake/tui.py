@@ -86,4 +86,5 @@ class EC2Tui:
             clear_screen=True,
         )
         idx = terminal_menu.show()
+
         return instance_names[idx]

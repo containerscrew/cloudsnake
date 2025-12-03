@@ -83,10 +83,3 @@ def test_ensure_directory_exists(mock_directory):
     filepath = os.path.join(mock_directory, "test_file.txt")
     with pytest.raises(FileNotFoundError):
         ensure_directory_exists(filepath)
-
-
-# def test_ensure_directory_exists(mock_directory):
-#     """Test that ensure_directory_exists creates the directory if it doesn't exist."""
-#     filepath = os.path.join(mock_directory, "test_file.txt")
-#     ensure_directory_exists(filepath)
-#     assert os.path.exists(os.path.dirname(filepath))
