@@ -39,7 +39,7 @@ cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specif
 
 <p align="center">
     <img align="center" alt="SSM get parameter" src="docs/img/cloudsnake-ssm-parameter.gif">
-<h3 align="center">SSM get parameter</h3>
+<h3 align="center">SSM parameter</h3>
 </p>
 
 ```shell
