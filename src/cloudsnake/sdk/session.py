@@ -13,7 +13,7 @@ class SessionWrapper:
         self.region = region
 
         if not self.profile:
-            self.log.warning(
+            self.log.debug(
                 "No AWS profile provided, falling back to environment defaults"
             )
 

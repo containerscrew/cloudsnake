@@ -1,5 +1,6 @@
 # https://docs.python.org/3/howto/logging.html
 import logging
+from typing import Any
 
 
 class CustomFormatter(logging.Formatter):
@@ -36,7 +37,7 @@ def configure_boto3_logger(handler, log_level):
     botocore_logger.addHandler(handler)
 
 
-def init_logger(log_level: str = "INFO") -> logging.Logger:
+def init_logger(log_level: Any) -> logging.Logger:
     logger = logging.getLogger("cloudsnake")
     logger.setLevel(log_level)
 

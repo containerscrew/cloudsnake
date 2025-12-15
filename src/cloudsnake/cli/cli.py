@@ -4,6 +4,7 @@ from typing import Optional
 from importlib.metadata import version
 from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.ssm import ssm
+from cloudsnake.cli.sso import sso
 from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
 from rich import traceback
@@ -16,7 +17,7 @@ APP_VERSION = version("cloudsnake")
 # Declare app and add subcommands
 app = typer.Typer(
     name="cloudsnake",
-    help="🐍☁  A modern CLI to interact with AWS resources (EC2, SSM, RDS). By github.com/containerscrew",
+    help="🐍☁  A modern CLI to interact with AWS resources (SSO, SSM, RDS). By github.com/containerscrew",
     no_args_is_help=True,
     pretty_exceptions_short=True,
     pretty_exceptions_show_locals=False,
@@ -24,6 +25,7 @@ app = typer.Typer(
 )
 
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
+app.add_typer(sso, name="sso", help="Manage SSO operations")
 
 
 @app.command("version", help="Show cloudsnake app version")

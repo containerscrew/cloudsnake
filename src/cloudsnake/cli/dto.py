@@ -10,6 +10,19 @@ class Common:
     region: str
 
 
+@dataclass
+class DeviceRegistration:
+    client_id: str
+    client_secret: str
+
+
+@dataclass
+class DeviceCode:
+    device_code: str
+    user_code: str
+    verification_uri_complete: str
+
+
 class OutputMode(str, Enum):
     json = "json"
     table = "table"
