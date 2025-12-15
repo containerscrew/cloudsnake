@@ -10,7 +10,7 @@ from cloudsnake.utils import open_browser_url
 
 
 def signal_handler(sig, frame):
-    typer.secho("You pressed Ctrl+C! Exiting gracefully...", fg="bright_red")
+    typer.secho("\nYou pressed Ctrl+C! Exiting gracefully. Bye!", fg="bright_red")
     sys.exit(0)
 
 

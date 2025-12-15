@@ -50,7 +50,7 @@ def entrypoint(
         show_default=True,
     ),
     log_level: Optional[LoggingLevel] = typer.Option(
-        LoggingLevel.WARNING,
+        LoggingLevel.INFO,
         "--log-level",
         "-l",
         help="Logging level for the app custom code and boto3",
