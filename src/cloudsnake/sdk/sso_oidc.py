@@ -7,7 +7,7 @@ from cloudsnake.sdk.aws import App
 class SSOOIDCWrapper(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.log = logging.getLogger("cloudsnake.sso_oidc")
+        self.log = logging.getLogger("cloudsnake.sso")
 
     @property
     def client_name(self) -> str:

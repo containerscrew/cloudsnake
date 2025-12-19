@@ -56,6 +56,21 @@ cloudsnake ssm start-session --target i-XXXXXX  # connect to the instance specif
 cloudsnake ssm get-parameter # default region eu-west-1
 cloudsnake --region us-east-1 ssm get-parameters # specify region
 ```
+---
+
+<br><br>
+<p align="center">
+    <img align="center" alt="SSO get-credentials" src="docs/img/cloudsnake-sso-get-credentials.png">
+<h3 align="center">SSO get-credentials</h3>
+</p>
+
+```shell
+cloudsnake --region eu-west-1 sso get-credentials --start-url https://myapp.awsapps.com/start
+```
+
+> [!NOTE]
+> This command will open your default browser. You will need to approve manually the authentication.
+> More use cases and examples for `cloudsnake sso get-credentials` can be found in [`docs/sso-get-credentials.md`](./docs/sso-get-credentials.md).
 
 # Installation
 
@@ -110,6 +125,12 @@ hint: See PEP 668 for the detailed specification.
 pipx uninstall cloudsnake
 # or
 pip3 uninstall cloudsnake
+```
+
+## Debug AWS SDK API calls
+
+```shell
+cloudsnake --log-level debug command subcommand [options]
 ```
 
 # License

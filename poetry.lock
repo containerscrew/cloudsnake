@@ -756,6 +756,26 @@ files = [
 markers = {main = "platform_system == \"Windows\"", test = "sys_platform == \"win32\""}
 
 [[package]]
+name = "configparser"
+version = "7.2.0"
+description = "Updated configparser from stdlib for earlier Pythons."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "configparser-7.2.0-py3-none-any.whl", hash = "sha256:fee5e1f3db4156dcd0ed95bc4edfa3580475537711f67a819c966b389d09ce62"},
+    {file = "configparser-7.2.0.tar.gz", hash = "sha256:b629cc8ae916e3afbd36d1b3d093f34193d851e11998920fdcfc4552218b7b70"},
+]
+
+[package.extras]
+check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1) ; sys_platform != \"cygwin\""]
+cover = ["pytest-cov"]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+enabler = ["pytest-enabler (>=2.2)"]
+test = ["pytest (>=6,!=8.1.*)", "types-backports"]
+type = ["pytest-mypy"]
+
+[[package]]
 name = "coverage"
 version = "7.13.0"
 description = "Code coverage measurement for Python"
@@ -1534,6 +1554,28 @@ docs = ["django", "furo", "sphinx", "sybil (>=6)", "twisted"]
 test = ["django", "django-stubs", "mypy", "mypy-zope", "pytest (>=7.1)", "pytest-cov", "pytest-django", "sybil (>=6)", "twisted", "types-mock"]
 
 [[package]]
+name = "tqdm"
+version = "4.67.1"
+description = "Fast, Extensible Progress Meter"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "tqdm-4.67.1-py3-none-any.whl", hash = "sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2"},
+    {file = "tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+dev = ["nbval", "pytest (>=6)", "pytest-asyncio (>=0.24)", "pytest-cov", "pytest-timeout"]
+discord = ["requests"]
+notebook = ["ipywidgets (>=6)"]
+slack = ["slack-sdk"]
+telegram = ["requests"]
+
+[[package]]
 name = "typer"
 version = "0.20.0"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
@@ -1641,4 +1683,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "f77d7124e04e49656408a56cd58a64ee42e48448bcb4fd0791124cca89a9a5da"
+content-hash = "bb3a8538452c5fcbf3a2ef5ef49df3cfa99af7b54bb14d19ce24a277fa7eaf86"

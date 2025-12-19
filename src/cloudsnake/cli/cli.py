@@ -50,7 +50,7 @@ def entrypoint(
         show_default=True,
     ),
     log_level: Optional[LoggingLevel] = typer.Option(
-        LoggingLevel.INFO,
+        LoggingLevel.WARNING,
         "--log-level",
         "-l",
         help="Logging level for the app custom code and boto3",
@@ -65,7 +65,14 @@ def entrypoint(
     Entry point for the cloudsnake CLI.
     """
     logger = init_logger(log_level.value)
-    logger.info("Initializing cloudsnake 🐍☁")
+
+    typer.echo(
+        typer.style(
+            "~> cloudsnake 🐍",
+            fg=typer.colors.CYAN,
+            bold=True,
+        )
+    )
 
     # Create resources
     session = SessionWrapper(profile, region).with_local_session()
