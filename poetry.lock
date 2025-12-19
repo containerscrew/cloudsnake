@@ -478,14 +478,14 @@ crt = ["awscrt (==0.29.2)"]
 
 [[package]]
 name = "botocore-stubs"
-version = "1.42.10"
+version = "1.42.13"
 description = "Type annotations and code completion for botocore"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "botocore_stubs-1.42.10-py3-none-any.whl", hash = "sha256:2512c3931042f73d473f33c5228040636b419e3cd7ec3be94de6d8e0d240a00a"},
-    {file = "botocore_stubs-1.42.10.tar.gz", hash = "sha256:e86fcb0d6755559b714481316854d19a6b4b993023607da47d56a0c75d4f9387"},
+    {file = "botocore_stubs-1.42.13-py3-none-any.whl", hash = "sha256:d565f01c31034e7fd86193c0f4937179a67a971098947c0d1e83d81973a9ec4c"},
+    {file = "botocore_stubs-1.42.13.tar.gz", hash = "sha256:7a1d5749a5088fa3184add28efad1e6548039b40d8d00413c69021c0c31501ee"},
 ]
 
 [package.dependencies]
@@ -1554,28 +1554,6 @@ docs = ["django", "furo", "sphinx", "sybil (>=6)", "twisted"]
 test = ["django", "django-stubs", "mypy", "mypy-zope", "pytest (>=7.1)", "pytest-cov", "pytest-django", "sybil (>=6)", "twisted", "types-mock"]
 
 [[package]]
-name = "tqdm"
-version = "4.67.1"
-description = "Fast, Extensible Progress Meter"
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-files = [
-    {file = "tqdm-4.67.1-py3-none-any.whl", hash = "sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2"},
-    {file = "tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"},
-]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["nbval", "pytest (>=6)", "pytest-asyncio (>=0.24)", "pytest-cov", "pytest-timeout"]
-discord = ["requests"]
-notebook = ["ipywidgets (>=6)"]
-slack = ["slack-sdk"]
-telegram = ["requests"]
-
-[[package]]
 name = "typer"
 version = "0.20.0"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
@@ -1683,4 +1661,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "bb3a8538452c5fcbf3a2ef5ef49df3cfa99af7b54bb14d19ce24a277fa7eaf86"
+content-hash = "9a24e163599a04590132e5fd080a9f8bc8e339ca4dafcad606f63a5dbe26ebbf"
