@@ -1,6 +1,6 @@
 <p align="center" >
     <h3 align="center">cloudsnake 🐍</h3>
-    <p align="center">Wrapping some useful AWS cli commands to operate AWS like EC2 SSM instance connection or RDS connection using IAM authentication</p>
+    <p align="center">Wrapping some useful AWS cli commands to operate some services like EC2, SSO and more</p>
 </p>
 
 ---
