@@ -14,7 +14,7 @@ class SSMParameterStoreWrapper(App):
     ):
         super().__init__(**kwargs)
         self.session_response_output = session_response_output
-        self.parameters = {}
+        self.parameters = []
         self.log = logging.getLogger("cloudsnake.ssm")
 
     @property
@@ -24,10 +24,12 @@ class SSMParameterStoreWrapper(App):
     def describe_parameters(self):
         try:
             paginator = self.client.get_paginator("describe_parameters")
+            self.parameters = []
             for page in paginator.paginate():
-                for page in paginator.paginate():
-                    self.parameters.update(page)
-            return self.parameters["Parameters"]
+                if "Parameters" in page:
+                    self.parameters.extend(page["Parameters"])
+            return self.parameters
+
         except ClientError as err:
             self.log.error(
                 "Couldn't register device",
