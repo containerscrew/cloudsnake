@@ -17,6 +17,7 @@
     <img alt="PyPiP version" src="https://img.shields.io/pypi/v/cloudsnake">
     <img alt="License" src="https://img.shields.io/github/license/containerscrew/cloudsnake">
     <img alt="Linter" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json">
+    <img alt="PyPip downloads" src="https://img.shields.io/pypi/dm/cloudsnake">
 </p>
 
 ---
