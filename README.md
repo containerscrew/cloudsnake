@@ -120,6 +120,12 @@ hint: See PEP 668 for the detailed specification.
 </pre>
 </details>
 
+# Upgrade
+
+```bash
+pipx upgrade cloudsnake
+```
+
 # Uninstall
 
 ```bash
