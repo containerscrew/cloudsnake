@@ -57,7 +57,7 @@ def start_session(
     )
 
     if with_instance_selector:
-        _ec2 = EC2InstanceWrapper(
+        ec2 = EC2InstanceWrapper(
             session=ctx.obj.session,
             filters=EC2_RUNNING_FILTER,
             query=EC2_INSTANCE_SELECTOR_QUERY,
@@ -65,18 +65,10 @@ def start_session(
             region=ctx.obj.region,
         )
 
-        # instances = ec2.describe_ec2_instances()
-        # if not instances:
-        #     typer.secho("~> No running instances found", fg="bright_yellow")
-        #     raise typer.Exit(1)
-
-        # Fake data
-        instances = [
-            {"TargetId": "i-003a434fb9c00f0f8", "Name": "WebServer-01"},
-            {"TargetId": "i-0c7cca12079e449a5", "Name": "eks-instance-nodegroup-apps"},
-            {"TargetId": "i-06ad6856a7ca778c6", "Name": "Database-Primary"},
-            {"TargetId": "i-050ed4067698e7d26", "Name": "Cache-Server-01"},
-        ]
+        instances = ec2.describe_ec2_instances()
+        if not instances:
+            typer.secho("~> No running instances found", fg="bright_yellow")
+            raise typer.Exit(1)
 
         app = InstanceSelectorApp(instances, profile=ctx.obj.profile)
         result_id = app.run()

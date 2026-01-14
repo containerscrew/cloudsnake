@@ -20,7 +20,7 @@ class InstanceSelectorApp(App[str]):
 
         with Vertical(id="main-container"):
             yield Label(
-                f"🚀 Instance Selector - AWS PROFILE: {self.profile}",
+                f"🚀 Instance Selector - {self.profile}",
                 classes="main-title",
             )
             yield Input(
