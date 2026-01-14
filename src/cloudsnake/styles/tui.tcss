@@ -47,3 +47,12 @@ OptionList > .option--highlighted {
 OptionList:focus {
     border: solid #38bdf8;
 }
+
+Notification {
+    background: #020617;
+    border: solid #a78bfa;
+}
+
+Notification.-warning {
+    border: solid #fbbf24;
+}

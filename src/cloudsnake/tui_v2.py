@@ -9,6 +9,11 @@ from rich.text import Text
 class InstanceSelectorApp(App[str]):
     TITLE = "AWS EC2 Manager CLI"
     CSS_PATH = "styles/tui.tcss"
+    BINDINGS = [
+        ("ctrl+q", "hint_quit", "Quit hint"),
+        ("ctrl+c", "quit", "Quit"),
+        ("escape", "quit", "Cancel"),
+    ]
 
     def __init__(self, instances: list[dict], profile: str):
         super().__init__()
@@ -72,3 +77,11 @@ class InstanceSelectorApp(App[str]):
         option_list = self.query_one("#instance-list", OptionList)
         if option_list.option_count > 0:
             option_list.focus()
+
+    def action_hint_quit(self) -> None:
+        self.notify(
+            "Use Ctrl+C to exit",
+            title="Quit disabled",
+            severity="warning",
+            timeout=2.5,
+        )
