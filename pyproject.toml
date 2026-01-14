@@ -26,7 +26,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-include = [{ path = "tests", format = "sdist" }, { path = "CHANGELOG.md" }]
+include = [{ path = "tests", format = "sdist" }, { path = "CHANGELOG.md" }, { path = "src/cloudsnake/styles/*.tcss"}]
 
 [tool.poetry.scripts]
 cloudsnake = 'cloudsnake.__main__:main'
@@ -53,3 +53,4 @@ moto = "^5.0.9"
 requests = "^2.32.5"
 boto3-stubs = "~=1.42.8"
 configparser = "^7.2.0"
+textual = "^7.2.0"

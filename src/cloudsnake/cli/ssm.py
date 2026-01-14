@@ -8,6 +8,7 @@ import typer
 
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
+from cloudsnake.tui_v2 import InstanceSelectorApp
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 
@@ -56,7 +57,7 @@ def start_session(
     )
 
     if with_instance_selector:
-        ec2 = EC2InstanceWrapper(
+        _ec2 = EC2InstanceWrapper(
             session=ctx.obj.session,
             filters=EC2_RUNNING_FILTER,
             query=EC2_INSTANCE_SELECTOR_QUERY,
@@ -64,17 +65,29 @@ def start_session(
             region=ctx.obj.region,
         )
 
-        instances = ec2.describe_ec2_instances()
-        if not instances:
-            typer.echo("No running instances found.")
+        # instances = ec2.describe_ec2_instances()
+        # if not instances:
+        #     typer.secho("~> No running instances found", fg="bright_yellow")
+        #     raise typer.Exit(1)
+
+        # Fake data
+        instances = [
+            {"TargetId": "i-003a434fb9c00f0f8", "Name": "WebServer-01"},
+            {"TargetId": "i-0c7cca12079e449a5", "Name": "eks-instance-nodegroup-apps"},
+            {"TargetId": "i-06ad6856a7ca778c6", "Name": "Database-Primary"},
+            {"TargetId": "i-050ed4067698e7d26", "Name": "Cache-Server-01"},
+        ]
+
+        app = InstanceSelectorApp(instances, profile=ctx.obj.profile)
+        result_id = app.run()
+
+        if result_id:
+            selected = next(item for item in instances if item["TargetId"] == result_id)
+            instance_id = selected["TargetId"]
+            return ssm.start_session(instance_id)
+        else:
+            typer.secho("~> No instance selected", fg="bright_yellow")
             raise typer.Exit(1)
-
-        instance_name = ec2_tui.interactive_menu(
-            instances, title="Select the EC2 you want to connect"
-        )
-        instance_id = ec2_tui.get_target_id_by_name(instances, instance_name)
-
-        return ssm.start_session(instance_id)
 
     return ssm.start_session(target)
 
