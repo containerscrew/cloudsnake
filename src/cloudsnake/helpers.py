@@ -105,6 +105,17 @@ def ec2_targets_to_items(targets: list[dict]) -> list[SelectorItem]:
     ]
 
 
+def ssm_parameters_to_items(parameters: list[dict]) -> list[SelectorItem]:
+    return [
+        SelectorItem(
+            id=p["Name"],
+            label=p["Name"],
+            meta=[p.get("Type", "String")],
+        )
+        for p in parameters
+    ]
+
+
 def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
     items: list[SelectorItem] = []
 

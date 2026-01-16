@@ -61,7 +61,7 @@ cloudsnake --region us-east-1 ssm get-parameters # specify region
 
 <br><br>
 <p align="center">
-    <img align="center" alt="SSO get-credentials" src="docs/img/cloudsnake-sso-get-credentials.png">
+    <img align="center" alt="SSO get-credentials" src="docs/img/cloudsnake-sso-credentials.png">
 <h3 align="center">SSO get-credentials</h3>
 </p>
 
@@ -72,6 +72,21 @@ cloudsnake --region eu-west-1 sso get-credentials --start-url https://myapp.awsa
 > [!NOTE]
 > This command will open your default browser. You will need to approve manually the authentication.
 > More use cases and examples for `cloudsnake sso get-credentials` can be found in [`docs/sso-get-credentials.md`](./docs/sso-get-credentials.md).
+
+---
+
+<br><br>
+<p align="center">
+    <img align="center" alt="Cloudwatch log stream" src="docs/img/cloudsnake-logs-stream.gif">
+<h3 align="center">Cloudwatch log stream</h3>
+</p>
+
+```shell
+cloudsnake logs stream
+cloudsnake logs stream --filter-pattern "ERROR"
+```
+> [!NOTE]
+> By the moment, `logs stream` only supports viewing logs from the moment you start the command. Future versions will include the ability to view historical logs.
 
 # Installation
 

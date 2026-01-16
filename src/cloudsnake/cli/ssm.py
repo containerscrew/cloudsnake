@@ -1,8 +1,7 @@
 import signal
 import sys
 from typing import Optional
-from cloudsnake.cli.dto import OutputMode
-from cloudsnake.helpers import ec2_targets_to_items
+from cloudsnake.helpers import ec2_targets_to_items, ssm_parameters_to_items
 from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
 from cloudsnake.tui import EC2Tui, SSMTui
 import typer
@@ -49,7 +48,7 @@ def start_session(
     ),
 ):
     signal.signal(signal.SIGINT, signal_handler)
-    ssm = SSMStartSessionWrapper(
+    ssm_wrapper = SSMStartSessionWrapper(
         session=ctx.obj.session,
         profile=ctx.obj.profile,
         region=ctx.obj.region,
@@ -63,6 +62,14 @@ def start_session(
             profile=ctx.obj.profile,
             region=ctx.obj.region,
         )
+
+        # Fake data for testing
+        # instances = [
+        #     {"TargetId": "i-003a434fb9c00f0f8", "Name": "WebServer-01", "Ip": "10.100.0.2"},
+        #     {"TargetId": "i-0c7cca12079e449a5", "Name": "eks-instance-nodegroup-apps", "Ip": "10.100.0.3"},
+        #     {"TargetId": "i-06ad6856a7ca778c6", "Name": "Database-Primary", "Ip": "10.100.0.4"},
+        #     {"TargetId": "i-050ed4067698e7d26", "Name": "Cache-Server-01", "Ip": "10.100.0.5"},
+        # ]
 
         instances = ec2.describe_ec2_instances()
 
@@ -83,37 +90,46 @@ def start_session(
         if result_id:
             selected = next(item for item in instances if item["TargetId"] == result_id)
             instance_id = selected["TargetId"]
-            return ssm.start_session(instance_id)
+            return ssm_wrapper.start_session(instance_id, reason)
         else:
             typer.secho("~> No instance selected", fg="bright_yellow")
             raise typer.Exit(1)
 
-    return ssm.start_session(target)
+    return ssm_wrapper.start_session(target, reason)
 
 
 @ssm.command("get-parameters", help="Get secrets from parameter store")
 def get_parameters(
     ctx: typer.Context,
-    output: Optional[OutputMode] = typer.Option(
-        OutputMode.json, "--output", "-o", help="Output mode", case_sensitive=True
-    ),
-    colored: Optional[bool] = typer.Option(
-        True, "--no-color", "-nc", help="Output with highlights."
-    ),
 ):
     signal.signal(signal.SIGINT, signal_handler)
-    ssm = SSMParameterStoreWrapper(
+    ssm_wrapper = SSMParameterStoreWrapper(
         session=ctx.obj.session,
         profile=ctx.obj.profile,
         region=ctx.obj.region,
     )
 
-    parameters = ssm.describe_parameters()
+    parameters = ssm_wrapper.describe_parameters()
+
+    # fake_parameters= [
+    #     {"Name": "/myapp/db_password", "Type": "SecureString"},
+    #     {"Name": "/myapp/db_endpoint", "Type": "SecureString"},
+    #     {"Name": "/myapp/redis_password", "Type": "SecureString"},
+    #     {"Name": "/myapp/google_oauth", "Type": "SecureString"},
+    # ]
+
+    items = ssm_parameters_to_items(parameters)
 
     if not parameters:
         typer.echo("No parameters found.")
         raise typer.Exit(1)
 
-    parameter_name = ssm_tui.interactive_menu(parameters)
-    parameter = ssm.get_parameter_by_name(parameter_name)
-    typer.secho(parameter, fg="bright_green")
+    app = SelectorApp(
+        items=items,
+        title=f"🚀 SSM Parameter — {ctx.obj.profile}",
+        placeholder="Type to filter by name ...",
+    )
+
+    result_id = app.run()
+    parameter = ssm_wrapper.get_parameter_by_name(result_id)
+    typer.secho(f"~> {parameter}", fg="bright_green")

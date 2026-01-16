@@ -35,16 +35,16 @@ class SSMStartSessionWrapper(App):
         if shutil.which("session-manager-plugin") is None:
             raise FileNotFoundError(PLUGIN_NOT_FOUND_MSG)
 
-    def start_session_response(self, target: str) -> Dict[str, Any]:
+    def start_session_response(self, target: str, reason: str) -> Dict[str, Any]:
         self.log.debug(f"ssm.start_session(Target={target})")
-        res = self.client.start_session(Target=target, Reason="cloudsnake session")
+        res = self.client.start_session(Target=target, Reason=reason)
         self.session_response_output = res
         return res
 
-    def start_session(self, target: str):
+    def start_session(self, target: str, reason: str = "cloudsnake session") -> int:
         self._ensure_plugin_installed()
         self.log.info(f"Starting SSM session for {target}")
-        self.start_session_response(target)
+        self.start_session_response(target, reason)
 
         try:
             with ignore_user_entered_signals():
