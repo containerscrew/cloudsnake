@@ -114,7 +114,7 @@ def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
 
         meta = []
         if stored_bytes is not None:
-            meta.append(format_bytes_gb(stored_bytes))
+            meta.append(format_bytes(stored_bytes))
 
         items.append(
             SelectorItem(
@@ -127,8 +127,15 @@ def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
     return items
 
 
-def format_bytes_gb(size_in_bytes: int) -> str:
-    return f"{round(size_in_bytes / (1024**3), 2)} GB"
+def format_bytes(bytes_size: int) -> str:
+    if bytes_size < 1024:
+        return f"{bytes_size} B"
+    elif bytes_size < 1024**2:
+        return f"{bytes_size / 1024:.2f} KB"
+    elif bytes_size < 1024**3:
+        return f"{bytes_size / 1024**2:.2f} MB"
+    else:
+        return f"{bytes_size / 1024**3:.2f} GB"
 
 
 def normalize_log_group_arn_for_live_tail(arn: str) -> str:
