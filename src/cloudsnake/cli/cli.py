@@ -2,7 +2,10 @@ import os
 import typer
 from typing import Optional
 from importlib.metadata import version
+
+
 from cloudsnake.cli.dto import Common, LoggingLevel
+from cloudsnake.cli.logs import cw_logs
 from cloudsnake.cli.ssm import ssm
 from cloudsnake.cli.sso import sso
 from cloudsnake.sdk.session import SessionWrapper
@@ -26,6 +29,7 @@ app = typer.Typer(
 
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
 app.add_typer(sso, name="sso", help="Manage SSO operations")
+app.add_typer(cw_logs, name="logs", help="Manage CloudWatch Logs operations")
 
 
 @app.callback()

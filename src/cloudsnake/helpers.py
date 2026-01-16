@@ -105,15 +105,42 @@ def ec2_targets_to_items(targets: list[dict]) -> list[SelectorItem]:
     ]
 
 
-# def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
-#     return [
-#         SelectorItem(
-#             id=g["logGroupName"],
-#             label=g["logGroupName"],
-#         )
-#         for g in groups
-#     ]
-#
+def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
+    items: list[SelectorItem] = []
+
+    for g in groups:
+        name = g["logGroupName"]
+        stored_bytes = g.get("size")
+
+        meta = []
+        if stored_bytes is not None:
+            meta.append(format_bytes_gb(stored_bytes))
+
+        items.append(
+            SelectorItem(
+                id=name,
+                label=name,
+                meta=meta,
+            )
+        )
+
+    return items
+
+
+def format_bytes_gb(size_in_bytes: int) -> str:
+    return f"{round(size_in_bytes / (1024**3), 2)} GB"
+
+
+def normalize_log_group_arn_for_live_tail(arn: str) -> str:
+    """
+    CloudWatch returns log group ARNs ending with ':*'.
+    StartLiveTail requires the ARN WITHOUT ':*'.
+    """
+    if arn.endswith(":*"):
+        return arn[:-2]
+    return arn
+
+
 # def s3_buckets_to_items(buckets: list[dict]) -> list[SelectorItem]:
 #     return [
 #         SelectorItem(

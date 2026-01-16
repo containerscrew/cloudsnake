@@ -65,6 +65,7 @@ def start_session(
         )
 
         instances = ec2.describe_ec2_instances()
+
         if not instances:
             typer.secho("~> No running instances found", fg="bright_yellow")
             raise typer.Exit(1)
