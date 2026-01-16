@@ -33,7 +33,7 @@ In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the
 ---
 <br><br>
 <p align="center">
-    <img align="center" alt="SSM session" src="docs/img//cloudsnake-ssm-session.gif">
+    <img align="center" alt="SSM session" src="docs/img/cloudsnake-ssm-session.gif">
 <h3 align="center">SSM session</h3>
 </p>
 
