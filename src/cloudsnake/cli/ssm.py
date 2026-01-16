@@ -2,19 +2,18 @@ import signal
 import sys
 from typing import Optional
 from cloudsnake.cli.dto import OutputMode
+from cloudsnake.helpers import ec2_targets_to_items
 from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
 from cloudsnake.tui import EC2Tui, SSMTui
 import typer
 
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
-from cloudsnake.tui_v2 import InstanceSelectorApp
+from cloudsnake.tui_v2 import SelectorApp
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 
-EC2_INSTANCE_SELECTOR_QUERY = (
-    "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0]}"
-)
+EC2_INSTANCE_SELECTOR_QUERY = "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0], Ip: PrivateIpAddress}"
 
 # TUI
 ec2_tui = EC2Tui()
@@ -70,7 +69,14 @@ def start_session(
             typer.secho("~> No running instances found", fg="bright_yellow")
             raise typer.Exit(1)
 
-        app = InstanceSelectorApp(instances, profile=ctx.obj.profile)
+        items = ec2_targets_to_items(instances)
+
+        app = SelectorApp(
+            items=items,
+            title=f"🚀 EC2 Instances — {ctx.obj.profile}",
+            placeholder="Type to filter by name or ID...",
+        )
+
         result_id = app.run()
 
         if result_id:

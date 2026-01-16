@@ -3,8 +3,9 @@ from datetime import datetime
 import os
 import signal
 import sys
-
 from typing_extensions import List, Dict
+
+from cloudsnake.models.selector import SelectorItem
 
 
 def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
@@ -91,3 +92,33 @@ def ensure_is_valid_dir(dirpath):
     """
     if not os.path.isdir(dirpath):
         raise NotADirectoryError(f"'{dirpath}' is not a directory.")
+
+
+def ec2_targets_to_items(targets: list[dict]) -> list[SelectorItem]:
+    return [
+        SelectorItem(
+            id=t["TargetId"],
+            label=t.get("Name", t["TargetId"]),
+            meta=[t["Ip"]],
+        )
+        for t in targets
+    ]
+
+
+# def log_groups_to_items(groups: list[dict]) -> list[SelectorItem]:
+#     return [
+#         SelectorItem(
+#             id=g["logGroupName"],
+#             label=g["logGroupName"],
+#         )
+#         for g in groups
+#     ]
+#
+# def s3_buckets_to_items(buckets: list[dict]) -> list[SelectorItem]:
+#     return [
+#         SelectorItem(
+#             id=b["Name"],
+#             label=b["Name"],
+#         )
+#         for b in buckets
+#     ]
