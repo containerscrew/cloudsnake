@@ -82,11 +82,18 @@ cloudsnake --region eu-west-1 sso get-credentials --start-url https://myapp.awsa
 </p>
 
 ```shell
+# Opens an interactive menu to select the log group
 cloudsnake logs stream
-cloudsnake logs stream --filter-pattern "ERROR"
+
+# Streams logs from 1 day ago with a filter pattern "deleting"
+cloudsnake logs stream --since 1d --log-group /aws/lambda/my-function-name --filter-pattern "deleting"
+
+# Streams (tails) logs starting from the moment you execute the command
+cloudsnake logs stream --log-group /aws/lambda/my-function-name
+
+# Streams logs from a specific window (between 30 mins ago and 1 min ago)
+cloudsnake logs stream --since 30m --end 1m --log-group /aws/lambda/my-function-name
 ```
-> [!NOTE]
-> By the moment, `logs stream` only supports viewing logs from the moment you start the command. Future versions will include the ability to view historical logs.
 
 # Installation
 
