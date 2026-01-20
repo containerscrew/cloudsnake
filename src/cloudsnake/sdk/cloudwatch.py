@@ -89,9 +89,101 @@ class CloudWatchLogsWrapper(App):
             )
             raise
 
-    # TODO: implement get_historical_logs
-    def get_historical_logs(self):
-        pass
+    def _parse_time_str(self, time_str: str) -> int:
+        """
+        Parses a time string (e.g., '1h', '2d', '30m') into a Unix timestamp in milliseconds.
+        """
+        now_ms = int(time.time() * 1000)
+
+        # Clean string: remove "ago" or spaces if present (e.g. "1h ago" -> "1h")
+        clean_str = time_str.lower().replace("ago", "").strip()
+
+        if not clean_str:
+            return 0
+
+        # Extract unit and value
+        try:
+            unit = clean_str[-1]
+            # Handle cases where user might type just "100" (assume minutes or handle error)
+            if unit.isdigit():
+                value = int(clean_str)
+                unit = "m"  # Default to minutes if no unit provided
+            else:
+                value = int(clean_str[:-1])
+        except ValueError:
+            self.log.warning(f"Could not parse time '{time_str}', defaulting to 1h ago")
+            value = 1
+            unit = "h"
+
+        multiplier = 1000  # Seconds
+        if unit == "m":  # Minutes
+            multiplier *= 60
+        elif unit == "h":  # Hours
+            multiplier *= 3600
+        elif unit == "d":  # Days
+            multiplier *= 86400
+        elif unit == "w":  # Weeks
+            multiplier *= 604800
+
+        delta_ms = value * multiplier
+        return now_ms - delta_ms
+
+    def get_historical_logs(
+        self,
+        log_group_arn: str,
+        since: str,
+        end: Optional[str] = None,
+        filter_pattern: Optional[str] = None,
+    ) -> Iterator[dict]:
+        """
+        Fetches historical logs using filter_log_events with pagination.
+        """
+        parts = log_group_arn.split(":")
+
+        if "log-group" in parts:
+            idx = parts.index("log-group")
+            if idx + 1 < len(parts):
+                log_group_name = parts[idx + 1]
+            else:
+                log_group_name = log_group_arn
+        else:
+            log_group_name = parts[-1]
+
+        if log_group_name.endswith("*"):
+            log_group_name = log_group_name[:-1]
+            if log_group_name.endswith(":"):
+                log_group_name = log_group_name[:-1]
+
+        start_time_ms = self._parse_time_str(since)
+        end_time_ms = self._parse_time_str(end) if end else int(time.time() * 1000)
+
+        self.log.debug(
+            f"Fetching logs for {log_group_name} from {start_time_ms} to {end_time_ms}"
+        )
+        paginator = self.client.get_paginator("filter_log_events")
+
+        kwargs = {
+            "logGroupName": log_group_name,
+            "startTime": start_time_ms,
+            "endTime": end_time_ms,
+            "interleaved": True,
+        }
+
+        if filter_pattern:
+            kwargs["filterPattern"] = filter_pattern
+
+        try:
+            for page in paginator.paginate(**kwargs):
+                for event in page.get("events", []):
+                    yield event
+
+        except ClientError as err:
+            self.log.error(
+                f"CloudWatch Logs filter_log_events failed: "
+                f"{err.response['Error']['Code']} - "
+                f"{err.response['Error']['Message']}"
+            )
+            raise
 
 
 def print_colored_log(event: dict, highlight_term: str | None = None) -> None:
