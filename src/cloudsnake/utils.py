@@ -1,7 +1,8 @@
 import configparser
-import sys
 import webbrowser
 from typing import List, Dict, Optional
+
+import typer
 
 from cloudsnake.console import console
 
@@ -68,4 +69,4 @@ def write_config_file(
 
 def signal_handler(sig, frame):
     console.print("[bold red]You pressed Ctrl+C! Exiting gracefully...[/bold red]")
-    sys.exit(0)
+    raise typer.Exit(1)
