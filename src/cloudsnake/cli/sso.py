@@ -17,17 +17,12 @@ from rich.progress import (
 from cloudsnake import utils
 from cloudsnake.sdk.sso import SSOWrapper
 from cloudsnake.sdk.sso_oidc import SSOOIDCWrapper
-from cloudsnake.utils import open_browser_url, parse_key_val_list
+from cloudsnake.utils import open_browser_url, parse_key_val_list, signal_handler
+from cloudsnake.console import console
 
 AWS_CREDENTIALS_FILE_PATH = os.path.expanduser("~/.aws/credentials")
 
 logger = logging.getLogger("cloudsnake.sso")
-
-
-def signal_handler(sig, frame):
-    typer.secho("\n ~> You pressed Ctrl+C! Exiting gracefully. Bye!", fg="bright_red")
-    sys.exit(0)
-
 
 sso = typer.Typer(
     no_args_is_help=True,
@@ -72,13 +67,8 @@ def get_credentials(
 
     open_browser_url(device_auth.verification_uri_complete)
 
-    typer.echo(
-        typer.style(
-            f"~> Press Enter after you have authorized the device in the opened browser: {device_auth.verification_uri_complete}",
-            fg=typer.colors.CYAN,
-            bold=True,
-        ),
-        nl=False,
+    console.print(
+        f"[bold cyan]~> Press Enter after you have authorized the device in the opened browser: {device_auth.verification_uri_complete}[/bold cyan]"
     )
 
     sys.stdin.readline()
@@ -148,8 +138,6 @@ def get_credentials(
         account_overrides_map,
         role_overrides_map,
     )
-    typer.secho(
-        f"~> AWS credentials have been written to {AWS_CREDENTIALS_FILE_PATH}",
-        fg=typer.colors.GREEN,
-        bold=True,
+    console.print(
+        f"[bold green]✔[/bold green] AWS credentials have been written to {AWS_CREDENTIALS_FILE_PATH}"
     )

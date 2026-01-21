@@ -8,6 +8,7 @@ from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.logs import cw_logs
 from cloudsnake.cli.ssm import ssm
 from cloudsnake.cli.sso import sso
+from cloudsnake.console import console
 from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
 from rich import traceback
@@ -59,13 +60,7 @@ def entrypoint(
     """
     logger = init_logger(log_level.value)
 
-    typer.echo(
-        typer.style(
-            f"~> cloudsnake 🐍 - version {APP_VERSION}",
-            fg=typer.colors.CYAN,
-            bold=True,
-        )
-    )
+    console.print(f"[bold cyan]~> cloudsnake 🐍 - version {APP_VERSION}[/bold cyan]")
 
     # Create resources
     session = SessionWrapper(profile, region).with_local_session()

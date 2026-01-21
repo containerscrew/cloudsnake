@@ -1,6 +1,9 @@
 import configparser
+import sys
 import webbrowser
 from typing import List, Dict, Optional
+
+from cloudsnake.console import console
 
 
 def open_browser_url(url: str) -> str | None:
@@ -61,3 +64,8 @@ def write_config_file(
 
     with open(path, "w") as config_file:
         config.write(config_file)
+
+
+def signal_handler(sig, frame):
+    console.print("[bold red]You pressed Ctrl+C! Exiting gracefully...[/bold red]")
+    sys.exit(0)

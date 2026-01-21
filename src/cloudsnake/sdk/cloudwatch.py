@@ -1,18 +1,13 @@
 from __future__ import annotations
-
 import re
 import time
-
 import jmespath
 from typing import Any, Dict, Optional, Iterator
-
-from rich.console import Console
 from rich.text import Text
 
+from cloudsnake.console import console
 from cloudsnake.sdk.aws import App
 from botocore.exceptions import ClientError
-
-console = Console()
 
 
 class CloudWatchLogsWrapper(App):

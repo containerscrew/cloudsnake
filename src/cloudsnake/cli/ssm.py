@@ -1,28 +1,18 @@
 import signal
-import sys
 from typing import Optional
+
+from cloudsnake.console import console
 from cloudsnake.helpers import ec2_targets_to_items, ssm_parameters_to_items
 from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
-from cloudsnake.tui import EC2Tui, SSMTui
 import typer
 
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 from cloudsnake.tui_v2 import SelectorApp
+from cloudsnake.utils import signal_handler
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
-
 EC2_INSTANCE_SELECTOR_QUERY = "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0], Ip: PrivateIpAddress}"
-
-# TUI
-ec2_tui = EC2Tui()
-ssm_tui = SSMTui()
-
-
-def signal_handler(sig, frame):
-    typer.secho("You pressed Ctrl+C! Exiting gracefully...", fg="bright_red")
-    sys.exit(0)
-
 
 ssm = typer.Typer(
     no_args_is_help=True,
@@ -74,7 +64,7 @@ def start_session(
         instances = ec2.describe_ec2_instances()
 
         if not instances:
-            typer.secho("~> No running instances found", fg="bright_yellow")
+            console.print("[bold yellow]~> No running instances found[/bold yellow]")
             raise typer.Exit(1)
 
         items = ec2_targets_to_items(instances)
@@ -92,7 +82,7 @@ def start_session(
             instance_id = selected["TargetId"]
             return ssm_wrapper.start_session(instance_id, reason)
         else:
-            typer.secho("~> No instance selected", fg="bright_yellow")
+            console.print("[bold yellow]~> No instance selected[/bold yellow]")
             raise typer.Exit(1)
 
     return ssm_wrapper.start_session(target, reason)
@@ -121,7 +111,7 @@ def get_parameters(
     items = ssm_parameters_to_items(parameters)
 
     if not parameters:
-        typer.echo("No parameters found.")
+        console.print("[bold yellow]~> No parameters found[/bold yellow]")
         raise typer.Exit(1)
 
     app = SelectorApp(
@@ -132,4 +122,4 @@ def get_parameters(
 
     result_id = app.run()
     parameter = ssm_wrapper.get_parameter_by_name(result_id)
-    typer.secho(f"~> {parameter}", fg="bright_green")
+    console.print(f"[bold green]~> {parameter}[/bold green]")
