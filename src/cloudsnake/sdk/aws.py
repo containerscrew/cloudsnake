@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from abc import ABC, abstractmethod
 from typing import Optional, Any
 
@@ -49,3 +50,42 @@ class App(ABC):
 
         cfg = Config(retries={"max_attempts": self.retries, "mode": "standard"})
         return self.session.client(self.client_name, config=cfg)
+
+    def _parse_time_str(self, time_str: str) -> int:
+        """
+        Parses a time string (e.g., '1h', '2d', '30m') into a Unix timestamp in milliseconds.
+        """
+        now_ms = int(time.time() * 1000)
+
+        # Clean string: remove "ago" or spaces if present (e.g. "1h ago" -> "1h")
+        clean_str = time_str.lower().replace("ago", "").strip()
+
+        if not clean_str:
+            return 0
+
+        # Extract unit and value
+        try:
+            unit = clean_str[-1]
+            # Handle cases where user might type just "100" (assume minutes or handle error)
+            if unit.isdigit():
+                value = int(clean_str)
+                unit = "m"  # Default to minutes if no unit provided
+            else:
+                value = int(clean_str[:-1])
+        except ValueError:
+            self.log.warning(f"Could not parse time '{time_str}', defaulting to 1h ago")
+            value = 1
+            unit = "h"
+
+        multiplier = 1000  # Seconds
+        if unit == "m":  # Minutes
+            multiplier *= 60
+        elif unit == "h":  # Hours
+            multiplier *= 3600
+        elif unit == "d":  # Days
+            multiplier *= 86400
+        elif unit == "w":  # Weeks
+            multiplier *= 604800
+
+        delta_ms = value * multiplier
+        return now_ms - delta_ms

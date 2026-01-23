@@ -85,17 +85,17 @@ jobs:
       - name: Publish package
         run: poetry publish --build --no-interaction --username __token__ --password ${{ secrets.PYPIP_TOKEN }}
 
-#      - name: Send Telegram Notification
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_TO }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          format: markdown
-#          message: |
-#            🚀 **New Version Published!**
-#
-#            📦 **Project:** ${{ github.repository }}
-#            🏷️ **Version:** `${{ github.ref_name }}`
-#            👤 **Author:** ${{ github.actor }}
-#
-#            [View on PyPI](https://pypi.org/project/cloudsnake)
+      - name: Send Telegram Notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            🚀 **New Version Published!**
+
+            📦 **Project:** ${{ github.repository }}
+            🏷️ **Version:** `${{ github.ref_name }}`
+            👤 **Author:** ${{ github.actor }}
+
+            [View on PyPI](https://pypi.org/project/cloudsnake/${{ github.ref_name }})

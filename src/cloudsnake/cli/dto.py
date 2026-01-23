@@ -25,8 +25,8 @@ class DeviceCode:
 
 class OutputMode(str, Enum):
     json = "json"
-    table = "table"
-    text = "text"
+    pretty = "pretty"
+    ndjson = "ndjson"
 
 
 class LoggingLevel(str, Enum):

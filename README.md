@@ -95,6 +95,81 @@ cloudsnake logs stream --log-group /aws/lambda/my-function-name
 cloudsnake logs stream --since 30m --end 1m --log-group /aws/lambda/my-function-name
 ```
 
+---
+
+<br><br>
+<p align="center">
+    <img align="center" alt="CloudTrail events" src="">
+<h3 align="center">CloudTrail events</h3>
+</p>
+
+```shell
+# Monitor recent activity from the last 15 minutes (default)
+cloudsnake trail events
+
+# Look back 10 minutes
+cloudsnake trail events --since 10m
+
+# Look back 1 hour
+cloudsnake trail events --since 1h
+
+# Look back 1 day
+cloudsnake trail events --since 1d
+
+# Fetch events once and exit (no follow)
+cloudsnake trail events --since 1h --once
+
+# Watch only write (mutating) API calls
+cloudsnake trail events --write-only --since 1h
+
+# Watch only read-only API calls
+cloudsnake trail events --read-only
+
+# Filter by a specific AWS action
+cloudsnake trail events --event DeleteTable
+cloudsnake trail events --event TerminateInstances
+
+# Filter events by a specific user
+cloudsnake trail events --user john.doe
+
+# Filter events by a specific resource
+cloudsnake trail events --resource i-0123456789abcdef
+
+# Search for an error message across all JSON bodies
+cloudsnake trail events --search AccessDenied --since 6h
+
+# Search for an IP address
+cloudsnake trail events --search 203.0.113.15 --since 1d
+
+# Dot-path structured search
+cloudsnake trail events --search requestParameters.instanceId=i-0123456789abcdef
+cloudsnake trail events --search userIdentity.type=AssumedRole
+
+# Combine server-side filtering with client-side search (advanced)
+cloudsnake trail events --event StopInstances --search Unauthorized --since 12h
+
+# Full JSON output
+cloudsnake trail events --output json
+
+# NDJSON output (pipe-friendly)
+cloudsnake trail events --output ndjson
+cloudsnake trail events --output ndjson | jq '.EventName'
+
+# Inline jq filtering
+cloudsnake trail events --jq '.userIdentity.type == "AssumedRole"'
+cloudsnake trail events --output ndjson --jq '.EventName'
+
+# Scriptable examples
+
+# Count API calls by type in the last hour
+cloudsnake trail events --output ndjson --since 10m \
+  | jq -r '.EventName' | sort | uniq -c
+
+# Find delete or terminate actions in the last 24 hours
+cloudsnake trail events --output ndjson --since 24h \
+  | jq 'select(.EventName | test("Delete|Terminate"))'
+```
+
 # Installation
 
 ## Using pipx (Recommended)

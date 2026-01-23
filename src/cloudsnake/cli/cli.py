@@ -8,7 +8,7 @@ from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.logs import cw_logs
 from cloudsnake.cli.ssm import ssm
 from cloudsnake.cli.sso import sso
-from cloudsnake.console import console
+from cloudsnake.cli.trail import trail
 from cloudsnake.sdk.session import SessionWrapper
 from cloudsnake.logger import init_logger
 from rich import traceback
@@ -31,6 +31,7 @@ app = typer.Typer(
 app.add_typer(ssm, name="ssm", help="Manage SSM operations")
 app.add_typer(sso, name="sso", help="Manage SSO operations")
 app.add_typer(cw_logs, name="logs", help="Manage CloudWatch Logs operations")
+app.add_typer(trail, name="trail", help="Manage CloudTrail operations")
 
 
 @app.callback()
@@ -59,8 +60,6 @@ def entrypoint(
     Entry point for the cloudsnake CLI.
     """
     logger = init_logger(log_level.value)
-
-    console.print(f"[bold cyan]~> cloudsnake 🐍 - version {APP_VERSION}[/bold cyan]")
 
     # Create resources
     session = SessionWrapper(profile, region).with_local_session()

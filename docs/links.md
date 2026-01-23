@@ -11,3 +11,5 @@
 * https://docs.aws.amazon.com/code-library/latest/ug/python_3_ec2_code_examples.html
 * https://github.com/getmoto/moto
 * https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+* https://typer.tiangolo.com/tutorial/testing/ (Testing typer cli)
+* https://github.com/getmoto/moto (Testing AWS functions)
