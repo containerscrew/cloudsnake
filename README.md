@@ -99,7 +99,6 @@ cloudsnake logs stream --since 30m --end 1m --log-group /aws/lambda/my-function-
 
 <br><br>
 <p align="center">
-    <img align="center" alt="CloudTrail events" src="">
 <h3 align="center">CloudTrail events</h3>
 </p>
 
