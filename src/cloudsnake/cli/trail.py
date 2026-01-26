@@ -81,7 +81,7 @@ def trail_events(
     # All the available spinners: https://github.com/Textualize/rich/blob/master/rich/_spinners.py
     with console.status(
         "[bold cyan]Fetching CloudTrail history since[/]",
-        speed=2.0,
+        speed=0.1,
         spinner="aesthetic",
         spinner_style="bold cyan",
     ):
