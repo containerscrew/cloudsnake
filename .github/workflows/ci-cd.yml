@@ -83,7 +83,9 @@ jobs:
       - uses: snok/install-poetry@v1
 
       - name: Publish package
-        run: poetry publish --build --no-interaction --username __token__ --password ${{ secrets.PYPIP_TOKEN }}
+        run: |
+            poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+            poetry publish --build --no-interaction
 
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
