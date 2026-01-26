@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.0 - 2026-01-26
+#### Documentation
+- update readme - (0431458) - containerscrew
+#### Features
+- new version 0.12.0 - (7825360) - containerscrew
+- new command for cloudtrail events - (7dcde1b) - containerscrew
+#### Miscellaneous Chores
+- update rich console spinner speed - (9ca4a1c) - containerscrew
+- bump boto3-stubs from 1.42.30 to 1.42.34 - (d5a141b) - dependabot[bot]
+- bump boto3 from 1.42.30 to 1.42.34 - (722e00c) - dependabot[bot]
+- bump rich from 14.2.0 to 14.3.1 - (eb2f1aa) - dependabot[bot]
+- bump jmespath from 1.0.1 to 1.1.0 - (2347963) - dependabot[bot]
+- update ci-cd pipeline - (9813318) - containerscrew
+- update ci-cd pipeline - (11c1437) - containerscrew
+
+- - -
+
 ## 0.11.1 - 2026-01-21
 #### Bug Fixes
 - security bugfixes - (c0f6c4f) - containerscrew
