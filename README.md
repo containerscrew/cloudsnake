@@ -169,6 +169,7 @@ cloudsnake trail events --output ndjson --since 10m \
 cloudsnake trail events --output ndjson --since 24h \
   | jq 'select(.EventName | test("Delete|Terminate"))'
 ```
+---
 
 # Installation
 
