@@ -7,6 +7,9 @@ import subprocess
 import logging
 from typing import Optional, Dict, Any
 
+import typer
+from moto.organizations.exceptions import TargetNotFoundException
+
 from cloudsnake.helpers import ignore_user_entered_signals
 from cloudsnake.sdk.aws import App
 
@@ -44,9 +47,10 @@ class SSMStartSessionWrapper(App):
     def start_session(self, target: str, reason: str = "cloudsnake session") -> int:
         self._ensure_plugin_installed()
         self.log.info(f"Starting SSM session for {target}")
-        self.start_session_response(target, reason)
 
         try:
+            self.start_session_response(target, reason)
+
             with ignore_user_entered_signals():
                 subprocess.check_call(
                     [
@@ -61,6 +65,13 @@ class SSMStartSessionWrapper(App):
                 )
             self.log.info("Session closed cleanly")
             return 0
+
+        except (
+            TargetNotFoundException,
+            self.client.exceptions.TargetNotConnected,
+        ) as e:
+            self.log.error(f"{e}")
+            raise typer.Exit(1)
 
         except subprocess.CalledProcessError as e:
             self.log.error(f"SSM session failed: {e}")
