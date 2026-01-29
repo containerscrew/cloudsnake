@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.2 - 2026-01-29
+#### Bug Fixes
+- handle exception in sso and ssm commands - (69cc0f3) - containerscrew
+
+- - -
+
 ## 0.12.1 - 2026-01-28
 #### Bug Fixes
 - handle exception TargetNotFoundException - (80eccb8) - containerscrew
