@@ -2,6 +2,7 @@ import signal
 from typing import Optional
 
 from cloudsnake.console import console
+from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.helpers import ec2_targets_to_items, ssm_parameters_to_items
 from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
 import typer
@@ -24,6 +25,7 @@ ssm = typer.Typer(
 @ssm.command(
     "start-session", help="Start session with the given target id", no_args_is_help=True
 )
+@handle_aws_errors
 def start_session(
     ctx: typer.Context,
     target: Optional[str] = typer.Option(None, help="Target id of the instance"),
@@ -89,6 +91,7 @@ def start_session(
 
 
 @ssm.command("get-parameters", help="Get secrets from parameter store")
+@handle_aws_errors
 def get_parameters(
     ctx: typer.Context,
 ):

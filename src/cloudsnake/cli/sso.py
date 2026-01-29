@@ -15,6 +15,7 @@ from rich.progress import (
 )
 
 from cloudsnake import utils
+from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.sdk.sso import SSOWrapper
 from cloudsnake.sdk.sso_oidc import SSOOIDCWrapper
 from cloudsnake.utils import open_browser_url, parse_key_val_list, signal_handler
@@ -32,6 +33,7 @@ sso = typer.Typer(
 
 
 @sso.command("get-credentials", help="Get SSO credentials", no_args_is_help=True)
+@handle_aws_errors
 def get_credentials(
     ctx: typer.Context,
     start_url: str = typer.Option(..., help="SSO Start URL"),
