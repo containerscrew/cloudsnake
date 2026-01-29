@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.3 - 2026-01-29
+#### Miscellaneous Chores
+- update pyproject dependencies - (c8bcd0e) - containerscrew
+
+- - -
+
 ## 0.12.2 - 2026-01-29
 #### Bug Fixes
 - handle exception in sso and ssm commands - (69cc0f3) - containerscrew
