@@ -1,6 +1,6 @@
 import boto3
-from moto import mock_aws
 import pytest
+from moto import mock_aws
 
 
 @pytest.fixture(scope="function")

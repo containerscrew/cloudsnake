@@ -3,23 +3,23 @@ import os
 import signal
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Optional, List
+from typing import List, Optional
 
 import typer
 from rich.progress import (
+    BarColumn,
     Progress,
     SpinnerColumn,
-    BarColumn,
     TextColumn,
     TimeElapsedColumn,
 )
 
 from cloudsnake import utils
+from cloudsnake.console import console
 from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.sdk.sso import SSOWrapper
 from cloudsnake.sdk.sso_oidc import SSOOIDCWrapper
 from cloudsnake.utils import open_browser_url, parse_key_val_list, signal_handler
-from cloudsnake.console import console
 
 AWS_CREDENTIALS_FILE_PATH = os.path.expanduser("~/.aws/credentials")
 

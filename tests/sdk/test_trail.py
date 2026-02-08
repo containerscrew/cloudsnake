@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, patch
+
 from cloudsnake.sdk.cloudtrail import CloudTrailWrapper
 
 

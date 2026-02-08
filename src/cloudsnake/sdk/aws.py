@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import time
 from abc import ABC, abstractmethod
-from typing import Optional, Any
+from typing import Any, Optional
 
 import boto3
 from botocore.config import Config

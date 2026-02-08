@@ -1,14 +1,15 @@
 import signal
-import typer
-from cloudsnake.console import console
 
+import typer
+
+from cloudsnake.console import console
+from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.helpers import (
     log_groups_to_items,
     normalize_log_group_arn_for_live_tail,
 )
 from cloudsnake.sdk.cloudwatch import CloudWatchLogsWrapper, print_colored_log
-from cloudsnake.tui_v2 import SelectorApp
-from cloudsnake.decorators import handle_aws_errors
+from cloudsnake.tui import SelectorApp
 from cloudsnake.utils import signal_handler
 
 DEFAULT_LOG_FILTER = "[].{logGroupName: logGroupName, size: storedBytes, arn: arn}"

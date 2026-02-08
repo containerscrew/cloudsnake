@@ -62,7 +62,7 @@ cloudsnake --region us-east-1 ssm get-parameters # specify region
 <br><br>
 <p align="center">
     <img align="center" alt="SSO get-credentials" src="docs/img/cloudsnake-sso-credentials.png">
-<h3 align="center">SSO get-credentials</h3>
+<h3 align="center">SSO Credentials</h3>
 </p>
 
 ```shell
@@ -168,6 +168,19 @@ cloudsnake trail events --output ndjson --since 10m \
 cloudsnake trail events --output ndjson --since 24h \
   | jq 'select(.EventName | test("Delete|Terminate"))'
 ```
+---
+
+<br><br>
+<p align="center">
+    <img align="center" alt="SecretsManager " src="docs/img/cloudsnake-secrets-manager.png">
+<h3 align="center">Secrets Manager</h3>
+</p>
+
+```shell
+cloudsnake secrets-manager get-secrets
+cloudsnake --region us-east-1 secrets-manager get-secrets
+```
+
 ---
 
 # Installation

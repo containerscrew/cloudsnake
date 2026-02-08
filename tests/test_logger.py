@@ -1,5 +1,6 @@
-from cloudsnake.logger import init_logger
 from testfixtures import log_capture
+
+from cloudsnake.logger import init_logger
 
 
 @log_capture()

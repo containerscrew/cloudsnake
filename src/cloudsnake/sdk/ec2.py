@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import jmespath
 from typing import Any, Dict, Optional
+
+import jmespath
+from botocore.exceptions import ClientError
 
 from cloudsnake.helpers import parse_filters
 from cloudsnake.sdk.aws import App
-from botocore.exceptions import ClientError
 
 
 class EC2InstanceWrapper(App):

@@ -1,8 +1,8 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, OptionList, Input, Label
-from textual.widgets.option_list import Option
-from textual.containers import Vertical
 from rich.text import Text
+from textual.app import App, ComposeResult
+from textual.containers import Vertical
+from textual.widgets import Footer, Header, Input, Label, OptionList
+from textual.widgets.option_list import Option
 
 from cloudsnake.models.selector import SelectorItem
 

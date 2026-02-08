@@ -2,17 +2,16 @@ from __future__ import annotations
 
 import errno
 import json
+import logging
 import shutil
 import subprocess
-import logging
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
 import typer
 from moto.organizations.exceptions import TargetNotFoundException
 
 from cloudsnake.helpers import ignore_user_entered_signals
 from cloudsnake.sdk.aws import App
-
 
 PLUGIN_NOT_FOUND_MSG = """
 Session Manager Plugin not found.

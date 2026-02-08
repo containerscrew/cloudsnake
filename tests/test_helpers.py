@@ -1,13 +1,14 @@
-from datetime import datetime
 import os
+from datetime import datetime
+
 import pytest
+
 from cloudsnake.helpers import (
     ensure_directory_exists,
     ensure_is_valid_dir,
     parse_filters,
     serialize_datetime,
 )
-
 
 """Testing function parse_filters"""
 

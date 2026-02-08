@@ -1,9 +1,10 @@
 import os
 from typing import Optional
+
 import typer
+
 from cloudsnake.cli.dto import OutputMode
 from cloudsnake.sdk.rds_session import RDSInstanceConnectWrapper
-
 
 rds = typer.Typer(
     no_args_is_help=True,

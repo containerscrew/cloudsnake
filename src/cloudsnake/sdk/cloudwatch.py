@@ -1,13 +1,15 @@
 from __future__ import annotations
+
 import re
 import time
+from typing import Any, Dict, Iterator, Optional
+
 import jmespath
-from typing import Any, Dict, Optional, Iterator
+from botocore.exceptions import ClientError
 from rich.text import Text
 
 from cloudsnake.console import console
 from cloudsnake.sdk.aws import App
-from botocore.exceptions import ClientError
 
 
 class CloudWatchLogsWrapper(App):

@@ -1,7 +1,9 @@
 import time
-from typing import Iterator, Optional, Dict
 from datetime import datetime, timezone
+from typing import Dict, Iterator, Optional
+
 from botocore.exceptions import ClientError
+
 from cloudsnake.sdk.aws import App
 
 

@@ -1,17 +1,18 @@
 import errno
 import os
 import subprocess
+
 import jmespath
 import requests
+from botocore.exceptions import ClientError
+from rich import print
+
 from cloudsnake.helpers import (
     ensure_directory_exists,
     ignore_user_entered_signals,
     parse_filters,
 )
 from cloudsnake.sdk.aws import App
-from rich import print
-from botocore.exceptions import ClientError
-
 
 MYSQL_CLIENT__ERROR_MESSAGE = (
     "Mysql binary client not found",

@@ -1,6 +1,6 @@
 import logging
 
-from cloudsnake.cli.dto import DeviceRegistration, DeviceCode
+from cloudsnake.cli.dto import DeviceCode, DeviceRegistration
 from cloudsnake.sdk.aws import App
 
 

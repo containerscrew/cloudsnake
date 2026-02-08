@@ -1,9 +1,10 @@
 import contextlib
-from datetime import datetime
 import os
 import signal
 import sys
-from typing_extensions import List, Dict
+from datetime import datetime
+
+from typing_extensions import Dict, List
 
 from cloudsnake.models.selector import SelectorItem
 
@@ -113,6 +114,17 @@ def ssm_parameters_to_items(parameters: list[dict]) -> list[SelectorItem]:
             meta=[p.get("Type", "String")],
         )
         for p in parameters
+    ]
+
+
+def secrets_manager_secrets_to_items(secrets: list[dict]) -> list[SelectorItem]:
+    return [
+        SelectorItem(
+            id=s["ARN"],
+            label=s["Name"],
+            meta=[s.get("Description", "")],
+        )
+        for s in secrets
     ]
 
 

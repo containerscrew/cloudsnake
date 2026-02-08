@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import boto3
 import logging
 import os
 from typing import Optional
+
+import boto3
 
 
 class SessionWrapper:

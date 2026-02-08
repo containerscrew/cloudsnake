@@ -1,15 +1,15 @@
 import signal
 from typing import Optional
 
+import typer
+
 from cloudsnake.console import console
 from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.helpers import ec2_targets_to_items, ssm_parameters_to_items
-from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
-import typer
-
 from cloudsnake.sdk.ec2 import EC2InstanceWrapper
+from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
-from cloudsnake.tui_v2 import SelectorApp
+from cloudsnake.tui import SelectorApp
 from cloudsnake.utils import signal_handler
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"

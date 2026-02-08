@@ -8,4 +8,8 @@ poetry config repositories.testpypi https://test.pypi.org/legacy/ ## config for 
 poetry publish --build -r testpypi # publish to pypip test
 poetry run python3 src/cloudsnake/__main__.py --help # run cloudsnake locally using poetry
 poetry env use python3.14 # set the python version
+
+# Load dependencies in nvim
+source <(poetry env activate)
+nvim
 ```
