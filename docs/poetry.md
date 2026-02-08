@@ -13,3 +13,8 @@ poetry env use python3.14 # set the python version
 source <(poetry env activate)
 nvim
 ```
+
+```shell
+poetry config virtualenvs.in-project true
+poetry install
+```
