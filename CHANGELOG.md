@@ -20,6 +20,16 @@
 - bump boto3 from 1.42.37 to 1.42.39 - (b10d22e) - dependabot[bot]
 
 - - -
+## 0.14.1 - 2026-02-09
+#### Documentation
+- update readme - (ad3d5ea) - containerscrew
+- update readme - (54851b9) - containerscrew
+#### Miscellaneous Chores
+- automatic CHANGELOG generator using pipeline - (b58be60) - containerscrew
+- update CHANGELOG.md - (8d7a044) - containerscrew
+
+- - -
+
 
 ## 0.12.3 - 2026-02-09
 #### Miscellaneous Chores
