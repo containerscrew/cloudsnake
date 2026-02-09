@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 permissions:
   contents: write
-  pull_request: write
+  pull-request: write
 
 on:
   pull_request:
