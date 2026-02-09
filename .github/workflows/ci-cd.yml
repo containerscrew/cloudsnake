@@ -1,5 +1,9 @@
 name: CI/CD Pipeline
 
+permissions:
+  contents: write
+  pull_request: write
+
 on:
   pull_request:
   push:
@@ -101,3 +105,38 @@ jobs:
             👤 **Author:** ${{ github.actor }}
 
             [View on PyPI](https://pypi.org/project/cloudsnake/${{ github.ref_name }})
+
+  changelog:
+    name: Generate CHANGELOG
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install cocogitto
+        run: |
+          rustup default stable
+          cargo install cocogitto
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set tag
+        id: set_tag
+        run: |
+          # Extract the tag name from the full reference
+          TAG_NAME=$(echo "${{ github.ref }}" | sed 's|.*/||')
+          echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_ENV"
+
+      - name: Update CHANGELOG.md in main branch
+        #        if: github.ref == 'refs/tags/v*.*.*'
+        run: |
+          git checkout main
+          git pull origin main
+          git config --global user.name 'containerscrew'
+          git config --global user.email 'containerscrew@users.noreply.github.com'
+          rm CHANGELOG.md
+          cog changelog > CHANGELOG.md
+          git add CHANGELOG.md
+          git commit -m "Update CHANGELOG.md for release ${{ env.TAG_NAME }}"
+          git push origin main

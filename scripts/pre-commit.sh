@@ -12,8 +12,8 @@ pre-commit run -a --show-diff-on-failure
 # gitleaks git -v
 
 separator "Running ruff format and ruff check"
-ruff format
-ruff check
+ruff format --exclude CHANGELOG.md
+ruff check --exclude CHANGELOG.md
 
 separator "Running pytest"
 poetry run pytest -v
