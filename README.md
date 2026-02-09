@@ -172,13 +172,18 @@ cloudsnake trail events --output ndjson --since 24h \
 
 <br><br>
 <p align="center">
-    <img align="center" alt="SecretsManager " src="docs/img/cloudsnake-secrets-manager.png">
+    <img align="center" alt="SecretsManager get secrets" src="docs/img/cloudsnake-secrets-manager-get-secrets.png">
+    <img align="center" alt="SecretsManager password generator" src="docs/img/cloudsnake-secrets-manager-password-generator.png">
 <h3 align="center">Secrets Manager</h3>
+
 </p>
 
 ```shell
 cloudsnake secrets-manager get-secrets
 cloudsnake --region us-east-1 secrets-manager get-secrets
+# Password generator
+cloudsnake secrets-manager generate-password --password-length 30
+cloudsnake secrets-manager generate-password --help # for more options
 ```
 
 ---

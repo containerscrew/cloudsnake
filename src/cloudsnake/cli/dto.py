@@ -37,3 +37,15 @@ class LoggingLevel(str, Enum):
     WARNING = "WARNING"
     ERROR = "ERROR"
     CRITICAL = "CRITICAL"
+
+
+@dataclass
+class PasswordOptions:
+    password_length: int
+    exclude_characters: str
+    exclude_numbers: bool
+    exclude_punctuation: bool
+    exclude_uppercase: bool
+    exclude_lowercase: bool
+    include_space: bool
+    require_each_included_type: bool
