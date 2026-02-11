@@ -5,6 +5,7 @@ from typing import Optional
 import typer
 from rich import traceback
 
+from cloudsnake.cli import resource_group_tagging
 from cloudsnake.cli.dto import Common, LoggingLevel
 from cloudsnake.cli.logs import cw_logs
 from cloudsnake.cli.secrets_manager import secrets_manager
@@ -35,6 +36,11 @@ app.add_typer(cw_logs, name="logs", help="Manage CloudWatch Logs operations")
 app.add_typer(trail, name="trail", help="Manage CloudTrail operations")
 app.add_typer(
     secrets_manager, name="secrets-manager", help="Manage Secrets Manager operations"
+)
+app.add_typer(
+    resource_group_tagging,
+    name="resource-group",
+    help="Manage Resource Group Tagging API operations",
 )
 
 
