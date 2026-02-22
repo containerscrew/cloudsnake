@@ -1691,14 +1691,14 @@ test = ["django", "django-stubs", "mypy", "mypy-zope", "pytest (>=7.1)", "pytest
 
 [[package]]
 name = "textual"
-version = "7.5.0"
+version = "8.0.0"
 description = "Modern Text User Interface framework"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "textual-7.5.0-py3-none-any.whl", hash = "sha256:849dfee9d705eab3b2d07b33152b7bd74fb1f5056e002873cc448bce500c6374"},
-    {file = "textual-7.5.0.tar.gz", hash = "sha256:c730cba1e3d704e8f1ca915b6a3af01451e3bca380114baacf6abf87e9dac8b6"},
+    {file = "textual-8.0.0-py3-none-any.whl", hash = "sha256:8908f4ebe93a6b4f77ca7262197784a52162bc88b05f4ecf50ac93a92d49bb8f"},
+    {file = "textual-8.0.0.tar.gz", hash = "sha256:ce48f83a3d686c0fac0e80bf9136e1f8851c653aa6a4502e43293a151df18809"},
 ]
 
 [package.dependencies]
@@ -1835,4 +1835,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "4101470c1ffed1b51370fa8cfb839e31c3e3ade3b841dde1c6f895a63982c777"
+content-hash = "71f0315a56464175f2e9b5d064ed6975832cf362f6c6ea2b847e4451acc08955"
