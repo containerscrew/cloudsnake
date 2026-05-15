@@ -15,7 +15,7 @@ class SSOWrapper(App):
 
     def list_accounts(self, token: str) -> dict:
         try:
-            response = self.client.list_accounts(maxResults=123, accessToken=token)
+            response = self.client.list_accounts(maxResults=100, accessToken=token)
             return response
         except Exception as e:
             self.log.error(f"Couldn't list accounts: {str(e)}")
