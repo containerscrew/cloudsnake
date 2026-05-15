@@ -1,7 +1,9 @@
-## Unreleased (0ffd47c..2977c3d)
+## 0.14.2 - 2026-05-15
+#### Miscellaneous Chores
+- new version 0.14.2 - (679f6b6) - containerscrew
+- update dependencies - (4c33d1d) - containerscrew
 
 - - -
-
 ## 0.14.1 - 2026-05-15
 #### Bug Fixes
 - change maxResults frm 123 to 100 in list_accounts - (82c8154) - containerscrew
