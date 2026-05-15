@@ -1,25 +1,3 @@
-## 0.14.0 - 2026-02-09
-#### Documentation
-- update docs/poetry.md - (7bf1b33) - containerscrew
-- update README - (e0806bc) - containerscrew
-#### Features
-- new secrets-manager command generate-password - (48b9170) - containerscrew
-- new version 0.13.0 - (352cf6d) - containerscrew
-- new command for secrets-manager (get-secrets) - (ec01beb) - containerscrew
-#### Miscellaneous Chores
-- **(version)** 0.14.0 - (785b21b) - containerscrew
-- **(version)** 0.13.0 - (f75f737) - containerscrew
-- remove changelog.md - (2aacde8) - containerscrew
-- add tools.pyright configuration - (17fefcb) - containerscrew
-- update CHANGELOG.md - (456c06d) - containerscrew
-- bump boto3 from 1.42.39 to 1.42.44 - (f93beaf) - dependabot[bot]
-- bump rich from 14.3.1 to 14.3.2 - (13b379c) - dependabot[bot]
-- bump boto3-stubs from 1.42.39 to 1.42.44 - (e56c790) - dependabot[bot]
-- bump boto3-stubs from 1.42.37 to 1.42.39 - (5f3d8c9) - dependabot[bot]
-- bump textual from 7.4.0 to 7.5.0 - (de38ac9) - dependabot[bot]
-- bump boto3 from 1.42.37 to 1.42.39 - (b10d22e) - dependabot[bot]
-
-- - -
 ## 0.14.1 - 2026-05-15
 #### Bug Fixes
 - change maxResults frm 123 to 100 in list_accounts - (82c8154) - containerscrew
@@ -29,6 +7,7 @@
 - update readme - (ad3d5ea) - containerscrew
 - update readme - (54851b9) - containerscrew
 #### Miscellaneous Chores
+- (**version**) 0.14.1 - (0ffd47c) - containerscrew
 - (**version**) 0.14.1 - (d9d69db) - containerscrew
 - (**version**) 0.14.1 - (2a1a17f) - containerscrew
 - new release 0.14.1 - (29b288f) - containerscrew
@@ -91,124 +70,74 @@
 
 - - -
 
-## 0.14.1 - 2026-05-15
-#### Bug Fixes
-- change maxResults frm 123 to 100 in list_accounts - (82c8154) - containerscrew
-- ci-cd pipeline - (6e66499) - containerscrew
-- ci-cd pipeline - (dd84e40) - containerscrew
+## 0.14.0 - 2026-02-09
+#### Features
+- new secrets-manager command generate-password - (48b9170) - containerscrew
 #### Documentation
-- update readme - (ad3d5ea) - containerscrew
-- update readme - (54851b9) - containerscrew
+- update docs/poetry.md - (7bf1b33) - containerscrew
 #### Miscellaneous Chores
-- (**version**) 0.14.1 - (2a1a17f) - containerscrew
-- bump boto3 from 1.43.2 to 1.43.6 - (5045971) - dependabot[bot]
-- bump boto3-stubs from 1.43.2 to 1.43.6 - (519cc07) - dependabot[bot]
-- bump boto3-stubs from 1.42.96 to 1.43.2 - (256a091) - dependabot[bot]
-- bump textual from 8.2.4 to 8.2.5 - (f9f9262) - dependabot[bot]
-- bump boto3 from 1.42.96 to 1.43.2 - (7253ad5) - dependabot[bot]
-- bump typer from 0.24.2 to 0.25.1 - (06e24d9) - dependabot[bot]
-- bump moto from 5.1.22 to 5.2.0 - (9a12b9e) - dependabot[bot]
-- bump click from 8.3.2 to 8.3.3 - (3bd2011) - dependabot[bot]
-- bump boto3 from 1.42.91 to 1.42.96 - (0bf8670) - dependabot[bot]
-- bump pytest-randomly from 4.0.1 to 4.1.0 - (941515f) - dependabot[bot]
-- bump typer from 0.24.1 to 0.24.2 - (13e5556) - dependabot[bot]
-- bump boto3-stubs from 1.42.91 to 1.42.96 - (6fb4a99) - dependabot[bot]
-- bump boto3 from 1.42.88 to 1.42.91 - (b8e27e2) - dependabot[bot]
-- bump textual from 8.2.3 to 8.2.4 - (60a62fa) - dependabot[bot]
-- bump rich from 14.3.4 to 15.0.0 - (8d8ece6) - dependabot[bot]
-- bump boto3-stubs from 1.42.88 to 1.42.91 - (1aecd9c) - dependabot[bot]
-- bump pytest from 9.0.2 to 9.0.3 - (42e7ea0) - dependabot[bot]
-- bump textual from 8.2.2 to 8.2.3 - (b9a5a99) - dependabot[bot]
-- bump boto3-stubs from 1.42.83 to 1.42.88 - (8ea113d) - dependabot[bot]
-- bump rich from 14.3.3 to 14.3.4 - (636787d) - dependabot[bot]
-- bump boto3 from 1.42.83 to 1.42.88 - (b1da2c0) - dependabot[bot]
-- bump boto3 from 1.42.78 to 1.42.83 - (f0a3206) - dependabot[bot]
-- bump requests from 2.33.0 to 2.33.1 - (2348477) - dependabot[bot]
-- bump textual from 8.2.1 to 8.2.2 - (34c476a) - dependabot[bot]
-- bump boto3-stubs from 1.42.78 to 1.42.83 - (a0fb009) - dependabot[bot]
-- bump click from 8.3.1 to 8.3.2 - (1c04799) - dependabot[bot]
-- bump requests from 2.32.5 to 2.33.0 - (2e526db) - dependabot[bot]
-- bump boto3-stubs from 1.42.73 to 1.42.78 - (5fce271) - dependabot[bot]
-- bump boto3 from 1.42.73 to 1.42.78 - (f339bc5) - dependabot[bot]
-- bump textual from 8.1.1 to 8.2.1 - (7e4e18d) - dependabot[bot]
-- bump boto3-stubs from 1.42.68 to 1.42.73 - (4148eac) - dependabot[bot]
-- bump pytest-cov from 7.0.0 to 7.1.0 - (0420857) - dependabot[bot]
-- bump boto3 from 1.42.68 to 1.42.73 - (f4798eb) - dependabot[bot]
-- bump textual from 8.0.2 to 8.1.1 - (2260cba) - dependabot[bot]
-- bump testfixtures from 10.0.0 to 11.0.0 - (b1b3cd0) - dependabot[bot]
-- bump moto from 5.1.21 to 5.1.22 - (33b9ef4) - dependabot[bot]
-- bump boto3 from 1.42.63 to 1.42.68 - (939154f) - dependabot[bot]
-- bump boto3-stubs from 1.42.63 to 1.42.68 - (33d70cf) - dependabot[bot]
-- bump boto3-stubs from 1.42.59 to 1.42.63 - (0518787) - dependabot[bot]
-- bump textual from 8.0.0 to 8.0.2 - (3e030ae) - dependabot[bot]
-- bump boto3 from 1.42.59 to 1.42.63 - (6c1b219) - dependabot[bot]
-- bump werkzeug from 3.1.5 to 3.1.6 - (c7a74b0) - dependabot[bot]
-- bump boto3 from 1.42.54 to 1.42.59 - (4ab37aa) - dependabot[bot]
-- bump boto3-stubs from 1.42.54 to 1.42.59 - (6d9d7dc) - dependabot[bot]
-- bump typer from 0.23.1 to 0.24.1 - (ecfd4c0) - dependabot[bot]
-- bump rich from 14.3.2 to 14.3.3 - (ae93c48) - dependabot[bot]
-- bump boto3 from 1.42.49 to 1.42.54 - (b884e27) - dependabot[bot]
-- bump boto3-stubs from 1.42.49 to 1.42.54 - (d6b6e16) - dependabot[bot]
-- bump textual from 7.5.0 to 8.0.0 - (e25ce53) - dependabot[bot]
-- bump boto3-stubs from 1.42.44 to 1.42.49 - (6f39b4f) - dependabot[bot]
-- bump typer from 0.21.1 to 0.23.1 - (09523b6) - dependabot[bot]
-- bump moto from 5.1.20 to 5.1.21 - (69340e0) - dependabot[bot]
-- bump boto3 from 1.42.44 to 1.42.49 - (2f3b506) - dependabot[bot]
-- bump cryptography from 46.0.4 to 46.0.5 - (4550211) - dependabot[bot]
-- automatic CHANGELOG generator using pipeline - (b58be60) - containerscrew
-- update CHANGELOG.md - (8d7a044) - containerscrew
+- (**version**) 0.14.0 - (785b21b) - containerscrew
+- remove changelog.md - (2aacde8) - containerscrew
+- add tools.pyright configuration - (17fefcb) - containerscrew
+- update CHANGELOG.md - (456c06d) - containerscrew
 
 - - -
 
-## 0.14.1 - 2026-02-09
+## 0.13.0 - 2026-02-08
+#### Features
+- new version 0.13.0 - (352cf6d) - containerscrew
+- new command for secrets-manager (get-secrets) - (ec01beb) - containerscrew
 #### Documentation
-- update readme - (ad3d5ea) - containerscrew
-- update readme - (54851b9) - containerscrew
+- update README - (e0806bc) - containerscrew
 #### Miscellaneous Chores
-- automatic CHANGELOG generator using pipeline - (b58be60) - containerscrew
-- update CHANGELOG.md - (8d7a044) - containerscrew
+- (**version**) 0.13.0 - (f75f737) - containerscrew
+- bump boto3 from 1.42.39 to 1.42.44 - (f93beaf) - dependabot[bot]
+- bump rich from 14.3.1 to 14.3.2 - (13b379c) - dependabot[bot]
+- bump boto3-stubs from 1.42.39 to 1.42.44 - (e56c790) - dependabot[bot]
+- bump boto3-stubs from 1.42.37 to 1.42.39 - (5f3d8c9) - dependabot[bot]
+- bump textual from 7.4.0 to 7.5.0 - (de38ac9) - dependabot[bot]
+- bump boto3 from 1.42.37 to 1.42.39 - (b10d22e) - dependabot[bot]
 
 - - -
 
-
-## 0.12.3 - 2026-02-09
+## 0.12.3 - 2026-01-29
 #### Miscellaneous Chores
-- **(version)** 0.12.3 - (00cc5ae) - containerscrew
+- (**version**) 0.12.3 - (00cc5ae) - containerscrew
 - update pyproject dependencies - (c8bcd0e) - containerscrew
 
 - - -
 
-## 0.12.2 - 2026-02-09
+## 0.12.2 - 2026-01-29
 #### Bug Fixes
 - handle exception in sso and ssm commands - (69cc0f3) - containerscrew
 #### Miscellaneous Chores
-- **(version)** 0.12.2 - (66e9658) - containerscrew
+- (**version**) 0.12.2 - (66e9658) - containerscrew
 
 - - -
 
-## 0.12.1 - 2026-02-09
+## 0.12.1 - 2026-01-28
 #### Bug Fixes
 - handle exception TargetNotFoundException - (80eccb8) - containerscrew
 #### Documentation
 - update readme - (7670027) - containerscrew
 #### Miscellaneous Chores
-- **(version)** 0.12.1 - (c3ea9d0) - containerscrew
+- (**version**) 0.12.1 - (c3ea9d0) - containerscrew
 
 - - -
 
-## 0.12.0 - 2026-02-09
+## 0.12.0 - 2026-01-26
+#### Features
+- new version 0.12.0 - (7825360) - containerscrew
+- new command for cloudtrail events - (7dcde1b) - containerscrew
 #### Bug Fixes
 - poetry pypip token secret name - (7de2163) - containerscrew
 - poetry publish stage - (4115472) - containerscrew
 #### Documentation
 - update readme - (0431458) - containerscrew
-#### Features
-- new version 0.12.0 - (7825360) - containerscrew
-- new command for cloudtrail events - (7dcde1b) - containerscrew
 #### Miscellaneous Chores
-- **(version)** 0.12.0 - (db4346f) - containerscrew
-- **(version)** 0.12.0 - (b76d31a) - containerscrew
-- **(version)** 0.12.0 - (5ed5b57) - containerscrew
+- (**version**) 0.12.0 - (db4346f) - containerscrew
+- (**version**) 0.12.0 - (b76d31a) - containerscrew
+- (**version**) 0.12.0 - (5ed5b57) - containerscrew
 - update rich console spinner speed - (9ca4a1c) - containerscrew
 - bump boto3-stubs from 1.42.30 to 1.42.34 - (d5a141b) - dependabot[bot]
 - bump boto3 from 1.42.30 to 1.42.34 - (722e00c) - dependabot[bot]
@@ -219,7 +148,33 @@
 
 - - -
 
-## 0.11.1 - 2026-02-09
+## 0.11.1 - 2026-01-21
+#### Refactoring
+- use typer.exit - (8efb126) - containerscrew
+- console print & reusable functions - (63d4c5b) - containerscrew
+- console print & reusable functions - (93780cf) - containerscrew
+#### Miscellaneous Chores
+- (**version**) 0.11.1 - (5bb5496) - containerscrew
+- (**version**) 0.1.0 - (77e8998) - containerscrew
+- (**version**) 0.1.0 - (ac737bf) - containerscrew
+- remove changelog.md - (89466ce) - containerscrew
+
+- - -
+
+## 0.11.0 - 2026-01-20
+#### Features
+- get historical cloudwatch log group - (9338991) - containerscrew
+- adapt size for log groups - (fd2c4ba) - containerscrew
+- cloudwatch logs stream - (56610b7) - containerscrew
+- new version 0.9.1 - (8d71abd) - containerscrew
+- (tuiv2): replace cntrl commands to exit the menu - (353a302) - containerscrew
+- new version 0.9.0 - (6d5c0ff) - containerscrew
+- replace instance selector using textual library - (8cc6af7) - containerscrew
+- remove version command and usage message - (dde37c7) - containerscrew
+- implement new sso get-credentials command - (ae41db4) - containerscrew
+- wip: implementing sso fetch credentials - (4bde401) - containerscrew
+- implement SSM get parameter - (c7f9943) - containerscrew
+- refactor rds session - (bae0db4) - containerscrew
 #### Bug Fixes
 - security bugfixes - (c0f6c4f) - containerscrew
 - (ssm) remove nested loop and fix parameter accumulation logic - (df3c5bc) - containerscrew
@@ -240,24 +195,17 @@
 - update README.md and examples - (a42a202) - containerscrew
 - update README.md and examples - (80a1c23) - containerscrew
 - update README.md and examples - (3516cb5) - containerscrew
-#### Features
-- get historical cloudwatch log group - (9338991) - containerscrew
-- adapt size for log groups - (fd2c4ba) - containerscrew
-- cloudwatch logs stream - (56610b7) - containerscrew
-- new version 0.9.1 - (8d71abd) - containerscrew
-- (tuiv2): replace cntrl commands to exit the menu - (353a302) - containerscrew
-- new version 0.9.0 - (6d5c0ff) - containerscrew
-- replace instance selector using textual library - (8cc6af7) - containerscrew
-- remove version command and usage message - (dde37c7) - containerscrew
-- implement new sso get-credentials command - (ae41db4) - containerscrew
-- wip: implementing sso fetch credentials - (4bde401) - containerscrew
-- implement SSM get parameter - (c7f9943) - containerscrew
-- refactor rds session - (bae0db4) - containerscrew
+#### Refactoring
+- cloudsnake selector app & documentation - (258de7d) - containerscrew
+- logging default log level - (0eee9de) - containerscrew
+- session file name - (82922b7) - containerscrew
+- ruff checks - (29e52e9) - containerscrew
+- sdk and cli commands - (117b9d9) - containerscrew
+- code structure and doc - (c450f30) - containerscrew
+- code structure - (90d2678) - containerscrew
+- code and doc - (686cd5c) - containerscrew
+- documentation and code - (7c93213) - containerscrew
 #### Miscellaneous Chores
-- **(version)** 0.11.1 - (5bb5496) - containerscrew
-- **(version)** 0.1.0 - (77e8998) - containerscrew
-- **(version)** 0.1.0 - (ac737bf) - containerscrew
-- remove changelog.md - (89466ce) - containerscrew
 - bump boto3 from 1.42.29 to 1.42.30 - (e1ab78a) - dependabot[bot]
 - bump moto from 5.1.19 to 5.1.20 - (486ba22) - dependabot[bot]
 - bump boto3-stubs from 1.42.29 to 1.42.30 - (f49aa2d) - dependabot[bot]
@@ -397,16 +345,5 @@
 - auto-fix non-conventional commit - Update README - (984f8c2) - containerscrew
 - auto-fix non-conventional commit - Update README - (26b5250) - containerscrew
 - auto-fix non-conventional commit - Initial commit - (964dbd0) - containerscrew
-#### Refactoring
-- use typer.exit - (8efb126) - containerscrew
-- console print & reusable functions - (63d4c5b) - containerscrew
-- console print & reusable functions - (93780cf) - containerscrew
-- cloudsnake selector app & documentation - (258de7d) - containerscrew
-- logging default log level - (0eee9de) - containerscrew
-- session file name - (82922b7) - containerscrew
-- ruff checks - (29e52e9) - containerscrew
-- sdk and cli commands - (117b9d9) - containerscrew
-- code structure and doc - (c450f30) - containerscrew
-- code structure - (90d2678) - containerscrew
-- code and doc - (686cd5c) - containerscrew
-- documentation and code - (7c93213) - containerscrew
+
+
