@@ -4,6 +4,15 @@
 - update dependencies - (4c33d1d) - containerscrew
 
 - - -
+## 0.14.3 - 2026-05-15
+#### Miscellaneous Chores
+- (**version**) 0.14.2 - (69c53ca) - containerscrew
+- new version 0.14.3 - (274e953) - containerscrew
+- new version 0.14.2 - (c3db49e) - containerscrew
+- update dependencies - (a3a41c3) - containerscrew
+
+- - -
+
 ## 0.14.1 - 2026-05-15
 #### Bug Fixes
 - change maxResults frm 123 to 100 in list_accounts - (82c8154) - containerscrew
