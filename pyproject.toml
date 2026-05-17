@@ -42,7 +42,7 @@ pytest-cov = "^7.0.0"
 [tool.poetry.dependencies]
 python = "^3.12"
 boto3 = "^1.42.10"
-click = "<8.4.0"
+click = "<8.5.0"
 dacite = "^1.8.1"
 simple-term-menu = "^1.6.4"
 typer = ">=0.20,<0.26"
