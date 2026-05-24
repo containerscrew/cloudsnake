@@ -34,7 +34,7 @@ cloudsnake = 'cloudsnake.__main__:main'
 [tool.poetry.group.test.dependencies]
 pytest-randomly = "^4.0.1"
 pytest = "^9.0.1"
-testfixtures = ">=10,<12"
+testfixtures = ">=10,<13"
 moto = "^5.0.9"
 pytest-cov = "^7.0.0"
 
