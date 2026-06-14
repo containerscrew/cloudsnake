@@ -1683,14 +1683,14 @@ files = [
 
 [[package]]
 name = "testfixtures"
-version = "12.0.0"
+version = "12.0.1"
 description = "A collection of helpers and mock objects for unit tests and doc tests."
 optional = false
 python-versions = ">=3.11"
 groups = ["test"]
 files = [
-    {file = "testfixtures-12.0.0-py3-none-any.whl", hash = "sha256:db6ae636369cd31f40899344a2dfa9e50da0e0e80b63128f82fbf60e9a118f2b"},
-    {file = "testfixtures-12.0.0.tar.gz", hash = "sha256:95f3a7824e104be2f6673fea59f9260ed6972b28064240e317c771fc13ab4268"},
+    {file = "testfixtures-12.0.1-py3-none-any.whl", hash = "sha256:50fc20b17024077970ba25b52072037639082a4df4394062e5c017b072896260"},
+    {file = "testfixtures-12.0.1.tar.gz", hash = "sha256:aad7ba894d0093ea41b5b14bbb4c12fef727e50c9fb086facf5d9a972174171a"},
 ]
 
 [package.extras]
