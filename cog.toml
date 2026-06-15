@@ -6,7 +6,7 @@ disable_bump_commit = false
 branch_whitelist = ["main"]
 skip_untracked = false
 
-pre_bump_hooks = ["cog changelog"]
+pre_bump_hooks = ["poetry version {{version}}", "cog changelog"]
 
 [git_hooks]
 [git_hooks.pre-commit]
