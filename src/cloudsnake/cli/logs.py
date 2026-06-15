@@ -10,7 +10,7 @@ from cloudsnake.helpers import (
 )
 from cloudsnake.sdk.cloudwatch import CloudWatchLogsWrapper, print_colored_log
 from cloudsnake.tui import SelectorApp
-from cloudsnake.utils import signal_handler
+from cloudsnake.utils import apply_context_overrides, signal_handler, with_aws_overrides
 
 DEFAULT_LOG_FILTER = "[].{logGroupName: logGroupName, size: storedBytes, arn: arn}"
 
@@ -21,10 +21,20 @@ cw_logs = typer.Typer(
 )
 
 
+@cw_logs.callback()
+def logs_callback(
+    ctx: typer.Context,
+    region: str | None = typer.Option(None, "--region", "-r", help="AWS region"),
+    profile: str | None = typer.Option(None, "--profile", "-p", help="AWS profile"),
+) -> None:
+    apply_context_overrides(ctx, region, profile)
+
+
 @cw_logs.command(
     "stream", help="Live stream logs from a CloudWatch log group", no_args_is_help=False
 )
 @handle_aws_errors
+@with_aws_overrides
 def log_stream(
     ctx: typer.Context,
     filter_pattern: str = typer.Option(

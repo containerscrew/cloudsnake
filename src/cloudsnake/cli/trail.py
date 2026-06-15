@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
 import jq
 import typer
@@ -9,6 +9,7 @@ from cloudsnake.cli.dto import OutputMode
 from cloudsnake.console import console
 from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.sdk.cloudtrail import CloudTrailWrapper
+from cloudsnake.utils import apply_context_overrides, with_aws_overrides
 
 trail = typer.Typer(
     no_args_is_help=True,
@@ -17,17 +18,27 @@ trail = typer.Typer(
 )
 
 
+@trail.callback()
+def trail_callback(
+    ctx: typer.Context,
+    region: str | None = typer.Option(None, "--region", "-r", help="AWS region"),
+    profile: str | None = typer.Option(None, "--profile", "-p", help="AWS profile"),
+) -> None:
+    apply_context_overrides(ctx, region, profile)
+
+
 @trail.command("events")
 @handle_aws_errors
+@with_aws_overrides
 def trail_events(
     ctx: typer.Context,
     user: str = typer.Option(None, "--user", "-u"),
     event_name: str = typer.Option(None, "--event", "-e"),
-    resource_name: str = typer.Option(None, "--resource", "-r"),
-    read_only: Optional[bool] = typer.Option(None, "--read-only/--write-only"),
+    resource_name: str = typer.Option(None, "--resource"),
+    read_only: bool | None = typer.Option(None, "--read-only/--write-only"),
     since: str = typer.Option("15m", "--since", "-s"),
     search: str = typer.Option(None, "--search", "-q"),
-    output: Optional[OutputMode] = typer.Option(
+    output: OutputMode | None = typer.Option(
         OutputMode.pretty,
         "--output",
         "-o",
@@ -134,7 +145,7 @@ def json_safe(obj: Any) -> Any:
     return obj
 
 
-def match_search(detail: Optional[dict], expr: str) -> bool:
+def match_search(detail: dict | None, expr: str) -> bool:
     if not detail:
         return False
 
@@ -161,7 +172,7 @@ def get_by_path(obj: Any, path: str) -> Any:
     return cur
 
 
-def print_event(event: dict, detail: Optional[dict]):
+def print_event(event: dict, detail: dict | None):
     event_time = event["EventTime"].strftime("%H:%M:%S")
     name = event.get("EventName", "Unknown")
     source = event.get("EventSource", "").replace(".amazonaws.com", "")

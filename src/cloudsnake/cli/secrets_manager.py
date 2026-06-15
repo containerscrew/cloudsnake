@@ -8,7 +8,7 @@ from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.helpers import secrets_manager_secrets_to_items
 from cloudsnake.sdk.secrets_manager import SecretsManagerWrapper
 from cloudsnake.tui import SelectorApp
-from cloudsnake.utils import signal_handler
+from cloudsnake.utils import apply_context_overrides, signal_handler, with_aws_overrides
 
 secrets_manager = typer.Typer(
     no_args_is_help=True,
@@ -17,8 +17,18 @@ secrets_manager = typer.Typer(
 )
 
 
+@secrets_manager.callback()
+def secrets_callback(
+    ctx: typer.Context,
+    region: str | None = typer.Option(None, "--region", "-r", help="AWS region"),
+    profile: str | None = typer.Option(None, "--profile", "-p", help="AWS profile"),
+) -> None:
+    apply_context_overrides(ctx, region, profile)
+
+
 @secrets_manager.command("get-secrets", help="Get secrets from Secrets Manager")
 @handle_aws_errors
+@with_aws_overrides
 def get_parameters(
     ctx: typer.Context,
 ):
@@ -53,6 +63,7 @@ def get_parameters(
     help="Generate a random password. Visit official documentation https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager/client/get_random_password.html for more details.",
 )
 @handle_aws_errors
+@with_aws_overrides
 def generate_password(
     ctx: typer.Context,
     password_length: int = typer.Option(

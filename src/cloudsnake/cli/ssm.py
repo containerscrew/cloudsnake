@@ -10,7 +10,7 @@ from cloudsnake.sdk.ec2 import EC2InstanceWrapper
 from cloudsnake.sdk.ssm_parameters import SSMParameterStoreWrapper
 from cloudsnake.sdk.ssm_session import SSMStartSessionWrapper
 from cloudsnake.tui import SelectorApp
-from cloudsnake.utils import signal_handler
+from cloudsnake.utils import apply_context_overrides, signal_handler, with_aws_overrides
 
 EC2_RUNNING_FILTER = "Name=instance-state-name,Values=running"
 EC2_INSTANCE_SELECTOR_QUERY = "[].{TargetId: InstanceId, Name: Tags[?Key=='Name'].Value | [0], Ip: PrivateIpAddress}"
@@ -22,10 +22,20 @@ ssm = typer.Typer(
 )
 
 
+@ssm.callback()
+def ssm_callback(
+    ctx: typer.Context,
+    region: str | None = typer.Option(None, "--region", "-r", help="AWS region"),
+    profile: str | None = typer.Option(None, "--profile", "-p", help="AWS profile"),
+) -> None:
+    apply_context_overrides(ctx, region, profile)
+
+
 @ssm.command(
     "start-session", help="Start session with the given target id", no_args_is_help=True
 )
 @handle_aws_errors
+@with_aws_overrides
 def start_session(
     ctx: typer.Context,
     target: Optional[str] = typer.Option(None, help="Target id of the instance"),
@@ -92,6 +102,7 @@ def start_session(
 
 @ssm.command("get-parameters", help="Get secrets from parameter store")
 @handle_aws_errors
+@with_aws_overrides
 def get_parameters(
     ctx: typer.Context,
 ):

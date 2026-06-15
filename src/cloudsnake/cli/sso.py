@@ -3,7 +3,6 @@ import os
 import signal
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Optional
 
 import typer
 from rich.progress import (
@@ -19,7 +18,13 @@ from cloudsnake.console import console
 from cloudsnake.decorators import handle_aws_errors
 from cloudsnake.sdk.sso import SSOWrapper
 from cloudsnake.sdk.sso_oidc import SSOOIDCWrapper
-from cloudsnake.utils import open_browser_url, parse_key_val_list, signal_handler
+from cloudsnake.utils import (
+    apply_context_overrides,
+    open_browser_url,
+    parse_key_val_list,
+    signal_handler,
+    with_aws_overrides,
+)
 
 AWS_CREDENTIALS_FILE_PATH = os.path.expanduser("~/.aws/credentials")
 
@@ -32,18 +37,28 @@ sso = typer.Typer(
 )
 
 
+@sso.callback()
+def sso_callback(
+    ctx: typer.Context,
+    region: str | None = typer.Option(None, "--region", "-r", help="AWS region"),
+    profile: str | None = typer.Option(None, "--profile", "-p", help="AWS profile"),
+) -> None:
+    apply_context_overrides(ctx, region, profile)
+
+
 @sso.command("get-credentials", help="Get SSO credentials", no_args_is_help=True)
 @handle_aws_errors
+@with_aws_overrides
 def get_credentials(
     ctx: typer.Context,
     start_url: str = typer.Option(..., help="SSO Start URL"),
-    role_overrides: Optional[List[str]] = typer.Option(
+    role_overrides: list[str] | None = typer.Option(
         None,
         "--role-overrides",
         "-ro",
         help="Override the role name to filter",
     ),
-    account_overrides: Optional[List[str]] = typer.Option(
+    account_overrides: list[str] | None = typer.Option(
         None,
         "--account-overrides",
         "-ao",
