@@ -31,6 +31,27 @@ In your terminal, set the corresponding `AWS_PROFILE=MyProfile` if not using the
 </p>
 
 ---
+
+## Profile, region & log level
+
+`--profile/-p`, `--region/-r` and `--log-level/-l` are **global options**. Pass them right after `cloudsnake` and they apply to the subcommand that follows:
+
+```shell
+cloudsnake --profile prod --region us-east-1 ssm get-parameters
+cloudsnake --log-level debug trail events
+```
+
+`--region` and `--profile` can **also** be passed after the subcommand to override them per command (handy for aliases and quick one-offs):
+
+```shell
+# Equivalent to the global form above
+cloudsnake ssm get-parameters --region us-east-1 --profile prod
+cloudsnake secrets-manager get-secrets -r us-east-1 -p prod
+```
+
+When omitted, region defaults to `eu-west-1` and profile to your `AWS_PROFILE` environment variable.
+
+---
 <br><br>
 <p align="center">
     <img align="center" alt="SSM session" src="docs/img/cloudsnake-ssm-session.gif">

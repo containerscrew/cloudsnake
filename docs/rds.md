@@ -55,7 +55,7 @@ cloudsnake rds download-cert --save-path /tmp
 Other region:
 
 ```shell
-cloudsnake --region us-east-1 download-cert --save-path /tmp
+cloudsnake rds download-cert --save-path /tmp --region us-east-1
 ```
 
 ### Connect to the instance
