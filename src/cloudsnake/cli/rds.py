@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 import typer
 
@@ -22,7 +21,7 @@ def generate_db_auth_token(
     hostname: str = typer.Option(
         ..., "--hostname", "-h", help="Hostname of the RDS instance"
     ),
-    port: Optional[int] = typer.Option(3306, "--port", "-p", help="DB instance port"),
+    port: int | None = typer.Option(3306, "--port", "-p", help="DB instance port"),
     username: str = typer.Option(
         ...,
         "--username",
@@ -30,7 +29,7 @@ def generate_db_auth_token(
         help="Database username to connect",
         case_sensitive=True,
     ),
-    print: Optional[bool] = typer.Option(
+    print: bool | None = typer.Option(
         True, "--no-print", "-np", help="Do not print the token in the console"
     ),
 ):
@@ -62,14 +61,14 @@ def validate_hostname(ctx: typer.Context, param: typer.CallbackParam, value: str
 )
 def rds_connect(
     ctx: typer.Context,
-    hostname: Optional[str] = typer.Option(
+    hostname: str | None = typer.Option(
         None,
         "--hostname",
         "-h",
         callback=validate_hostname,
         help="Hostname of the RDS instance",
     ),
-    port: Optional[int] = typer.Option(3306, "--port", "-p", help="DB instance port"),
+    port: int | None = typer.Option(3306, "--port", "-p", help="DB instance port"),
     username: str = typer.Option(
         ...,
         "--username",
@@ -78,7 +77,7 @@ def rds_connect(
         case_sensitive=True,
     ),
     cert: str = typer.Option(..., "--cert", "-c", help="Path to the certificate"),
-    with_instance_selector: Optional[bool] = typer.Option(
+    with_instance_selector: bool | None = typer.Option(
         False,
         "--with-instance-selector",
         "-is",
@@ -105,7 +104,7 @@ def rds_connect(
 )
 def download_rds_certificate(
     ctx: typer.Context,
-    save_path: Optional[str] = typer.Option(
+    save_path: str | None = typer.Option(
         os.getcwd(), "--save-path", "-sp", help="Path to save the certificate"
     ),
 ):
@@ -122,16 +121,16 @@ def download_rds_certificate(
 )
 def describe_db_instances(
     ctx: typer.Context,
-    filters: Optional[str] = typer.Option(
+    filters: str | None = typer.Option(
         None, "--filters", "-f", help="Filters for EC2 instances in Name=Value format"
     ),
-    query: Optional[str] = typer.Option(
+    query: str | None = typer.Option(
         None, "--query", "-q", help="Query to format the output"
     ),
-    output: Optional[OutputMode] = typer.Option(
+    output: OutputMode | None = typer.Option(
         OutputMode.json, "--output", "-o", help="Output mode", case_sensitive=True
     ),
-    colored: Optional[bool] = typer.Option(
+    colored: bool | None = typer.Option(
         True, "--no-color", "-nc", help="Output with highlights."
     ),
 ):

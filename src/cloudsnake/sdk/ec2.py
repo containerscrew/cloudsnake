@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 import jmespath
 from botocore.exceptions import ClientError
@@ -12,12 +12,12 @@ from cloudsnake.sdk.aws import App
 class EC2InstanceWrapper(App):
     def __init__(
         self,
-        filters: Optional[str] = None,
-        query: Optional[str] = None,
+        filters: str | None = None,
+        query: str | None = None,
         **kwargs,
     ):
         super().__init__(filters=filters, query=query, **kwargs)
-        self.instances: Dict[str, Any] = {}
+        self.instances: dict[str, Any] = {}
 
     @property
     def client_name(self) -> str:

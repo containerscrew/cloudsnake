@@ -1,6 +1,5 @@
 import os
 from importlib.metadata import version
-from typing import Optional
 
 import typer
 from rich import traceback
@@ -41,14 +40,14 @@ app.add_typer(
 @app.callback()
 def entrypoint(
     ctx: typer.Context,
-    profile: Optional[str] = typer.Option(
+    profile: str | None = typer.Option(
         os.getenv("AWS_PROFILE"),
         "--profile",
         "-p",
         help="AWS profile to use",
         show_default=True,
     ),
-    log_level: Optional[LoggingLevel] = typer.Option(
+    log_level: LoggingLevel | None = typer.Option(
         LoggingLevel.WARNING,
         "--log-level",
         "-l",
@@ -56,7 +55,7 @@ def entrypoint(
         case_sensitive=False,
         is_eager=True,
     ),
-    region: Optional[str] = typer.Option(
+    region: str | None = typer.Option(
         "eu-west-1", "--region", "-r", help="AWS region", show_default=True
     ),
 ):

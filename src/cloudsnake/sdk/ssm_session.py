@@ -5,10 +5,9 @@ import json
 import logging
 import shutil
 import subprocess
-from typing import Any, Dict, Optional
+from typing import Any
 
 import typer
-from moto.organizations.exceptions import TargetNotFoundException
 
 from cloudsnake.helpers import ignore_user_entered_signals
 from cloudsnake.sdk.aws import App
@@ -22,7 +21,7 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-wor
 class SSMStartSessionWrapper(App):
     def __init__(
         self,
-        session_response_output: Optional[Dict[str, Any]] = None,
+        session_response_output: dict[str, Any] | None = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -37,7 +36,7 @@ class SSMStartSessionWrapper(App):
         if shutil.which("session-manager-plugin") is None:
             raise FileNotFoundError(PLUGIN_NOT_FOUND_MSG)
 
-    def start_session_response(self, target: str, reason: str) -> Dict[str, Any]:
+    def start_session_response(self, target: str, reason: str) -> dict[str, Any]:
         self.log.debug(f"ssm.start_session(Target={target})")
         res = self.client.start_session(Target=target, Reason=reason)
         self.session_response_output = res
@@ -65,10 +64,7 @@ class SSMStartSessionWrapper(App):
             self.log.info("Session closed cleanly")
             return 0
 
-        except (
-            TargetNotFoundException,
-            self.client.exceptions.TargetNotConnected,
-        ) as e:
+        except self.client.exceptions.TargetNotConnected as e:
             self.log.error(f"{e}")
             raise typer.Exit(1)
 

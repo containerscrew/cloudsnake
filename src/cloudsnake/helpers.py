@@ -4,12 +4,10 @@ import signal
 import sys
 from datetime import datetime
 
-from typing_extensions import Dict, List
-
 from cloudsnake.models.selector import SelectorItem
 
 
-def parse_filters(filters: str) -> List[Dict[str, List[str]]]:
+def parse_filters(filters: str) -> list[dict[str, list[str]]]:
     """Parse filters passed in commands like cloudsnake ec2 describe-instances --filters Name=instance-state-name,
     Values=running"""
     parsed_filters = []

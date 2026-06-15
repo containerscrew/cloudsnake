@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Any, Dict, Iterator, Optional
+from collections.abc import Iterator
+from typing import Any
 
 import jmespath
 from botocore.exceptions import ClientError
@@ -15,12 +16,12 @@ from cloudsnake.sdk.aws import App
 class CloudWatchLogsWrapper(App):
     def __init__(
         self,
-        filters: Optional[str] = None,
-        query: Optional[str] = None,
+        filters: str | None = None,
+        query: str | None = None,
         **kwargs,
     ):
         super().__init__(filters=filters, query=query, **kwargs)
-        self.log_groups: Dict[str, Any] = {}
+        self.log_groups: dict[str, Any] = {}
 
     @property
     def client_name(self) -> str:
@@ -57,7 +58,7 @@ class CloudWatchLogsWrapper(App):
     def tail_log_group_live(
         self,
         log_group_arn: str,
-        filter_pattern: Optional[str] = None,
+        filter_pattern: str | None = None,
     ) -> Iterator[dict]:
         """
         Live tail a CloudWatch log group using start_live_tail (push-based).
@@ -90,8 +91,8 @@ class CloudWatchLogsWrapper(App):
         self,
         log_group_arn: str,
         since: str,
-        end: Optional[str] = None,
-        filter_pattern: Optional[str] = None,
+        end: str | None = None,
+        filter_pattern: str | None = None,
     ) -> Iterator[dict]:
         """
         Fetches historical logs using filter_log_events with pagination.

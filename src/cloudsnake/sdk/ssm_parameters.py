@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 from botocore.exceptions import ClientError
 
@@ -11,7 +10,7 @@ from cloudsnake.sdk.aws import App
 class SSMParameterStoreWrapper(App):
     def __init__(
         self,
-        session_response_output: Optional[dict] = None,
+        session_response_output: dict | None = None,
         **kwargs,
     ):
         super().__init__(**kwargs)

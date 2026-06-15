@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import logging
 import os
-from typing import Optional
 
 import boto3
 
 
 class SessionWrapper:
-    def __init__(self, profile: Optional[str] = None, region: str = "us-east-1"):
+    def __init__(self, profile: str | None = None, region: str = "us-east-1"):
         self.log = logging.getLogger("cloudsnake.session")
         self.profile = profile or os.getenv("AWS_PROFILE")
         self.region = region

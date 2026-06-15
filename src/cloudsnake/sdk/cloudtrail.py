@@ -1,6 +1,6 @@
 import time
+from collections.abc import Iterator
 from datetime import datetime, timezone
-from typing import Dict, Iterator, Optional
 
 from botocore.exceptions import ClientError
 
@@ -15,12 +15,12 @@ class CloudTrailWrapper(App):
     def tail_events(
         self,
         start_time_ms: int,
-        lookup_attr: Optional[Dict[str, str]] = None,
+        lookup_attr: dict[str, str] | None = None,
         poll_interval: int = 5,
         once: bool = False,
         seen_cache_size: int = 10_000,
     ) -> Iterator[dict]:
-        seen_event_ids: Dict[str, None] = {}
+        seen_event_ids: dict[str, None] = {}
 
         current_start_time = datetime.fromtimestamp(
             start_time_ms / 1000, tz=timezone.utc

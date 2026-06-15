@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import time
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any
 
 import boto3
 from botocore.config import Config
@@ -12,11 +12,11 @@ from botocore.config import Config
 class App(ABC):
     def __init__(
         self,
-        session: Optional[boto3.Session] = None,
-        region: Optional[str] = None,
-        profile: Optional[str] = None,
-        filters: Optional[dict] = None,
-        query: Optional[Any] = None,
+        session: boto3.Session | None = None,
+        region: str | None = None,
+        profile: str | None = None,
+        filters: dict | None = None,
+        query: Any | None = None,
         retries: int = 10,
         **kwargs,
     ):

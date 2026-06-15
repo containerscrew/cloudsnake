@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from cloudsnake.sdk.aws import App
 
@@ -55,7 +54,7 @@ class SSOWrapper(App):
 
     def get_credentials(
         self, account_id: str, account_name: str, token: str
-    ) -> List[dict]:
+    ) -> list[dict]:
         roles = self.list_account_roles(account_id, token)
         all_credentials = []
         for role in roles.get("roleList", []):
