@@ -7,6 +7,43 @@
 - update dependencies - (a3a41c3) - containerscrew
 
 - - -
+## 0.15.0 - 2026-06-16
+#### Features
+- <span style="background-color: #d73a49; color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 0.85em;">BREAKING</span>add per-subcommand --region/--profile overrides; -r now means --region (trail --resource drops -r short flag) - (bcaf182) - containerscrew
+#### Documentation
+- document flag overrides and cog commit/release workflow; add AGENTS.md - (877b696) - containerscrew
+#### Build system
+- regenerate lockfile after dropping moto and typing-extensions - (863f955) - containerscrew
+- drop moto and typing-extensions from runtime dependencies - (caea60c) - containerscrew
+#### Continuous Integration
+- rollback ruff-action version - (220a950) - containerscrew
+#### Refactoring
+- modernize type hints to builtin generics and use RichHandler logging - (6210949) - containerscrew
+#### Miscellaneous Chores
+- sync pyproject version on bump via poetry pre_bump_hook - (17a70d5) - containerscrew
+- bump boto3 from 1.43.24 to 1.43.29 - (921384d) - dependabot[bot]
+- bump testfixtures from 12.0.0 to 12.0.1 - (06cf33a) - dependabot[bot]
+- bump pytest from 9.0.3 to 9.1.0 - (9120483) - dependabot[bot]
+- bump typer from 0.26.4 to 0.26.7 - (d66dbec) - dependabot[bot]
+- bump boto3 from 1.43.18 to 1.43.24 - (aa4d6ef) - dependabot[bot]
+- bump moto from 5.2.1 to 5.2.2 - (7eeeb9b) - dependabot[bot]
+- bump boto3-stubs from 1.43.18 to 1.43.24 - (ed6d130) - dependabot[bot]
+- bump typer from 0.25.1 to 0.26.4 - (90e467f) - dependabot[bot]
+- bump boto3 from 1.43.14 to 1.43.18 - (fd21cda) - dependabot[bot]
+- bump boto3-stubs from 1.43.14 to 1.43.18 - (5005e4d) - dependabot[bot]
+- bump textual from 8.2.6 to 8.2.7 - (73792f9) - dependabot[bot]
+- bump testfixtures from 11.0.0 to 12.0.0 - (e78a5c7) - dependabot[bot]
+- bump boto3 from 1.43.9 to 1.43.14 - (19fb2ee) - dependabot[bot]
+- bump boto3-stubs from 1.43.9 to 1.43.14 - (731e95d) - dependabot[bot]
+- bump click from 8.4.0 to 8.4.1 - (12abfb2) - dependabot[bot]
+- bump boto3-stubs from 1.43.8 to 1.43.9 - (13d5226) - dependabot[bot]
+- bump boto3 from 1.43.8 to 1.43.9 - (df9802d) - dependabot[bot]
+- bump click from 8.3.3 to 8.4.0 - (41d86e3) - dependabot[bot]
+- update ruff action version - (9188413) - containerscrew
+- update versions in actions - (0883fcf) - containerscrew
+
+- - -
+
 
 ## 0.14.1 - 2026-05-15
 #### Bug Fixes
