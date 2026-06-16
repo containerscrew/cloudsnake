@@ -1,8 +1,3 @@
-## Unreleased (d20e031..e44ec95)
-#### Miscellaneous Chores
-- bump boto3-stubs from 1.43.24 to 1.43.30 - (d20e031) - dependabot[bot]
-
-- - -
 ## 0.16.0 - 2026-06-16
 #### Documentation
 - note locked-deps testing and lightweight-tag push - (61bbb82) - containerscrew
@@ -12,12 +7,12 @@
 - run all jobs on python 3.14 only - (f8c01a4) - containerscrew
 - test on python 3.13 and 3.14 - (cac3fe2) - containerscrew
 #### Miscellaneous Chores
+- (**version**) 0.16.0 - (80fe9da) - containerscrew
 - bump cryptography from 48.0.0 to 48.0.1 - (6cab3f1) - dependabot[bot]
 - declare python 3.13 and 3.14 support in classifiers - (846c22b) - containerscrew
 - bump boto3-stubs from 1.43.24 to 1.43.30 - (d20e031) - dependabot[bot]
 
 - - -
-
 
 ## 0.15.0 - 2026-06-16
 #### Features
