@@ -19,10 +19,6 @@ classifiers = [
   "Operating System :: POSIX :: Linux",
   "Operating System :: MacOS",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
@@ -42,7 +38,7 @@ pytest-cov = "^7.0.0"
 
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.14"
 boto3 = "^1.42.10"
 click = "<8.5.0"
 dacite = "^1.8.1"
@@ -57,7 +53,7 @@ textual = ">=7.2,<9.0"
 jq = "^1.11.0"
 
 [tool.basedpyright]
-pythonVersion = "3.12"
+pythonVersion = "3.14"
 extraPaths = ["src"]
 venvPath = "."
 venv = ".venv"
