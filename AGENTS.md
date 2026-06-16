@@ -56,6 +56,14 @@ cog bump --version X.Y.Z         # updates pyproject.toml, regenerates CHANGELOG
 The `pre_bump_hooks` in `cog.toml` run `poetry version {{version}}` (syncs `pyproject.toml`) and
 `cog changelog` automatically — no manual version edit needed.
 
+The pre-commit hook runs `pytest` against the **installed** `.venv`, not the locked versions. After
+changing dependencies (or before releasing), run `poetry install` so the venv matches `poetry.lock`,
+otherwise tests validate stale packages — CI is the real gate for locked deps.
+
+Pushing a tag triggers the `publish` job in `.github/workflows/ci-cd.yml` (`poetry publish` to PyPI),
+gated on `linting` + `test`. `cog` creates a **lightweight** tag, so `git push --follow-tags` won't
+push it — push the tag explicitly: `git push origin <tag>`.
+
 ## Layout
 
 ```
