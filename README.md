@@ -13,7 +13,7 @@
     <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/containerscrew/cloudsnake">
     <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/containerscrew/cloudsnake?style=social">
     <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/containerscrew/cloudsnake?style=social">
-    <img alt="Python version" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=yellow">
+    <img alt="Python version" src="https://img.shields.io/badge/Python-3.14-3776AB.svg?style=flat&logo=python&logoColor=yellow">
     <img alt="PyPiP version" src="https://img.shields.io/pypi/v/cloudsnake">
     <img alt="License" src="https://img.shields.io/github/license/containerscrew/cloudsnake">
     <img alt="Linter" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json">
@@ -212,6 +212,9 @@ cloudsnake secrets-manager generate-password --help # for more options
 
 # Installation
 
+> [!IMPORTANT]
+> `cloudsnake` requires **Python 3.14+** (since `0.16.0`). Make sure `pipx`/`pip` use a 3.14 interpreter.
+
 ## Using pipx (Recommended)
 
 Install `pipx` with your system package manager (`apt`, `dnf`, `pacman`...).
@@ -262,6 +265,14 @@ hint: See PEP 668 for the detailed specification.
 ```bash
 pipx upgrade cloudsnake
 ```
+
+> [!NOTE]
+> `pipx upgrade` reuses the existing venv's interpreter. If yours was created with Python < 3.14,
+> the upgrade to `0.16.0+` fails with `requires a different Python`. Recreate the venv on 3.14:
+>
+> ```bash
+> pipx reinstall cloudsnake --python python3.14
+> ```
 
 # Uninstall
 
