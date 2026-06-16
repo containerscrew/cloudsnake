@@ -1,12 +1,9 @@
-## 0.14.3 - 2026-05-15
+## Unreleased (d20e031..e44ec95)
 #### Miscellaneous Chores
-- (**version**) 0.14.3 - (5d5725c) - containerscrew
-- (**version**) 0.14.2 - (69c53ca) - containerscrew
-- new version 0.14.3 - (274e953) - containerscrew
-- new version 0.14.2 - (c3db49e) - containerscrew
-- update dependencies - (a3a41c3) - containerscrew
+- bump boto3-stubs from 1.43.24 to 1.43.30 - (d20e031) - dependabot[bot]
 
 - - -
+
 ## 0.15.0 - 2026-06-16
 #### Features
 - <span style="background-color: #d73a49; color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 0.85em;">BREAKING</span>add per-subcommand --region/--profile overrides; -r now means --region (trail --resource drops -r short flag) - (bcaf182) - containerscrew
@@ -20,6 +17,7 @@
 #### Refactoring
 - modernize type hints to builtin generics and use RichHandler logging - (6210949) - containerscrew
 #### Miscellaneous Chores
+- (**version**) 0.15.0 - (3b58d95) - containerscrew
 - sync pyproject version on bump via poetry pre_bump_hook - (17a70d5) - containerscrew
 - bump boto3 from 1.43.24 to 1.43.29 - (921384d) - dependabot[bot]
 - bump testfixtures from 12.0.0 to 12.0.1 - (06cf33a) - dependabot[bot]
@@ -44,6 +42,15 @@
 
 - - -
 
+## 0.14.3 - 2026-05-15
+#### Miscellaneous Chores
+- (**version**) 0.14.3 - (5d5725c) - containerscrew
+- (**version**) 0.14.2 - (69c53ca) - containerscrew
+- new version 0.14.3 - (274e953) - containerscrew
+- new version 0.14.2 - (c3db49e) - containerscrew
+- update dependencies - (a3a41c3) - containerscrew
+
+- - -
 
 ## 0.14.1 - 2026-05-15
 #### Bug Fixes
