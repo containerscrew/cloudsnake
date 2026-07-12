@@ -1679,14 +1679,14 @@ files = [
 
 [[package]]
 name = "testfixtures"
-version = "12.2.0"
+version = "12.3.0"
 description = "A collection of helpers and mock objects for unit tests and doc tests."
 optional = false
 python-versions = ">=3.11"
 groups = ["test"]
 files = [
-    {file = "testfixtures-12.2.0-py3-none-any.whl", hash = "sha256:d86f5bb7903871a14394f38f8e05b23058eb402f2d62c536f94423542255434f"},
-    {file = "testfixtures-12.2.0.tar.gz", hash = "sha256:3d20c1834b1308ce2ecbd3d7eafe3c970315163df0f1f491dbf66a6150af6c85"},
+    {file = "testfixtures-12.3.0-py3-none-any.whl", hash = "sha256:da013e07f1e850b4d92ea6045c4a71f49d6ddcaab11c8b29f65ea38ff678aee8"},
+    {file = "testfixtures-12.3.0.tar.gz", hash = "sha256:d807ceb9bdd6ea7cc0663370dd5568339056b35dc15c26effd1ae267e323acf1"},
 ]
 
 [package.extras]
@@ -1696,6 +1696,7 @@ mock-backport = ["mock (>=4.0.3)"]
 numpy = ["numpy (>=2.3.2)"]
 pandas = ["pandas (>=2.3.3)"]
 polars = ["polars (>=1.32)"]
+pydantic = ["pydantic (>=2.12.0)"]
 structlog = ["structlog (>=24.3.0)"]
 sybil = ["sybil (>=10.1.0)"]
 toml = ["tomlkit (>=0.10.0)"]
