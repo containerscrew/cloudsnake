@@ -30,7 +30,7 @@ include = [{ path = "tests", format = "sdist" }, { path = "CHANGELOG.md" }, { pa
 cloudsnake = 'cloudsnake.__main__:main'
 
 [tool.poetry.group.test.dependencies]
-pytest-randomly = "^4.0.1"
+pytest-randomly = ">=4.0.1,<6.0.0"
 pytest = "^9.0.1"
 testfixtures = ">=10,<13"
 moto = "^5.0.9"
